@@ -1,0 +1,36 @@
+fileFormatVersion: 2
+guid: 16d944028443165419f8efac69288a65
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nexports.InteractionType = void 0;\r\nconst ZEPETO_Script_1
+    = require(\"ZEPETO.Script\");\r\nconst InteractionController_1 = require(\"./InteractionController\");\r\nconst
+    InteractionBtn_1 = require(\"../InteractionBtn\");\r\nclass Interactions extends
+    ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n        this._interactionBtn
+    = this.GetComponent($typeof(InteractionBtn_1.default));\r\n        this._interactionBtn.onClickEvent.AddListener(()
+    => {\r\n            this._interactionBtn.HideIcon();\r\n            this.DoInteraction();\r\n       
+    });\r\n    }\r\n    DoInteraction() {\r\n        switch (this._interactionType)
+    {\r\n            case (InteractionType.AnimInteraction):\r\n                this.GetComponent($typeof(InteractionController_1.default)).SendSignal();\r\n               
+    break;\r\n        }\r\n    }\r\n}\r\nexports.default = Interactions;\r\nvar InteractionType;\r\n(function
+    (InteractionType) {\r\n    InteractionType[InteractionType[\"AnimInteraction\"]
+    = 0] = \"AnimInteraction\";\r\n})(InteractionType = exports.InteractionType ||
+    (exports.InteractionType = {}));\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSW50ZXJhY3Rpb25zLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiSW50ZXJhY3Rpb25zLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBLGlEQUFxRDtBQUVyRCxtRUFBNEQ7QUFDNUQsc0RBQStDO0FBSS9DLE1BQXFCLFlBQWEsU0FBUSxxQ0FBcUI7SUFLM0QsS0FBSztRQUNELElBQUksQ0FBQyxlQUFlLEdBQUcsSUFBSSxDQUFDLFlBQVksU0FBQyx3QkFBYyxFQUFHLENBQUM7UUFDM0QsSUFBSSxDQUFDLGVBQWUsQ0FBQyxZQUFZLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUMvQyxJQUFJLENBQUMsZUFBZSxDQUFDLFFBQVEsRUFBRSxDQUFDO1lBQ2hDLElBQUksQ0FBQyxhQUFhLEVBQUUsQ0FBQztRQUN6QixDQUFDLENBQUMsQ0FBQTtJQUNOLENBQUM7SUFFTyxhQUFhO1FBQ2pCLFFBQVEsSUFBSSxDQUFDLGdCQUFnQixFQUFFO1lBQzNCLEtBQUssQ0FBQyxlQUFlLENBQUMsZUFBZSxDQUFDO2dCQUNsQyxJQUFJLENBQUMsWUFBWSxTQUFDLCtCQUFxQixHQUFJLFVBQVUsRUFBRSxDQUFDO2dCQUN4RCxNQUFNO1NBQ2I7SUFDTCxDQUFDO0NBQ0o7QUFwQkQsK0JBb0JDO0FBRUQsSUFBWSxlQUVYO0FBRkQsV0FBWSxlQUFlO0lBQ3ZCLDJFQUFlLENBQUE7QUFDbkIsQ0FBQyxFQUZXLGVBQWUsR0FBZix1QkFBZSxLQUFmLHVCQUFlLFFBRTFCIn0=","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/Interaction/Interactions.ts","manifest":{"properties":[{"assembly":"","name":"_interactionType","type":"InteractionType","isArray":false,"initValue":[],"enumKeys":["AnimInteraction"],"enumValues":["0"],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"Interactions","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: e4d5428c9b88dc57208af3815d68d960
+  onlyWriteTrigger: 0

@@ -1,0 +1,178 @@
+fileFormatVersion: 2
+guid: daa5246585831481aabbf61fcc5114da
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nexports.GameObjectStatus = void 0;\r\nconst ZEPETO_Script_1
+    = require(\"ZEPETO.Script\");\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_World_1 = require(\"ZEPETO.World\");\r\nconst ZEPETO_Multiplay_1 = require(\"ZEPETO.Multiplay\");\r\nconst
+    TransformSyncHelper_1 = require(\"../Transform/TransformSyncHelper\");\r\nconst
+    DOTWeenSyncHelper_1 = require(\"../DOTween/DOTWeenSyncHelper\");\r\nconst AnimatorSyncHelper_1
+    = require(\"../Transform/AnimatorSyncHelper\");\r\nconst GameManager_1 = require(\"../../Script/GameManager\");\r\nconst
+    ZepetoPlayersManager_1 = require(\"../Player/ZepetoPlayersManager\");\r\nconst
+    TypeManager_1 = require(\"../../Script/TypeManager\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nconst ChairController_1 = require(\"../../Script/Controllers/ChairController\");\r\nclass
+    MultiplayManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
+    {\r\n        super(...arguments);\r\n        this._pingCheckCount = 0;\r\n       
+    this._latency = 0;\r\n        this._diffServerTime = 0;\r\n        this._tfHelpers
+    = [];\r\n        this._dtHelpers = [];\r\n        this._animHelper = [];\r\n       
+    this.pingInterval = 1;\r\n        // When the application is paused (e.g. when
+    the screen is closed or the home screen is opened)\r\n        this.bPaused =
+    false;\r\n    }\r\n    get pingCheckCount() { return this._pingCheckCount; }\r\n   
+    get latency() { return this._latency; }\r\n    get Room() { return this.room;
+    }\r\n    static get instance() {\r\n        if (this.m_instance === null) {\r\n           
+    this.m_instance = UnityEngine_1.GameObject.FindObjectOfType($typeof(MultiplayManager));\r\n           
+    if (this.m_instance === null) {\r\n                this.m_instance = new UnityEngine_1.GameObject(MultiplayManager.name).AddComponent($typeof(MultiplayManager));\r\n           
+    }\r\n        }\r\n        return this.m_instance;\r\n    }\r\n    Awake() {\r\n       
+    if (MultiplayManager.m_instance !== null && MultiplayManager.m_instance !== this)
+    {\r\n            UnityEngine_1.GameObject.Destroy(this.gameObject);\r\n       
+    }\r\n        else {\r\n            MultiplayManager.m_instance = this;\r\n           
+    // GameObject.DontDestroyOnLoad(this.gameObject);\r\n        }\r\n    }\r\n   
+    Start() {\r\n        if (!this.multiplay)\r\n            this.multiplay = this.GetComponent($typeof(ZEPETO_World_1.ZepetoWorldMultiplay));\r\n       
+    if (!this.multiplay)\r\n            console.warn(\"Add ZepetoWorldMultiplay First\");\r\n       
+    this.multiplay.add_RoomJoined((room) => {\r\n            this.room = room;\r\n           
+    this.StartCoroutine(this.SendPing());\r\n            this.CheckMaster();\r\n           
+    this.GetInstantiate();\r\n            this.room.AddMessageHandler(TypeManager_1.MESSAGE.FoodEquipp,
+    (message) => {\r\n                const sessionId = message.OwnerSessionId;\r\n               
+    const foodName = message.FoodType;\r\n                switch (message.FoodType)
+    {\r\n                    default:\r\n                        GameManager_1.default.instance.EquippFood(sessionId,
+    foodName);\r\n                        break;\r\n                }\r\n           
+    });\r\n            this.room.AddMessageHandler(TypeManager_1.MESSAGE.FoodUnequipp,
+    (message) => {\r\n                const sessionId = message.OwnerSessionId;\r\n               
+    GameManager_1.default.instance.UnequippFood(sessionId);\r\n            });\r\n           
+    this.room.AddMessageHandler(TypeManager_1.MESSAGE.Busking, (message) => {\r\n               
+    const point = message.Point;\r\n                const isStart = message.IsStart;\r\n               
+    GameManager_1.default.instance.BuskingIsStart(point, isStart);\r\n           
+    });\r\n            this.room.AddMessageHandler(TypeManager_1.MESSAGE.BuskingHeart,
+    (message) => {\r\n                const num = message.Point;\r\n               
+    GameManager_1.default.instance.BuskingAddHeart(num);\r\n            });\r\n           
+    this.room.AddMessageHandler(TypeManager_1.MESSAGE.PlayerSync, (message) => {\r\n               
+    const sessionId = message.SessionId;\r\n                const isOn = message.IsOn;\r\n               
+    if (sessionId != this.room.SessionId) {\r\n                    const character
+    = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(sessionId).character;\r\n                   
+    if (!isOn)\r\n                        character.transform.Translate(this.disconnectZone.position);\r\n                   
+    // if (!isOn) character.Teleport(this.disconnectZone.position + new Vector3(0,
+    5, 0), this.disconnectZone.rotation);\r\n                    character.GetComponent($typeof(TransformSyncHelper_1.default)).SyncPosition
+    = isOn;\r\n                    character.GetComponent($typeof(TransformSyncHelper_1.default)).SyncRotation
+    = isOn;\r\n                    character.GetComponent($typeof(TransformSyncHelper_1.default)).SyncScale
+    = isOn;\r\n                }\r\n            });\r\n        });\r\n        this._dtHelpers
+    = UnityEngine_1.Object.FindObjectsOfType($typeof(DOTWeenSyncHelper_1.default));\r\n       
+    this._animHelper = UnityEngine_1.Object.FindObjectsOfType($typeof(AnimatorSyncHelper_1.default));\r\n   
+    }\r\n    /**Util**/\r\n    CheckMaster() {\r\n        this.StartCoroutine(this.WaitPingCheck());\r\n       
+    this.room.AddMessageHandler(TypeManager_1.MESSAGE.MasterResponse, (masterSessionId)
+    => {\r\n            this._masterSessionId = masterSessionId;\r\n            this._tfHelpers
+    = UnityEngine_1.Object.FindObjectsOfType($typeof(TransformSyncHelper_1.default));\r\n           
+    this._tfHelpers.forEach((tf) => {\r\n                if (tf.UpdateOwnerType ==
+    TransformSyncHelper_1.UpdateOwner.Master) {\r\n                    tf.ChangeOwner(this._masterSessionId);\r\n               
+    }\r\n            });\r\n            this._dtHelpers.forEach((dt) => {\r\n               
+    dt.ChangeOwner(this._masterSessionId);\r\n            });\r\n            this._animHelper.forEach((anim)
+    => {\r\n                anim.ChangeOwner(this._masterSessionId);\r\n           
+    });\r\n        });\r\n    }\r\n    // This function is used to instantiate a
+    new object in the game. It sends a message to the server requesting the creation
+    of the object, \r\n    // and waits for the server to respond with the necessary
+    information to create it.\r\n    GetInstantiate() {\r\n        this.room.Send(TypeManager_1.MESSAGE.RequestInstantiateCache);\r\n       
+    this.room.AddMessageHandler(TypeManager_1.MESSAGE.Instantiate, (message) => {\r\n           
+    const prefabObj = UnityEngine_1.Resources.Load(message.prefabName);\r\n           
+    if (null === prefabObj) {\r\n                console.warn(`${message.prefabName}
+    is null, Add Prefab in the Resources folder.`);\r\n                return;\r\n           
+    }\r\n            const spawnPosition = message.spawnPosition ? new UnityEngine_1.Vector3(message.spawnPosition.x,
+    message.spawnPosition.y, message.spawnPosition.z) : prefabObj.transform.position;\r\n           
+    const spawnRotation = message.spawnRotation ? new UnityEngine_1.Quaternion(message.spawnRotation.x,
+    message.spawnRotation.y, message.spawnRotation.z, message.spawnRotation.w) :
+    prefabObj.transform.rotation;\r\n            const newObj = UnityEngine_1.Object.Instantiate(prefabObj,
+    spawnPosition, spawnRotation);\r\n            // If the object has a TransformSyncHelper
+    script attached to it, it sets the script''s ID and owner information. \r\n           
+    // If the object does not have a TransformSyncHelper script, a warning is logged
+    to the console.\r\n            const tf = (newObj?.GetComponent)($typeof(TransformSyncHelper_1.default));\r\n           
+    if (null === tf) { //Creates an none-sync object.\r\n                console.warn(`${tf.name}
+    does not have a TransformSyncHelper script.`);\r\n                return;\r\n           
+    }\r\n            tf.Id = message.Id;\r\n            if (tf.UpdateOwnerType ===
+    TransformSyncHelper_1.UpdateOwner.Master) {\r\n                tf.ChangeOwner(this._masterSessionId);\r\n           
+    }\r\n            else if (message.ownerSessionId) {\r\n                tf.ChangeOwner(message.ownerSessionId);\r\n           
+    }\r\n        });\r\n    }\r\n    /** Destroy synchronization objects */\r\n   
+    Destroy(DestroyObject) {\r\n        const tf = DestroyObject.GetComponent($typeof(TransformSyncHelper_1.default));\r\n       
+    const objId = tf?.Id;\r\n        if (null === objId) {\r\n            console.warn(\"Only
+    objects that contain TransformSyncHelper scripts can be deleted.\");\r\n           
+    return;\r\n        }\r\n        this.SendStatus(objId, GameObjectStatus.Destroyed);\r\n       
+    UnityEngine_1.Object.Destroy(DestroyObject);\r\n    }\r\n    /** /Asset/Resources/
+    Add the prefabs to create in the path. Add TransformSyncHelper.ts to the prefab
+    to synchronize objects as well as creation.\r\n     @param prefabName The name
+    or path of the prefab on the resource folder ( ex) Monsters/zombie)\r\n     @param
+    ownerSessionId Inject owner into objects whose transform sync type is Undefine\r\n    
+    */\r\n    Instantiate(prefabName, ownerSessionId, spawnPosition, spawnRotation)
+    {\r\n        const newObjId = MultiplayManager.instance.GetServerTime().toString();\r\n       
+    const data = new ZEPETO_Multiplay_1.RoomData();\r\n        data.Add(\"Id\", newObjId);\r\n       
+    data.Add(\"prefabName\", prefabName);\r\n        data.Add(\"ownerSessionId\",
+    ownerSessionId);\r\n        if (undefined != spawnPosition) {\r\n           
+    const position = new ZEPETO_Multiplay_1.RoomData();\r\n            position.Add(\"x\",
+    spawnPosition.x);\r\n            position.Add(\"y\", spawnPosition.y);\r\n           
+    position.Add(\"z\", spawnPosition.z);\r\n            data.Add(\"spawnPosition\",
+    position.GetObject());\r\n        }\r\n        if (undefined != spawnRotation)
+    {\r\n            const rotation = new ZEPETO_Multiplay_1.RoomData();\r\n           
+    rotation.Add(\"x\", spawnRotation.x);\r\n            rotation.Add(\"y\", spawnRotation.y);\r\n           
+    rotation.Add(\"z\", spawnRotation.z);\r\n            rotation.Add(\"w\", spawnRotation.w);\r\n           
+    data.Add(\"spawnRotation\", rotation.GetObject());\r\n        }\r\n        this.room.Send(TypeManager_1.MESSAGE.Instantiate,
+    data.GetObject());\r\n    }\r\n    OnApplicationPause(pause) {\r\n        if
+    (pause && !this.bPaused) {\r\n            this.PauseUser();\r\n        }\r\n       
+    else if (!pause && this.bPaused) {\r\n            this.UnPauseUser();\r\n       
+    }\r\n    }\r\n    PauseUser() {\r\n        this.room?.Send(TypeManager_1.MESSAGE.PauseUser);\r\n       
+    this.bPaused = true;\r\n        this._pingCheckCount = 0;\r\n        this._tfHelpers
+    = UnityEngine_1.Object.FindObjectsOfType($typeof(TransformSyncHelper_1.default));\r\n       
+    // While paused, no information is received.\r\n        this._tfHelpers?.forEach((tf)
+    => {\r\n            if (tf.UpdateOwnerType === TransformSyncHelper_1.UpdateOwner.Master)
+    {\r\n                tf.ChangeOwner(null);\r\n            }\r\n            else
+    if (tf.isOwner) {\r\n                this.SendStatus(tf.Id, GameObjectStatus.Pause);\r\n           
+    }\r\n        });\r\n        this._dtHelpers?.forEach((dt) => {\r\n           
+    dt.ChangeOwner(null);\r\n        });\r\n    }\r\n    UnPauseUser() {\r\n       
+    this.room?.Send(TypeManager_1.MESSAGE.UnPauseUser);\r\n        this.bPaused =
+    false;\r\n        this._tfHelpers = UnityEngine_1.Object.FindObjectsOfType($typeof(TransformSyncHelper_1.default));\r\n       
+    this._tfHelpers?.forEach((tf) => {\r\n            if (tf.isOwner) {\r\n               
+    this.SendStatus(tf.Id, GameObjectStatus.Enable);\r\n            }\r\n           
+    else {\r\n                tf.ForceTarget();\r\n            }\r\n        });\r\n   
+    }\r\n    // Ping every 1 second to check latency with the server *\r\n    *SendPing()
+    {\r\n        let RequestTime = Number(+new Date());\r\n        let ResponseTime
+    = Number(+new Date());\r\n        let isResponseDone = false;\r\n        this.room.AddMessageHandler(TypeManager_1.MESSAGE.CheckServerTimeResponse,
+    (serverTime) => {\r\n            ResponseTime = Number(+new Date());\r\n           
+    this._latency = (ResponseTime - RequestTime) / 2;\r\n            this._diffServerTime
+    = Number(serverTime) - ResponseTime - this.latency;\r\n            this._pingCheckCount++;\r\n           
+    isResponseDone = true;\r\n        });\r\n        while (true) {\r\n           
+    if (!this.bPaused) {\r\n                this.room.Send(TypeManager_1.MESSAGE.CheckServerTimeRequest);\r\n               
+    RequestTime = Number(+new Date());\r\n                yield new UnityEngine_1.WaitUntil(()
+    => isResponseDone == true);\r\n            }\r\n            isResponseDone =
+    false;\r\n            yield new UnityEngine_1.WaitForSeconds(this.pingInterval);\r\n       
+    }\r\n    }\r\n    // After checking the connection with the server once, request
+    the master information.\r\n    *WaitPingCheck() {\r\n        if (this.pingCheckCount
+    == 0)\r\n            yield new UnityEngine_1.WaitUntil(() => this.pingCheckCount
+    > 0);\r\n        this.room.Send(TypeManager_1.MESSAGE.CheckMaster);\r\n    }\r\n   
+    //Returns the current server time.\r\n    GetServerTime() {\r\n        return
+    this._diffServerTime + Number(+new Date());\r\n    }\r\n    SendStatus(id, status)
+    {\r\n        const data = new ZEPETO_Multiplay_1.RoomData();\r\n        data.Add(\"Id\",
+    id);\r\n        data.Add(\"Status\", status);\r\n        this.room.Send(TypeManager_1.MESSAGE.SyncTransformStatus,
+    data.GetObject());\r\n    }\r\n}\r\nexports.default = MultiplayManager;\r\n/*
+    Singleton */\r\nMultiplayManager.m_instance = null;\r\nvar GameObjectStatus;\r\n(function
+    (GameObjectStatus) {\r\n    GameObjectStatus[GameObjectStatus[\"Destroyed\"]
+    = -1] = \"Destroyed\";\r\n    GameObjectStatus[GameObjectStatus[\"Disable\"]
+    = 0] = \"Disable\";\r\n    GameObjectStatus[GameObjectStatus[\"Enable\"] = 1]
+    = \"Enable\";\r\n    GameObjectStatus[GameObjectStatus[\"Pause\"] = 2] = \"Pause\";\r\n})(GameObjectStatus
+    = exports.GameObjectStatus || (exports.GameObjectStatus = {}));\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTXVsdGlwbGF5TWFuYWdlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIk11bHRpcGxheU1hbmFnZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUEsaURBQXFEO0FBQ3JELDZDQUE4SDtBQUM5SCwrQ0FBa0Q7QUFDbEQsdURBQWdEO0FBQ2hELDBFQUFvRjtBQUNwRixvRUFBNkQ7QUFDN0Qsd0VBQWlFO0FBQ2pFLDBEQUFtRDtBQUNuRCx5RUFBa0U7QUFDbEUsMERBQW1EO0FBQ25ELDZFQUE0RDtBQUM1RCw4RUFBdUU7QUFHdkUsTUFBcUIsZ0JBQWlCLFNBQVEscUNBQXFCO0lBQW5FOztRQUs4QixvQkFBZSxHQUFVLENBQUMsQ0FBQztRQUMzQixhQUFRLEdBQVUsQ0FBQyxDQUFDO1FBQ3BCLG9CQUFlLEdBQVUsQ0FBQyxDQUFDO1FBTTdDLGVBQVUsR0FBMEIsRUFBRSxDQUFDO1FBQ3ZDLGVBQVUsR0FBd0IsRUFBRSxDQUFDO1FBQ3JDLGdCQUFXLEdBQXlCLEVBQUUsQ0FBQztRQUc5QixpQkFBWSxHQUFVLENBQUMsQ0FBQztRQXNMekMsK0ZBQStGO1FBQ3ZGLFlBQU8sR0FBWSxLQUFLLENBQUM7SUF3RnJDLENBQUM7SUE3UUcsSUFBSSxjQUFjLEtBQUksT0FBTyxJQUFJLENBQUMsZUFBZSxDQUFDLENBQUMsQ0FBQztJQUNwRCxJQUFJLE9BQU8sS0FBSSxPQUFPLElBQUksQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDO0lBQ3RDLElBQUksSUFBSSxLQUFLLE9BQU8sSUFBSSxDQUFDLElBQUksQ0FBQyxDQUFDLENBQUM7SUFHekIsTUFBTSxLQUFLLFFBQVE7UUFDdEIsSUFBSSxJQUFJLENBQUMsVUFBVSxLQUFLLElBQUksRUFBRTtZQUMxQixJQUFJLENBQUMsVUFBVSxHQUFHLHdCQUFVLENBQUMsZ0JBQWdCLFNBQUMsZ0JBQWdCLEVBQUcsQ0FBQztZQUNsRSxJQUFJLElBQUksQ0FBQyxVQUFVLEtBQUssSUFBSSxFQUFFO2dCQUMxQixJQUFJ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","assetPath":"Assets/Zepeto
+    Multiplay Component/ZepetoScript/Common/MultiplayManager.ts","manifest":{"properties":[{"assembly":"ZEPETO.World","name":"multiplay","type":"ZEPETO.World.ZepetoWorldMultiplay","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"","name":"room","type":"ZEPETO.Multiplay.Room","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"_pingCheckCount","type":"System.Single","isArray":false,"initValue":["0"],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Server
+    connection status (View Only)\""]},{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"_latency","type":"System.Single","isArray":false,"initValue":["0"],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"_diffServerTime","type":"System.Single","isArray":false,"initValue":["0"],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"disconnectZone","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Disconnect
+    Zone\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"onRoomAdded","type":"UnityEngine.Events.UnityEvent","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"MultiplayManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: e1825be66f13939a781acbc0eef2f975
+  onlyWriteTrigger: 0

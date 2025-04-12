@@ -1,0 +1,72 @@
+fileFormatVersion: 2
+guid: 7cdc33fc069c30847b5e9cfb34153a36
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst MultiplayManager_1 = require(\"../../ZepetoScript/Common/MultiplayManager\");\r\nconst
+    ZEPETO_Multiplay_1 = require(\"ZEPETO.Multiplay\");\r\nconst TypeManager_1 =
+    require(\"../TypeManager\");\r\nconst AnimationManager_1 = require(\"../Manager/AnimationManager\");\r\nconst
+    InteractionBtn_1 = require(\"../Interaction/InteractionBtn\");\r\nclass ChairController
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
+    super(...arguments);\r\n        this.bodyBone = UnityEngine_1.HumanBodyBones.Hips;\r\n   
+    }\r\n    get ChairId() { return this.chairId + \"Chair\"; }\r\n    Start() {\r\n       
+    this.interactionBtn = this.GetComponent($typeof(InteractionBtn_1.default));\r\n       
+    this.sitTransform = this.transform;\r\n        this.chairId = `${this.gameObject.name}_${this.transform.parent.name}`;\r\n       
+    MultiplayManager_1.default.instance.multiplay.add_RoomJoined((room) => {\r\n           
+    room.AddMessageHandler(this.ChairId, (message) => {\r\n                const
+    sessionId = message.SessionId;\r\n                const isSit = message.IsSit;\r\n               
+    this.OnSit(sessionId, isSit);\r\n            });\r\n        });\r\n    }\r\n   
+    SitOnChair() {\r\n        if (this.isSit)\r\n            return;\r\n        this.isSit
+    = true;\r\n        const character = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;\r\n       
+    const data = new ZEPETO_Multiplay_1.RoomData();\r\n        data.Add(\"chairId\",
+    this.ChairId);\r\n        data.Add(\"isSit\", true);\r\n        // character.Teleport(this.sitTransform.position,
+    this.sitTransform.rotation);\r\n        MultiplayManager_1.default.instance.Room.Send(TypeManager_1.MESSAGE.ChairSit,
+    data.GetObject());\r\n    }\r\n    *CheckTryMove() {\r\n        const character
+    = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;\r\n       
+    const animator = character.ZepetoAnimator;\r\n        const bone = animator.GetBoneTransform(this.bodyBone);\r\n       
+    console.log(bone);\r\n        console.log(character.transform.position);\r\n       
+    let idx = 0;\r\n        while (true) {\r\n            if (character.tryJump ||
+    character.tryMove)\r\n                break;\r\n            const distance =
+    UnityEngine_1.Vector3.op_Subtraction(bone.position, character.transform.position);\r\n           
+    const newPos = UnityEngine_1.Vector3.op_Subtraction(this.sitTransform.position,
+    distance);\r\n            this._playerGesturePosition = newPos;\r\n           
+    character.transform.position = this._playerGesturePosition;\r\n            character.transform.rotation
+    = this.sitTransform.rotation;\r\n            yield new UnityEngine_1.WaitForEndOfFrame();\r\n           
+    yield UnityEngine_1.WaitForEndOfFrame;\r\n        }\r\n        const data = new
+    ZEPETO_Multiplay_1.RoomData();\r\n        data.Add(\"chairId\", this.ChairId);\r\n       
+    data.Add(\"isSit\", false);\r\n        MultiplayManager_1.default.instance.Room.Send(TypeManager_1.MESSAGE.ChairSit,
+    data.GetObject());\r\n    }\r\n    OnSit(sessionId, isSit) {\r\n        if (isSit)
+    {\r\n            this.interactionBtn.canShow = false;\r\n            this.interactionBtn.HideIcon();\r\n           
+    this.StartCoroutine(this.PlaySitAnimation(sessionId));\r\n        }\r\n       
+    else {\r\n            this.interactionBtn.canShow = true;\r\n            this.StopCoroutine(this.CheckTryMove);\r\n           
+    AnimationManager_1.default.SetCharacterAnimation(sessionId, AnimationManager_1.AnimParamType.Bool,
+    AnimationManager_1.AnimParamName.IsSit, false);\r\n        }\r\n        this.isSit
+    = isSit;\r\n    }\r\n    *PlaySitAnimation(sessionId) {\r\n        const character
+    = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(sessionId).character;\r\n       
+    const anim = character.ZepetoAnimator;\r\n        console.log(\"play sit animation\");\r\n       
+    AnimationManager_1.default.SetCharacterAnimation(sessionId, AnimationManager_1.AnimParamType.Bool,
+    AnimationManager_1.AnimParamName.IsSit, true);\r\n        // check local player
+    tring to move\r\n        if (sessionId == MultiplayManager_1.default.instance.room.SessionId)
+    {\r\n            this.StartCoroutine(this.CheckTryMove());\r\n        }\r\n   
+    }\r\n}\r\nexports.default = ChairController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2hhaXJDb250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiQ2hhaXJDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQThHO0FBQzlHLDZFQUE2RTtBQUM3RSxpREFBcUQ7QUFDckQsaUZBQTBFO0FBQzFFLHVEQUE0QztBQUM1QyxnREFBeUM7QUFDekMsa0VBQTZGO0FBQzdGLGtFQUEyRDtBQUUzRCxNQUFxQixlQUFnQixTQUFRLHFDQUFxQjtJQUFsRTs7UUFDWSxhQUFRLEdBQW1CLDRCQUFjLENBQUMsSUFBSSxDQUFDO0lBK0YzRCxDQUFDO0lBdEZHLElBQVksT0FBTyxLQUFlLE9BQU8sSUFBSSxDQUFDLE9BQU8sR0FBRyxPQUFPLENBQUMsQ0FBQyxDQUFDO0lBRWxFLEtBQUs7UUFDRCxJQUFJLENBQUMsY0FBYyxHQUFHLElBQUksQ0FBQyxZQUFZLFNBQUMsd0JBQWMsRUFBRyxDQUFDO1FBQzFELElBQUksQ0FBQyxZQUFZLEdBQUcsSUFBSSxDQUFDLFNBQVMsQ0FBQztRQUNuQyxJQUFJLENBQUMsT0FBTyxHQUFHLEdBQUcsSUFBSSxDQUFDLFVBQVUsQ0FBQyxJQUFJLElBQUksSUFBSSxDQUFDLFNBQVMsQ0FBQyxNQUFNLENBQUMsSUFBSSxFQUFFLENBQUM7UUFFdkUsMEJBQWdCLENBQUMsUUFBUSxDQUFDLFNBQVMsZ0JBQWMsQ0FBQyxJQUFJLEVBQUUsRUFBRTtZQUN0RCxJQUFJLENBQUMsaUJBQWlCLENBQUMsSUFBSSxDQUFDLE9BQU8sRUFBRSxDQUFDLE9BQWEsRUFBRSxFQUFFO2dCQUNuRCxNQUFNLFNBQVMsR0FBRyxPQUFPLENBQUMsU0FBUyxDQUFDO2dCQUNwQyxNQUFNLEtBQUssR0FBRyxPQUFPLENBQUMsS0FBSyxDQUFDO2dCQUM1QixJQUFJLENBQUMsS0FBSyxDQUFDLFNBQVMsRUFBRSxLQUFLLENBQUMsQ0FBQztZQUNqQyxDQUFDLENBQUMsQ0FBQztRQUNQLENBQUMsRUFBQTtJQUVMLENB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","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/Controllers/ChairController.ts","manifest":{"properties":[],"name":"ChairController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 572242453a51bcd444f380f53cca7138
+  onlyWriteTrigger: 0

@@ -1,0 +1,35 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Zepeto Script",
+            "address": "127.0.0.1",
+            "<<<<<<<HEADport": 10913,
+            "=======port": 64101,
+            ">>>>>>>b7bc4d147f0ca3847cfd75ce5b193d4e150e1d05request": "attach",
+            "type": "pwa-node"
+        },
+        {
+            "name": "Zepeto Multiplay Script",
+            "address": "127.0.0.1",
+            "<<<<<<<HEADport": 10914,
+            "=======port": 64102,
+            ">>>>>>>b7bc4d147f0ca3847cfd75ce5b193d4e150e1d05request": "attach",
+            "type": "pwa-node"
+        },
+        {
+            "name": "Attach to Unity",
+            "type": "vstuc",
+            "request": "attach"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Zepeto Script/Zepeto Multiplay Script Debug",
+            "configurations": [
+                "Zepeto Script",
+                "Zepeto Multiplay Script"
+            ]
+        }
+    ]
+}

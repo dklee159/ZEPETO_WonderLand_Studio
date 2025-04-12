@@ -1,0 +1,39 @@
+fileFormatVersion: 2
+guid: 351d3cf21e971fc409d86cbd382469d7
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    TranslateManager_1 = require(\"./TranslateManager\");\r\nconst LocalizeExternText_1
+    = require(\"./LocalizeExternText\");\r\nconst DebugController_1 = require(\"../Controllers/DebugController\");\r\nclass
+    LocalizeExternImage extends LocalizeExternText_1.default {\r\n    constructor()
+    {\r\n        super(...arguments);\r\n        this.sprites = [];\r\n    }\r\n   
+    Start() {\r\n        this.onStart();\r\n    }\r\n    onStart() {\r\n        if
+    (this.isStarted)\r\n            return;\r\n        this.isStarted = true;\r\n       
+    console.log(\"start image localize\");\r\n        this.gameObject.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite
+    = this.sprites[TranslateManager_1.default.nowSystemLanguage - 1];\r\n       
+    // if (this.gameObject.TryGetComponent<Image>(null)) {\r\n        // }\r\n   
+    }\r\n    DebugStart() {\r\n        console.log(\"start image localize\");\r\n       
+    this.gameObject.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite = this.sprites[TranslateManager_1.default.nowSystemLanguage
+    - 1];\r\n        // if (this.gameObject.TryGetComponent<Image>(null)) {\r\n       
+    // }\r\n    }\r\n}\r\nexports.default = LocalizeExternImage;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTG9jYWxpemVFeHRlcm5JbWFnZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkxvY2FsaXplRXh0ZXJuSW1hZ2UudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFDQSxtREFBdUM7QUFFdkMseURBQWlEO0FBQ2pELDZEQUFzRDtBQUN0RCxvRUFBNkQ7QUFFN0QsTUFBcUIsbUJBQW9CLFNBQVEsNEJBQWtCO0lBQW5FOztRQUNzQixZQUFPLEdBQWMsRUFBRSxDQUFDO0lBc0I5QyxDQUFDO0lBcEJHLEtBQUs7UUFDRCxJQUFJLENBQUMsT0FBTyxFQUFFLENBQUM7SUFDbkIsQ0FBQztJQUVTLE9BQU87UUFDYixJQUFJLElBQUksQ0FBQyxTQUFTO1lBQUUsT0FBTztRQUMzQixJQUFJLENBQUMsU0FBUyxHQUFHLElBQUksQ0FBQztRQUV0QixPQUFPLENBQUMsR0FBRyxDQUFDLHNCQUFzQixDQUFDLENBQUM7UUFDcEMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxZQUFZLFNBQUMsc0JBQUssR0FBSSxNQUFNLEdBQUcsSUFBSSxDQUFDLE9BQU8sQ0FBQywwQkFBZ0IsQ0FBQyxpQkFBaUIsR0FBRyxDQUFDLENBQUMsQ0FBQztRQUNwRyxzREFBc0Q7UUFDdEQsSUFBSTtJQUNSLENBQUM7SUFFZSxVQUFVO1FBQ3RCLE9BQU8sQ0FBQyxHQUFHLENBQUMsc0JBQXNCLENBQUMsQ0FBQztRQUNwQyxJQUFJLENBQUMsVUFBVSxDQUFDLFlBQVksU0FBQyxzQkFBSyxHQUFJLE1BQU0sR0FBRyxJQUFJLENBQUMsT0FBTyxDQUFDLDBCQUFnQixDQUFDLGlCQUFpQixHQUFHLENBQUMsQ0FBQyxDQUFDO1FBQ3BHLHNEQUFzRDtRQUN0RCxJQUFJO0lBQ1IsQ0FBQztDQUNKO0FBdkJELHNDQXVCQyJ9","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/Lang/LocalizeExternImage.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"sprites","type":"UnityEngine.Sprite[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"textIndex","type":"System.Single","isArray":false,"initValue":["0"],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"supportHead","type":"System.Boolean","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Support
+    - Index\""]},{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"supportTail","type":"System.Boolean","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"headText","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"tailText","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"isArray","type":"System.Boolean","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Array\""]},{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"indexs","type":"System.Single[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"LocalizeExternImage","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 04e347c999e7508a1008be7c47912f5d
+  onlyWriteTrigger: 0

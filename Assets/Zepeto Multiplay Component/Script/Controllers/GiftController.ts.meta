@@ -1,0 +1,52 @@
+fileFormatVersion: 2
+guid: 7acedaaafee6e6343821120a5ce11528
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    TypeManager_1 = require(\"../TypeManager\");\r\nconst EquipManager_1 = require(\"../Manager/EquipManager\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst FoodManager_1 = require(\"../Manager/FoodManager\");\r\nclass
+    GiftController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start()
+    {\r\n        this.mike_1.onValueChanged.AddListener(() => {\r\n            if
+    (!this.mike_1.isOn)\r\n                EquipManager_1.default.instance.UnequipItem(TypeManager_1.EquipList.AwardsMike_1);\r\n           
+    else {\r\n                this.foodManager.GetComponent($typeof(FoodManager_1.default)).RemoveFood();\r\n               
+    EquipManager_1.default.instance.EquipItem(TypeManager_1.EquipList.AwardsMike_1);\r\n           
+    }\r\n        });\r\n        this.mike_2.onValueChanged.AddListener(() => {\r\n           
+    if (!this.mike_2.isOn)\r\n                EquipManager_1.default.instance.UnequipItem(TypeManager_1.EquipList.AwardsMike_2);\r\n           
+    else {\r\n                this.foodManager.GetComponent($typeof(FoodManager_1.default)).RemoveFood();\r\n               
+    EquipManager_1.default.instance.EquipItem(TypeManager_1.EquipList.AwardsMike_2);\r\n           
+    }\r\n        });\r\n        this.head.onValueChanged.AddListener(() => {\r\n           
+    if (!this.head.isOn)\r\n                EquipManager_1.default.instance.UnequipItem(TypeManager_1.EquipList.AwardsHead);\r\n           
+    else\r\n                EquipManager_1.default.instance.EquipItem(TypeManager_1.EquipList.AwardsHead);\r\n       
+    });\r\n        this.neck_1.onValueChanged.AddListener(() => {\r\n           
+    if (!this.neck_1.isOn)\r\n                EquipManager_1.default.instance.UnequipItem(TypeManager_1.EquipList.AwardsNeck_1);\r\n           
+    else\r\n                EquipManager_1.default.instance.EquipItem(TypeManager_1.EquipList.AwardsNeck_1);\r\n       
+    });\r\n        this.neck_2.onValueChanged.AddListener(() => {\r\n           
+    if (!this.neck_2.isOn)\r\n                EquipManager_1.default.instance.UnequipItem(TypeManager_1.EquipList.AwardsNeck_2);\r\n           
+    else\r\n                EquipManager_1.default.instance.EquipItem(TypeManager_1.EquipList.AwardsNeck_2);\r\n       
+    });\r\n    }\r\n    MikeOff() {\r\n        if (this.mike_1.isOn)\r\n           
+    this.mike_1.isOn = false;\r\n        if (this.mike_2.isOn)\r\n            this.mike_2.isOn
+    = false;\r\n    }\r\n    SetInteractable(canInteractable) {\r\n        this.mike_1.interactable
+    = canInteractable;\r\n        this.mike_2.interactable = canInteractable;\r\n       
+    this.head.interactable = canInteractable;\r\n        this.neck_1.interactable
+    = canInteractable;\r\n        this.neck_2.interactable = canInteractable;\r\n   
+    }\r\n}\r\nexports.default = GiftController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR2lmdENvbnRyb2xsZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJHaWZ0Q29udHJvbGxlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUNBLGlEQUFxRDtBQUNyRCxnREFBMkM7QUFDM0MsMERBQW1EO0FBQ25ELDZDQUF5QztBQUN6Qyx3REFBaUQ7QUFFakQsTUFBcUIsY0FBZSxTQUFRLHFDQUFxQjtJQVM3RCxLQUFLO1FBQ0QsSUFBSSxDQUFDLE1BQU0sQ0FBQyxjQUFjLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUN4QyxJQUFHLENBQUMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxJQUFJO2dCQUNoQixzQkFBWSxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsdUJBQVMsQ0FBQyxZQUFZLENBQUMsQ0FBQztpQkFDekQ7Z0JBQ0QsSUFBSSxDQUFDLFdBQVcsQ0FBQyxZQUFZLFNBQUMscUJBQVcsR0FBSSxVQUFVLEVBQUUsQ0FBQztnQkFDMUQsc0JBQVksQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLHVCQUFTLENBQUMsWUFBWSxDQUFDLENBQUM7YUFDM0Q7UUFDTCxDQUFDLENBQUMsQ0FBQztRQUNILElBQUksQ0FBQyxNQUFNLENBQUMsY0FBYyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDeEMsSUFBRyxDQUFDLElBQUksQ0FBQyxNQUFNLENBQUMsSUFBSTtnQkFDaEIsc0JBQVksQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLHVCQUFTLENBQUMsWUFBWSxDQUFDLENBQUM7aUJBQ3pEO2dCQUNELElBQUksQ0FBQyxXQUFXLENBQUMsWUFBWSxTQUFDLHFCQUFXLEdBQUksVUFBVSxFQUFFLENBQUM7Z0JBQzFELHNCQUFZLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyx1QkFBUyxDQUFDLFlBQVksQ0FBQyxDQUFDO2FBQzNEO1FBQ0wsQ0FBQyxDQUFDLENBQUM7UUFDSCxJQUFJLENBQUMsSUFBSSxDQUFDLGNBQWMsQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ3RDLElBQUcsQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLElBQUk7Z0JBQUUsc0JBQVksQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLHVCQUFTLENBQUMsVUFBVSxDQUFDLENBQUM7O2dCQUN2RSxzQkFBWSxDQUFDLFFBQVEsQ0FBQyxTQUFTLENBQUMsdUJBQVMsQ0FBQyxVQUFVLENBQUMsQ0FBQztRQUMvRCxDQUFDLENBQUMsQ0FBQztRQUNILElBQUksQ0FBQyxNQUFNLENBQUMsY0FBYyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDeEMsSUFBRyxDQUFDLElBQUksQ0FBQyxNQUFNLENBQUMsSUFBSTtnQkFBRSxzQkFBWSxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsdUJBQVMsQ0FBQyxZQUFZLENBQUMsQ0FBQzs7Z0JBQzNFLHNCQUFZLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyx1QkFBUyxDQUFDLFlBQVksQ0FBQyxDQUFDO1FBQ2pFLENBQUMsQ0FBQyxDQUFDO1FBQ0gsSUFBSSxDQUFDLE1BQU0sQ0FBQyxjQUFjLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUN4QyxJQUFHLENBQUMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxJQUFJO2dCQUFFLHNCQUFZLENBQUMsUUFBUSxDQUFDLFdBQVcsQ0FBQyx1QkFBUyxDQUFDLFlBQVksQ0FBQyxDQUFDOztnQkFDM0Usc0JBQVksQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLHVCQUFTLENBQUMsWUFBWSxDQUFDLENBQUM7UUFDakUsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0lBRU0sT0FBTztRQUNWLElBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQyxJQUFJO1lBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxJQUFJLEdBQUcsS0FBSyxDQUFDO1FBQzlDLElBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQyxJQUFJO1lBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxJQUFJLEdBQUcsS0FBSyxDQUFDO0lBQ2xELENBQUM7SUFFTSxlQUFlLENBQUMsZUFBeUI7UUFDNUMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxZQUFZLEdBQUcsZUFBZSxDQUFBO1FBQzFDLElBQUksQ0FBQyxNQUFNLENBQUMsWUFBWSxHQUFHLGVBQWUsQ0FBQztRQUMzQyxJQUFJLENBQUMsSUFBSSxDQUFDLFlBQVksR0FBRyxlQUFlLENBQUM7UUFDekMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxZQUFZLEdBQUcsZUFBZSxDQUFDO1FBQzNDLElBQUksQ0FBQyxNQUFNLENBQUMsWUFBWSxHQUFHLGVBQWUsQ0FBQztJQUMvQyxDQUFDO0NBQ0o7QUFwREQsaUNBb0RDIn0=","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/Controllers/GiftController.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"mike_1","type":"UnityEngine.UI.Toggle","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"mike_2","type":"UnityEngine.UI.Toggle","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"head","type":"UnityEngine.UI.Toggle","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"neck_1","type":"UnityEngine.UI.Toggle","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"neck_2","type":"UnityEngine.UI.Toggle","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"foodManager","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"GiftController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: a492aadb7e5dd07464318bdadc7e52ca
+  onlyWriteTrigger: 0

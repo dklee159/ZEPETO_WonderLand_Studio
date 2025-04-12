@@ -1,0 +1,418 @@
+fileFormatVersion: 2
+guid: 8398f24b34ed29240b20d04ed8090fa1
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nexports.ERROR = exports.LAYER = exports.TOAST_MESSAGE =
+    exports.Anim = exports.Tags = exports.Datas = exports.PlayItemConditions = exports.SizeType
+    = exports.JoystickType = exports.BumperCarType = exports.BalloonCamType = exports.RankData
+    = exports.TimerData = exports.HorrorItemType = exports.HorrorTriggerType = exports.TimeTriggerType
+    = exports.TriggerType = exports.FoodList = exports.UnequipButtonType = exports.NPC_ID
+    = exports.NPCType = exports.NPCs = exports.WonderCollectList = exports.WonderCollectionList
+    = exports.WonderItemList = exports.MissionType = exports.Language = exports.LoadingType
+    = exports.MultiplayType = exports.ZoneType = exports.EffectType = exports.CameraMode
+    = exports.ButtonType = exports.WonderState = exports.EquipList = exports.PlayerMove
+    = exports.SendName = exports.MESSAGE = exports.WorldId = exports.QuestMenu =
+    exports.WonderDrawList = exports.SDName = exports.HttpData = void 0;\r\nconst
+    TMPro_1 = require(\"TMPro\");\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nclass TypeManager {\r\n}\r\nexports.default
+    = TypeManager;\r\n/*** Http Data Connection Service ***/\r\nvar HttpData;\r\n(function
+    (HttpData) {\r\n    HttpData[\"GET\"] = \"GET\";\r\n    HttpData[\"POST\"] =
+    \"POST\";\r\n    HttpData[\"GET_URL\"] = \"https://bkol779o38.execute-api.ap-northeast-2.amazonaws.com/WonderLandAPI/userdata/\";\r\n   
+    HttpData[\"POST_URL\"] = \"https://bkol779o38.execute-api.ap-northeast-2.amazonaws.com/WonderLandAPI/userdata\";\r\n   
+    HttpData[\"Data_Version\"] = \"1.1.0\";\r\n})(HttpData = exports.HttpData ||
+    (exports.HttpData = {}));\r\nvar SDName;\r\n(function (SDName) {\r\n    SDName[SDName[\"Siwoo\"]
+    = 0] = \"Siwoo\";\r\n    SDName[SDName[\"Yubin\"] = 1] = \"Yubin\";\r\n    SDName[SDName[\"Gabin\"]
+    = 2] = \"Gabin\";\r\n    SDName[SDName[\"Jia\"] = 3] = \"Jia\";\r\n    SDName[SDName[\"Hajun\"]
+    = 4] = \"Hajun\";\r\n})(SDName = exports.SDName || (exports.SDName = {}));\r\nvar
+    WonderDrawList;\r\n(function (WonderDrawList) {\r\n    WonderDrawList[\"K\"]
+    = \"K\";\r\n    WonderDrawList[\"Won\"] = \"Won\";\r\n    WonderDrawList[\"Der\"]
+    = \"Der\";\r\n    WonderDrawList[\"Land\"] = \"Land\";\r\n})(WonderDrawList =
+    exports.WonderDrawList || (exports.WonderDrawList = {}));\r\nvar QuestMenu;\r\n(function
+    (QuestMenu) {\r\n    QuestMenu[\"Daily\"] = \"dailyQuest\";\r\n    QuestMenu[\"Weekly\"]
+    = \"weeklyQuest\";\r\n    QuestMenu[\"Monthly\"] = \"monthlyQuest\";\r\n})(QuestMenu
+    = exports.QuestMenu || (exports.QuestMenu = {}));\r\nvar WorldId;\r\n(function
+    (WorldId) {\r\n    WorldId[\"WorldId_Land\"] = \"com.kofice.kwonderland\";\r\n   
+    WorldId[\"WorldId_Stage\"] = \"com.kofice.kwonderlandpop\";\r\n    WorldId[\"WorldId_Studio\"]
+    = \"com.kofice.kwonderdrama\";\r\n    WorldId[\"WorldId_Awards\"] = \"com.kofice.kwonderawards\";\r\n})(WorldId
+    = exports.WorldId || (exports.WorldId = {}));\r\n/* Server Connect Message */\r\nvar
+    MESSAGE;\r\n(function (MESSAGE) {\r\n    /*** Http Data Connection Service ***/\r\n   
+    MESSAGE[\"HTTP\"] = \"HTTP\";\r\n    MESSAGE[\"PlayerDB\"] = \"PlayerDB\";\r\n   
+    MESSAGE[\"SyncPlayer\"] = \"SyncPlayer\";\r\n    MESSAGE[\"ChairSit\"] = \"ChairSit\";\r\n   
+    MESSAGE[\"ChairSitDown\"] = \"ChairSitDown\";\r\n    MESSAGE[\"ChairSitUp\"]
+    = \"ChairSitUp\";\r\n    MESSAGE[\"Equip\"] = \"Equip\";\r\n    MESSAGE[\"EquipChange\"]
+    = \"EquipChange\";\r\n    MESSAGE[\"Unequip\"] = \"Unequip\";\r\n    MESSAGE[\"SyncObjectAnimation\"]
+    = \"SyncObjectAnimation\";\r\n    MESSAGE[\"LOG\"] = \"Log\";\r\n    MESSAGE[\"Visible\"]
+    = \"Visible\";\r\n    MESSAGE[\"Leaderboard_Update\"] = \"Leaderboard_Update\";\r\n   
+    MESSAGE[\"Effect\"] = \"Effect\";\r\n    /** Wonder **/\r\n    /* Wonder Zone
+    */\r\n    MESSAGE[\"AddBadge\"] = \"AddBadge\";\r\n    MESSAGE[\"MissionClear\"]
+    = \"MissionClear\";\r\n    MESSAGE[\"MissionAllClear\"] = \"MissionAllClear\";\r\n   
+    MESSAGE[\"SetWonder\"] = \"SetWonder\";\r\n    MESSAGE[\"State_OFF\"] = \"State_OFF\";\r\n   
+    MESSAGE[\"TeleportZone\"] = \"TeleportZone\";\r\n    MESSAGE[\"Picnic\"] = \"Picnic\";\r\n   
+    MESSAGE[\"PhotoPose\"] = \"PhotoPose\";\r\n    MESSAGE[\"Balloon_Play\"] = \"Balloon_Play\";\r\n   
+    MESSAGE[\"Balloon_Ride\"] = \"Balloon_Ride\";\r\n    MESSAGE[\"Balloon_Ride_OFF\"]
+    = \"Balloon_Ride_OFF\";\r\n    MESSAGE[\"Bumper_Play\"] = \"Bumper_Play\";\r\n   
+    MESSAGE[\"Bumper_Ride\"] = \"Bumper_Ride\";\r\n    MESSAGE[\"Bumper_Ride_OFF\"]
+    = \"Bumper_Ride_OFF\";\r\n    MESSAGE[\"Play_GameZone\"] = \"Play_GameZone\";\r\n   
+    MESSAGE[\"Play_Score\"] = \"Play_Score\";\r\n    MESSAGE[\"CheckServerTimeRequest\"]
+    = \"CheckServerTimeRequest\";\r\n    MESSAGE[\"CheckServerTimeResponse\"] = \"CheckServerTimeResponse\";\r\n   
+    MESSAGE[\"CheckMaster\"] = \"CheckMaster\";\r\n    MESSAGE[\"MasterResponse\"]
+    = \"MasterResponse\";\r\n    MESSAGE[\"RequestInstantiateCache\"] = \"RequestInstantiateCache\";\r\n   
+    MESSAGE[\"Instantiate\"] = \"Instantiate\";\r\n    MESSAGE[\"PauseUser\"] = \"PauseUser\";\r\n   
+    MESSAGE[\"UnPauseUser\"] = \"UnPauseUser\";\r\n    MESSAGE[\"SyncTransformStatus\"]
+    = \"SyncTransformStatus\";\r\n    MESSAGE[\"FoodEquipp\"] = \"Message_Food_Equipp\";\r\n   
+    MESSAGE[\"FoodUnequipp\"] = \"Message_Food_Unequipp\";\r\n    MESSAGE[\"Busking\"]
+    = \"Busking\";\r\n    MESSAGE[\"BuskingHeart\"] = \"BuskingHeart\";\r\n    MESSAGE[\"Ranking\"]
+    = \"Ranking\";\r\n    MESSAGE[\"PlayerSync\"] = \"PlayerSync\";\r\n    // SD\r\n   
+    MESSAGE[\"InstantiatedSD\"] = \"InstantiatedSD\";\r\n    MESSAGE[\"EquipSD\"]
+    = \"EquipSD\";\r\n    MESSAGE[\"UnequipSD\"] = \"UnequipSD\";\r\n    MESSAGE[\"VisibleSD\"]
+    = \"VisibleSD\";\r\n    MESSAGE[\"InvisibleSD\"] = \"InvisibleSD\";\r\n    //
+    Equip\r\n    MESSAGE[\"InstantiatedEquip\"] = \"InstantiatedEquip\";\r\n    MESSAGE[\"EquipItem\"]
+    = \"EquipItem\";\r\n    MESSAGE[\"UnequipItem\"] = \"UnequipItem\";\r\n    MESSAGE[\"VisibleItem\"]
+    = \"VisibleItem\";\r\n    MESSAGE[\"InvisibleItem\"] = \"InvisibleItem\";\r\n})(MESSAGE
+    = exports.MESSAGE || (exports.MESSAGE = {}));\r\n/* Server Connect Messages Room
+    Datas Name */\r\nvar SendName;\r\n(function (SendName) {\r\n    /*** Http Data
+    Connection Service ***/\r\n    SendName[\"METHOD\"] = \"METHOD\";\r\n    SendName[\"URL\"]
+    = \"URL\";\r\n    SendName[\"DATA\"] = \"DATA\";\r\n    // Default\r\n    SendName[\"isSit\"]
+    = \"isSit\";\r\n    SendName[\"chairId\"] = \"chairId\";\r\n    SendName[\"gestureName\"]
+    = \"gestureName\";\r\n    SendName[\"animationParam\"] = \"animationParam\";\r\n   
+    SendName[\"cliplength\"] = \"cliplength\";\r\n    SendName[\"playerAdditionalValue\"]
+    = \"playerAdditionalValue\";\r\n    SendName[\"id\"] = \"id\";\r\n    SendName[\"Name\"]
+    = \"Name\";\r\n    SendName[\"Attach\"] = \"Attach\";\r\n    /** Wonder **/\r\n   
+    /* Wonder Zone */\r\n    SendName[\"Count\"] = \"Count\";\r\n    SendName[\"WonderState\"]
+    = \"WonderState\";\r\n    SendName[\"MESSAGE\"] = \"MESSAGE\";\r\n    SendName[\"Multiplay\"]
+    = \"Multiplay\";\r\n    SendName[\"CurrentZone\"] = \"CurrentZone\";\r\n    SendName[\"ZoneType\"]
+    = \"ZoneType\";\r\n    SendName[\"Type\"] = \"Type\";\r\n    SendName[\"BumperCarType\"]
+    = \"BumperCarType\";\r\n    SendName[\"BumperTargets\"] = \"BumperTargets\";\r\n   
+    SendName[\"isPlay\"] = \"isPlay\";\r\n    SendName[\"isRide\"] = \"isRide\";\r\n   
+    SendName[\"Wait\"] = \"Wait\";\r\n    /* Horror Zone */\r\n    SendName[\"isHasPoint\"]
+    = \"isHasPoint\";\r\n    /* WonderHall Zone */\r\n    SendName[\"isJG\"] = \"isJG\";\r\n   
+    SendName[\"JG_Id\"] = \"JG_Id\";\r\n    SendName[\"FoodType\"] = \"FoodType\";\r\n   
+    SendName[\"SessionId\"] = \"SessionId\";\r\n})(SendName = exports.SendName ||
+    (exports.SendName = {}));\r\n/* Player Speed Datas Name */\r\nvar PlayerMove;\r\n(function
+    (PlayerMove) {\r\n    PlayerMove[\"additionalWalkSpeed\"] = \"additionalWalkSpeed\";\r\n   
+    PlayerMove[\"additionalRunSpeed\"] = \"additionalRunSpeed\";\r\n    PlayerMove[\"additionalJumpPower\"]
+    = \"additionalJumpPower\";\r\n})(PlayerMove = exports.PlayerMove || (exports.PlayerMove
+    = {}));\r\nvar EquipList;\r\n(function (EquipList) {\r\n    EquipList[EquipList[\"AnimMike\"]
+    = 0] = \"AnimMike\";\r\n    EquipList[EquipList[\"AwardsMike_1\"] = 1] = \"AwardsMike_1\";\r\n   
+    EquipList[EquipList[\"AwardsMike_2\"] = 2] = \"AwardsMike_2\";\r\n    EquipList[EquipList[\"AwardsHead\"]
+    = 10] = \"AwardsHead\";\r\n    EquipList[EquipList[\"AwardsNeck_1\"] = 100] =
+    \"AwardsNeck_1\";\r\n    EquipList[EquipList[\"AwardsNeck_2\"] = 101] = \"AwardsNeck_2\";\r\n})(EquipList
+    = exports.EquipList || (exports.EquipList = {}));\r\n/** Wonderland **/\r\n/*
+    Wonder State Data */\r\nvar WonderState;\r\n(function (WonderState) {\r\n   
+    WonderState[WonderState[\"NONE\"] = 0] = \"NONE\";\r\n    WonderState[WonderState[\"Ride_Slide\"]
+    = 20] = \"Ride_Slide\";\r\n    WonderState[WonderState[\"Hold_RightHand_Upper\"]
+    = 51] = \"Hold_RightHand_Upper\";\r\n    WonderState[WonderState[\"Hold_RightHand_Side\"]
+    = 52] = \"Hold_RightHand_Side\";\r\n    WonderState[WonderState[\"Swim\"] = 70]
+    = \"Swim\";\r\n    /** Wonder **/\r\n    /* Wonder Zone */\r\n    // Picnic\r\n   
+    WonderState[WonderState[\"Picnic_Eat\"] = 101] = \"Picnic_Eat\";\r\n    WonderState[WonderState[\"Picnic_LayDown\"]
+    = 102] = \"Picnic_LayDown\";\r\n    WonderState[WonderState[\"Picnic_LayDown_Photo\"]
+    = 103] = \"Picnic_LayDown_Photo\";\r\n    WonderState[WonderState[\"Photo_Pose_1_Sit\"]
+    = 111] = \"Photo_Pose_1_Sit\";\r\n    WonderState[WonderState[\"Photo_Pose_2_Sit\"]
+    = 112] = \"Photo_Pose_2_Sit\";\r\n    WonderState[WonderState[\"Photo_Pose_3_Sit\"]
+    = 113] = \"Photo_Pose_3_Sit\";\r\n    WonderState[WonderState[\"Photo_Pose_1\"]
+    = 114] = \"Photo_Pose_1\";\r\n    WonderState[WonderState[\"Photo_Pose_2\"] =
+    115] = \"Photo_Pose_2\";\r\n    WonderState[WonderState[\"Photo_Pose_3\"] = 116]
+    = \"Photo_Pose_3\";\r\n    // Panel Button\r\n    WonderState[WonderState[\"Panel_Pose_1\"]
+    = 131] = \"Panel_Pose_1\";\r\n    WonderState[WonderState[\"Panel_Pose_2\"] =
+    132] = \"Panel_Pose_2\";\r\n    WonderState[WonderState[\"Panel_Pose_3\"] = 133]
+    = \"Panel_Pose_3\";\r\n    WonderState[WonderState[\"Panel_LOCK_Pose_1\"] = 134]
+    = \"Panel_LOCK_Pose_1\";\r\n    WonderState[WonderState[\"Panel_LOCK_Pose_2\"]
+    = 135] = \"Panel_LOCK_Pose_2\";\r\n    WonderState[WonderState[\"Panel_LOCK_Pose_3\"]
+    = 136] = \"Panel_LOCK_Pose_3\";\r\n    WonderState[WonderState[\"Bumper_Ride\"]
+    = 201] = \"Bumper_Ride\";\r\n    WonderState[WonderState[\"Balloon_Ride\"] =
+    250] = \"Balloon_Ride\";\r\n    WonderState[WonderState[\"PlayGame\"] = 280]
+    = \"PlayGame\";\r\n    /* Horror Zone */\r\n    WonderState[WonderState[\"H_Damaged\"]
+    = 310] = \"H_Damaged\";\r\n    WonderState[WonderState[\"H_Attack\"] = 320] =
+    \"H_Attack\";\r\n    WonderState[WonderState[\"H_Death\"] = 390] = \"H_Death\";\r\n   
+    //WILL wonderhall minigame\r\n    WonderState[WonderState[\"HM_hurray\"] = 410]
+    = \"HM_hurray\";\r\n    WonderState[WonderState[\"HM_JG\"] = 420] = \"HM_JG\";\r\n   
+    WonderState[WonderState[\"HM_NT\"] = 430] = \"HM_NT\";\r\n    WonderState[WonderState[\"News_Sit\"]
+    = 490] = \"News_Sit\";\r\n    WonderState[WonderState[\"News_Sit_Default\"] =
+    491] = \"News_Sit_Default\";\r\n    WonderState[WonderState[\"News_Sit_Watch\"]
+    = 492] = \"News_Sit_Watch\";\r\n    WonderState[WonderState[\"News_Sit_Hi\"]
+    = 493] = \"News_Sit_Hi\";\r\n    WonderState[WonderState[\"News_Report\"] = 499]
+    = \"News_Report\";\r\n    /* Wonder Stage */\r\n    WonderState[WonderState[\"Pose_Dance\"]
+    = 2001] = \"Pose_Dance\";\r\n    WonderState[WonderState[\"Pose_Camera\"] = 2002]
+    = \"Pose_Camera\";\r\n    WonderState[WonderState[\"Pose_Walking\"] = 2003] =
+    \"Pose_Walking\";\r\n    WonderState[WonderState[\"Pose_Piano\"] = 2004] = \"Pose_Piano\";\r\n   
+    WonderState[WonderState[\"Pose_Chair\"] = 2008] = \"Pose_Chair\";\r\n    WonderState[WonderState[\"Pose_Dress_HairBrush\"]
+    = 2011] = \"Pose_Dress_HairBrush\";\r\n    WonderState[WonderState[\"Pose_Dress_HairComb\"]
+    = 2012] = \"Pose_Dress_HairComb\";\r\n    WonderState[WonderState[\"Pose_Dress_Hairspray\"]
+    = 2013] = \"Pose_Dress_Hairspray\";\r\n    WonderState[WonderState[\"Pose_Dress_MakeBlush\"]
+    = 2021] = \"Pose_Dress_MakeBlush\";\r\n    WonderState[WonderState[\"Pose_Dress_MakeEyebow\"]
+    = 2022] = \"Pose_Dress_MakeEyebow\";\r\n    WonderState[WonderState[\"Pose_Dress_MakeLip\"]
+    = 2023] = \"Pose_Dress_MakeLip\";\r\n    WonderState[WonderState[\"Pose_Runway\"]
+    = 2100] = \"Pose_Runway\";\r\n    WonderState[WonderState[\"Pose_Runway_001\"]
+    = 2101] = \"Pose_Runway_001\";\r\n    WonderState[WonderState[\"Pose_Runway_002\"]
+    = 2102] = \"Pose_Runway_002\";\r\n    WonderState[WonderState[\"Pose_Runway_003\"]
+    = 2103] = \"Pose_Runway_003\";\r\n})(WonderState = exports.WonderState || (exports.WonderState
+    = {}));\r\n//////////////////////////////////////////////// About Game Manager\r\n/*
+    Sprite World Button */\r\nvar ButtonType;\r\n(function (ButtonType) {\r\n   
+    ButtonType[ButtonType[\"NULL\"] = -1] = \"NULL\";\r\n    ButtonType[ButtonType[\"Chair\"]
+    = 0] = \"Chair\";\r\n    ButtonType[ButtonType[\"UIActivate\"] = 10] = \"UIActivate\";\r\n   
+    ButtonType[ButtonType[\"EquipHead\"] = 21] = \"EquipHead\";\r\n    ButtonType[ButtonType[\"EquipRightHand\"]
+    = 22] = \"EquipRightHand\";\r\n    ButtonType[ButtonType[\"EquipLeftHand\"] =
+    23] = \"EquipLeftHand\";\r\n    ButtonType[ButtonType[\"EquipBody\"] = 24] =
+    \"EquipBody\";\r\n    /** Wonder **/\r\n    /* Wonder Zone */\r\n    ButtonType[ButtonType[\"FoodTruck_A\"]
+    = 51] = \"FoodTruck_A\";\r\n    ButtonType[ButtonType[\"FoodTruck_B\"] = 52]
+    = \"FoodTruck_B\";\r\n    ButtonType[ButtonType[\"FoodTruck_C\"] = 53] = \"FoodTruck_C\";\r\n   
+    ButtonType[ButtonType[\"FoodTruck_D\"] = 54] = \"FoodTruck_D\";\r\n    ButtonType[ButtonType[\"Picnic_Eat_1\"]
+    = 61] = \"Picnic_Eat_1\";\r\n    ButtonType[ButtonType[\"Picnic_Eat_2\"] = 62]
+    = \"Picnic_Eat_2\";\r\n    ButtonType[ButtonType[\"Picnic_Down\"] = 63] = \"Picnic_Down\";\r\n   
+    ButtonType[ButtonType[\"Picnic_Down_Photo\"] = 64] = \"Picnic_Down_Photo\";\r\n   
+    ButtonType[ButtonType[\"Photo_Pose_1_Sit\"] = 71] = \"Photo_Pose_1_Sit\";\r\n   
+    ButtonType[ButtonType[\"Photo_Pose_2_Sit\"] = 72] = \"Photo_Pose_2_Sit\";\r\n   
+    ButtonType[ButtonType[\"Photo_Pose_3_Sit\"] = 73] = \"Photo_Pose_3_Sit\";\r\n   
+    ButtonType[ButtonType[\"Photo_Pose_1\"] = 74] = \"Photo_Pose_1\";\r\n    ButtonType[ButtonType[\"Photo_Pose_2\"]
+    = 75] = \"Photo_Pose_2\";\r\n    ButtonType[ButtonType[\"Photo_Pose_3\"] = 76]
+    = \"Photo_Pose_3\";\r\n    //\r\n    ButtonType[ButtonType[\"Ride_Bumper\"] =
+    201] = \"Ride_Bumper\";\r\n    ButtonType[ButtonType[\"PlayGameMachine\"] = 301]
+    = \"PlayGameMachine\";\r\n    ButtonType[ButtonType[\"Ticket_Balloon\"] = 401]
+    = \"Ticket_Balloon\";\r\n    ButtonType[ButtonType[\"Ticket_Bumper\"] = 402]
+    = \"Ticket_Bumper\";\r\n    ButtonType[ButtonType[\"Ticket_Horror\"] = 403] =
+    \"Ticket_Horror\";\r\n    ButtonType[ButtonType[\"Ticket_Play\"] = 404] = \"Ticket_Play\";\r\n   
+    /* WonderHall Zone */\r\n    ButtonType[ButtonType[\"News_Sit_Default\"] = 491]
+    = \"News_Sit_Default\";\r\n    ButtonType[ButtonType[\"News_Report\"] = 499]
+    = \"News_Report\";\r\n    ButtonType[ButtonType[\"Hall_JG\"] = 711] = \"Hall_JG\";\r\n   
+    ButtonType[ButtonType[\"Hall_NT\"] = 721] = \"Hall_NT\";\r\n    /* Wonder Stage
+    */\r\n    ButtonType[ButtonType[\"Pose_Dance\"] = 2001] = \"Pose_Dance\";\r\n   
+    ButtonType[ButtonType[\"Pose_Camera\"] = 2002] = \"Pose_Camera\";\r\n    ButtonType[ButtonType[\"Pose_Walking\"]
+    = 2003] = \"Pose_Walking\";\r\n    ButtonType[ButtonType[\"Pose_Piano\"] = 2004]
+    = \"Pose_Piano\";\r\n    ButtonType[ButtonType[\"Pose_Chair\"] = 2008] = \"Pose_Chair\";\r\n   
+    ButtonType[ButtonType[\"Pose_Dress_HairRandom\"] = 2010] = \"Pose_Dress_HairRandom\";\r\n   
+    ButtonType[ButtonType[\"Pose_Dress_HairBrush\"] = 2011] = \"Pose_Dress_HairBrush\";\r\n   
+    ButtonType[ButtonType[\"Pose_Dress_HairComb\"] = 2012] = \"Pose_Dress_HairComb\";\r\n   
+    ButtonType[ButtonType[\"Pose_Dress_Hairspray\"] = 2013] = \"Pose_Dress_Hairspray\";\r\n   
+    ButtonType[ButtonType[\"Pose_Dress_MakeRandom\"] = 2020] = \"Pose_Dress_MakeRandom\";\r\n   
+    ButtonType[ButtonType[\"Pose_Dress_MakeBlush\"] = 2021] = \"Pose_Dress_MakeBlush\";\r\n   
+    ButtonType[ButtonType[\"Pose_Dress_MakeEyebow\"] = 2022] = \"Pose_Dress_MakeEyebow\";\r\n   
+    ButtonType[ButtonType[\"Pose_Dress_MakeLip\"] = 2023] = \"Pose_Dress_MakeLip\";\r\n})(ButtonType
+    = exports.ButtonType || (exports.ButtonType = {}));\r\n/* Camera Mode Data */\r\nvar
+    CameraMode;\r\n(function (CameraMode) {\r\n    CameraMode[CameraMode[\"FPS\"]
+    = 0] = \"FPS\";\r\n    CameraMode[CameraMode[\"TPS\"] = 1] = \"TPS\";\r\n})(CameraMode
+    = exports.CameraMode || (exports.CameraMode = {}));\r\n/* Camera Mode Data */\r\nvar
+    EffectType;\r\n(function (EffectType) {\r\n    EffectType[EffectType[\"NONE\"]
+    = -1] = \"NONE\";\r\n    EffectType[EffectType[\"Firework\"] = 1] = \"Firework\";\r\n   
+    EffectType[EffectType[\"Runway\"] = 2000] = \"Runway\";\r\n})(EffectType = exports.EffectType
+    || (exports.EffectType = {}));\r\n/* Zones */\r\nvar ZoneType;\r\n(function (ZoneType)
+    {\r\n    ZoneType[ZoneType[\"NULL\"] = -1] = \"NULL\";\r\n    ZoneType[ZoneType[\"Main\"]
+    = 10] = \"Main\";\r\n    ZoneType[ZoneType[\"Main_Hall\"] = 11] = \"Main_Hall\";\r\n   
+    ZoneType[ZoneType[\"BumperZone\"] = 20] = \"BumperZone\";\r\n    ZoneType[ZoneType[\"ParkZone\"]
+    = 30] = \"ParkZone\";\r\n    ZoneType[ZoneType[\"BalloonZone\"] = 40] = \"BalloonZone\";\r\n   
+    ZoneType[ZoneType[\"PlayZone\"] = 50] = \"PlayZone\";\r\n    ZoneType[ZoneType[\"HorrorZone\"]
+    = 70] = \"HorrorZone\";\r\n    ZoneType[ZoneType[\"HorrorZone_Game\"] = 80] =
+    \"HorrorZone_Game\";\r\n    ZoneType[ZoneType[\"WonderHallZone\"] = 110] = \"WonderHallZone\";\r\n   
+    ZoneType[ZoneType[\"WonderHallZone_VR\"] = 120] = \"WonderHallZone_VR\";\r\n   
+    ZoneType[ZoneType[\"WonderHallZone_Game_JG\"] = 150] = \"WonderHallZone_Game_JG\";\r\n   
+    ZoneType[ZoneType[\"WonderHallZone_Game_NT\"] = 160] = \"WonderHallZone_Game_NT\";\r\n})(ZoneType
+    = exports.ZoneType || (exports.ZoneType = {}));\r\n/* Zones */\r\nvar MultiplayType;\r\n(function
+    (MultiplayType) {\r\n    MultiplayType[MultiplayType[\"Multiplay\"] = 0] = \"Multiplay\";\r\n   
+    MultiplayType[MultiplayType[\"Local\"] = 1] = \"Local\";\r\n})(MultiplayType
+    = exports.MultiplayType || (exports.MultiplayType = {}));\r\n////////////////////////////////////////////////
+    About UI Manager\r\n/* Loading UI Data */\r\nvar LoadingType;\r\n(function (LoadingType)
+    {\r\n    LoadingType[\"Start\"] = \"UI_Loarding_Start\";\r\n    LoadingType[\"Teleport\"]
+    = \"UI_Loarding_Teleport\";\r\n    LoadingType[\"Fade_Horror\"] = \"UI_Fade_Horror\";\r\n   
+    LoadingType[\"NONE\"] = \"\";\r\n})(LoadingType = exports.LoadingType || (exports.LoadingType
+    = {}));\r\nvar Language;\r\n(function (Language) {\r\n    Language[Language[\"EN\"]
+    = 0] = \"EN\";\r\n    Language[Language[\"KR\"] = 1] = \"KR\";\r\n})(Language
+    = exports.Language || (exports.Language = {}));\r\n////////////////////////////////////////////////
+    Wonderland\r\n/* Inventory */\r\nvar MissionType;\r\n(function (MissionType)
+    {\r\n    MissionType[\"NONE\"] = \"\";\r\n    MissionType[\"JG\"] = \"JG\";\r\n   
+    MissionType[\"NT\"] = \"NT\";\r\n    MissionType[\"Stage\"] = \"Stage\";\r\n   
+    MissionType[\"Runway\"] = \"Runway\";\r\n})(MissionType = exports.MissionType
+    || (exports.MissionType = {}));\r\nvar WonderItemList;\r\n(function (WonderItemList)
+    {\r\n    WonderItemList[\"TICKET_HORROR\"] = \"TICKET_HORROR\";\r\n    WonderItemList[\"TICKET_BALLOON\"]
+    = \"TICKET_BALLOON\";\r\n    WonderItemList[\"TICKET_BUMPER\"] = \"TICKET_BUMPER\";\r\n   
+    WonderItemList[\"TICKET_PLAY\"] = \"TICKET_PLAY\";\r\n})(WonderItemList = exports.WonderItemList
+    || (exports.WonderItemList = {}));\r\nvar WonderCollectionList;\r\n(function
+    (WonderCollectionList) {\r\n    // Badge 3\r\n    WonderCollectionList[\"Wonder_Badge_Hall\"]
+    = \"Wonder_Badge_Hall\";\r\n    WonderCollectionList[\"Wonder_Badge_Stage\"]
+    = \"Wonder_Badge_Stage\";\r\n    WonderCollectionList[\"Wonder_Badge_Studio\"]
+    = \"Wonder_Badge_Studio\";\r\n    // Award Hidden\r\n    WonderCollectionList[\"Hiddle_Collection\"]
+    = \"Hiddle_Collection\";\r\n})(WonderCollectionList = exports.WonderCollectionList
+    || (exports.WonderCollectionList = {}));\r\nvar WonderCollectList;\r\n(function
+    (WonderCollectList) {\r\n    WonderCollectList[\"STAMP_A\"] = \"STAMP_A\";\r\n   
+    WonderCollectList[\"STAMP_B\"] = \"STAMP_B\";\r\n    WonderCollectList[\"STAMP_C\"]
+    = \"STAMP_C\";\r\n    WonderCollectList[\"STAMP_D\"] = \"STAMP_D\";\r\n})(WonderCollectList
+    = exports.WonderCollectList || (exports.WonderCollectList = {}));\r\n/* NPC List
+    */\r\nvar NPCs;\r\n(function (NPCs) {\r\n    NPCs[NPCs[\"GABIN\"] = 0] = \"GABIN\";\r\n   
+    NPCs[NPCs[\"YUBIN\"] = 1] = \"YUBIN\";\r\n    NPCs[NPCs[\"HAJUN\"] = 2] = \"HAJUN\";\r\n   
+    NPCs[NPCs[\"JIA\"] = 3] = \"JIA\";\r\n    NPCs[NPCs[\"SIWOO\"] = 4] = \"SIWOO\";\r\n   
+    NPCs[NPCs[\"Special\"] = 5] = \"Special\";\r\n})(NPCs = exports.NPCs || (exports.NPCs
+    = {}));\r\nvar NPCType;\r\n(function (NPCType) {\r\n    NPCType[NPCType[\"Default\"]
+    = 0] = \"Default\";\r\n    NPCType[NPCType[\"HelloNPC\"] = 1] = \"HelloNPC\";\r\n   
+    NPCType[NPCType[\"NewsNPC\"] = 2] = \"NewsNPC\";\r\n    NPCType[NPCType[\"DanceNPC\"]
+    = 3] = \"DanceNPC\";\r\n    NPCType[NPCType[\"Hall_InfoNPC\"] = 4] = \"Hall_InfoNPC\";\r\n   
+    NPCType[NPCType[\"PortalNPC\"] = 5] = \"PortalNPC\";\r\n    NPCType[NPCType[\"MiniGameNPC\"]
+    = 6] = \"MiniGameNPC\";\r\n})(NPCType = exports.NPCType || (exports.NPCType =
+    {}));\r\nvar NPC_ID;\r\n(function (NPC_ID) {\r\n    NPC_ID[\"GABIN\"] = \"wonderland.gabin\";\r\n   
+    NPC_ID[\"YUBIN\"] = \"wonderland.yubin\";\r\n    NPC_ID[\"HAJUN\"] = \"wonderland.hajun\";\r\n   
+    NPC_ID[\"JIA\"] = \"wonderland.jia\";\r\n    NPC_ID[\"SIWOO\"] = \"kor_wonderland\";\r\n   
+    NPC_ID[\"Special\"] = \"kwonderstarjojo\";\r\n    // NPC Data\r\n    NPC_ID[\"_NOT_USERD_GABIN\"]
+    = \"wonderland_gabin\";\r\n    NPC_ID[\"_NOT_USERD_HAJUN\"] = \"wonderland_hajun\";\r\n   
+    NPC_ID[\"_NOT_USERD_JIA\"] = \"wonderland_jia\";\r\n    NPC_ID[\"_NOT_USERD_SIWOO_v1\"]
+    = \"wonderland.Siwoo\";\r\n    NPC_ID[\"_NOT_USERD_SIWOO_v2\"] = \"wonderland_Siwoo\";\r\n})(NPC_ID
+    = exports.NPC_ID || (exports.NPC_ID = {}));\r\nvar UnequipButtonType;\r\n(function
+    (UnequipButtonType) {\r\n    UnequipButtonType[UnequipButtonType[\"NONE\"] =
+    -1] = \"NONE\";\r\n    UnequipButtonType[UnequipButtonType[\"Hold_RightHand_Upper\"]
+    = 51] = \"Hold_RightHand_Upper\";\r\n    UnequipButtonType[UnequipButtonType[\"Hold_RightHand_Side\"]
+    = 52] = \"Hold_RightHand_Side\";\r\n})(UnequipButtonType = exports.UnequipButtonType
+    || (exports.UnequipButtonType = {}));\r\nvar FoodList;\r\n(function (FoodList)
+    {\r\n    // Food A\r\n    FoodList[\"Food_A_Tokkpokki\"] = \"Food_A-1 Tokkpokki\";\r\n   
+    FoodList[\"Food_A_Odeng\"] = \"Food_A-2 Odeng\";\r\n    // Food B\r\n    FoodList[\"Food_B_Jjigae\"]
+    = \"Food_B-1 Jjigae\";\r\n    FoodList[\"Food_B_Bibimbab\"] = \"Food_B-2 Bibimbab\";\r\n   
+    // Food C\r\n    FoodList[\"Food_C_Shike\"] = \"Food_C-1 Shike\";\r\n    FoodList[\"Food_C_Sujunggwa\"]
+    = \"Food_C-2 Sujunggwa\";\r\n    // Food D\r\n    FoodList[\"Food_D_Yakkwa\"]
+    = \"Food_D-1 Yakkwa\";\r\n    FoodList[\"Food_D_Hangwa\"] = \"Food_D-2 Hangwa\";\r\n})(FoodList
+    = exports.FoodList || (exports.FoodList = {}));\r\nvar TriggerType;\r\n(function
+    (TriggerType) {\r\n    TriggerType[TriggerType[\"NONE\"] = -1] = \"NONE\";\r\n   
+    TriggerType[TriggerType[\"UnEquip\"] = 30] = \"UnEquip\";\r\n    TriggerType[TriggerType[\"BalloonPhotoCam\"]
+    = 50] = \"BalloonPhotoCam\";\r\n    TriggerType[TriggerType[\"Water\"] = 70]
+    = \"Water\";\r\n    TriggerType[TriggerType[\"TicketBooth_Balloon\"] = 401] =
+    \"TicketBooth_Balloon\";\r\n    TriggerType[TriggerType[\"TicketBooth_Bumper\"]
+    = 402] = \"TicketBooth_Bumper\";\r\n    TriggerType[TriggerType[\"TicketBooth_Horror\"]
+    = 403] = \"TicketBooth_Horror\";\r\n    TriggerType[TriggerType[\"TicketBooth_Play\"]
+    = 404] = \"TicketBooth_Play\";\r\n    TriggerType[TriggerType[\"UIActivate_Once\"]
+    = 2010] = \"UIActivate_Once\";\r\n    TriggerType[TriggerType[\"UIActivate\"]
+    = 2020] = \"UIActivate\";\r\n    TriggerType[TriggerType[\"WorldTeleport_Land\"]
+    = 10000] = \"WorldTeleport_Land\";\r\n    TriggerType[TriggerType[\"WorldTeleport_Stage\"]
+    = 10100] = \"WorldTeleport_Stage\";\r\n    TriggerType[TriggerType[\"WorldTeleport_Studio\"]
+    = 10200] = \"WorldTeleport_Studio\";\r\n    TriggerType[TriggerType[\"WorldTeleport_Awards\"]
+    = 10300] = \"WorldTeleport_Awards\";\r\n    TriggerType[TriggerType[\"Collider\"]
+    = 10400] = \"Collider\";\r\n    TriggerType[TriggerType[\"Update\"] = 15000]
+    = \"Update\";\r\n    TriggerType[TriggerType[\"Button\"] = 10600] = \"Button\";\r\n})(TriggerType
+    = exports.TriggerType || (exports.TriggerType = {}));\r\nvar TimeTriggerType;\r\n(function
+    (TimeTriggerType) {\r\n    TimeTriggerType[TimeTriggerType[\"Start\"] = 0] =
+    \"Start\";\r\n    TimeTriggerType[TimeTriggerType[\"Finish\"] = 1] = \"Finish\";\r\n})(TimeTriggerType
+    = exports.TimeTriggerType || (exports.TimeTriggerType = {}));\r\nvar HorrorTriggerType;\r\n(function
+    (HorrorTriggerType) {\r\n    HorrorTriggerType[HorrorTriggerType[\"NONE\"] =
+    -1] = \"NONE\";\r\n    HorrorTriggerType[HorrorTriggerType[\"Start\"] = 0] =
+    \"Start\";\r\n    HorrorTriggerType[HorrorTriggerType[\"Ghost\"] = 10] = \"Ghost\";\r\n   
+    HorrorTriggerType[HorrorTriggerType[\"Item\"] = 20] = \"Item\";\r\n    HorrorTriggerType[HorrorTriggerType[\"Teleport\"]
+    = 40] = \"Teleport\";\r\n    HorrorTriggerType[HorrorTriggerType[\"Finish\"]
+    = 50] = \"Finish\";\r\n})(HorrorTriggerType = exports.HorrorTriggerType || (exports.HorrorTriggerType
+    = {}));\r\nvar HorrorItemType;\r\n(function (HorrorItemType) {\r\n    HorrorItemType[\"Lamp\"]
+    = \"Lamp\";\r\n    HorrorItemType[\"Fire\"] = \"Fire\";\r\n})(HorrorItemType
+    = exports.HorrorItemType || (exports.HorrorItemType = {}));\r\nvar TimerData;\r\n(function
+    (TimerData) {\r\n    TimerData[TimerData[\"Start\"] = 0] = \"Start\";\r\n   
+    TimerData[TimerData[\"Pause\"] = 1] = \"Pause\";\r\n    TimerData[TimerData[\"Stop\"]
+    = 2] = \"Stop\";\r\n    TimerData[TimerData[\"Reset\"] = 3] = \"Reset\";\r\n})(TimerData
+    = exports.TimerData || (exports.TimerData = {}));\r\n/* LeaderBoard Datas */\r\nvar
+    RankData;\r\n(function (RankData) {\r\n    /* LeaderBoard Id */\r\n    // HorrorZoneTimeId
+    = \"7e77bf91-28d4-4ff5-9e74-87d7cc08fc0c\",\r\n    // BumperZoneScoreId = \"bf9adc91-1983-423b-9ae3-9135763d256b\",\r\n   
+    // PlayZoneScoreId = \"89f6994a-0fec-4cda-9a56-f161f7408783\",\r\n    RankData[\"HorrorZoneTimeId_WEEK\"]
+    = \"7e77bf91-28d4-4ff5-9e74-87d7cc08fc0c\";\r\n    RankData[\"BumperZoneScoreId_WEEK\"]
+    = \"bf9adc91-1983-423b-9ae3-9135763d256b\";\r\n    RankData[\"PlayZoneScoreId_WEEK\"]
+    = \"89f6994a-0fec-4cda-9a56-f161f7408783\";\r\n    RankData[\"NT_Id_WEEK\"] =
+    \"15ca03d4-bce6-4042-b48b-297dfe681ff4\";\r\n    RankData[\"JG_Id_WEEK\"] = \"0889d68b-eeb0-4dc7-89c2-b18a31f472f2\";\r\n   
+    RankData[\"HorrorZoneTimeId\"] = \"37d71d9d-1f28-4e78-9818-4f6ae178d038\";\r\n   
+    RankData[\"BumperZoneScoreId\"] = \"c4eba8fa-fb5b-4505-80c6-d3b5946ceb8b\";\r\n   
+    RankData[\"PlayZoneScoreId\"] = \"121c8253-aa39-4e92-ba77-ad751c3d924f\";\r\n   
+    RankData[\"NT_Id\"] = \"774e84c9-96cd-43dc-9fd1-66b41a0bb8fc\";\r\n    RankData[\"JG_Id\"]
+    = \"0bcecb95-18f2-467c-bbce-97e3d82777e3\";\r\n    // Select Update\r\n    RankData[RankData[\"BumperZone\"]
+    = 200] = \"BumperZone\";\r\n    RankData[RankData[\"HorrorZone\"] = 300] = \"HorrorZone\";\r\n   
+    RankData[RankData[\"PlayZone\"] = 400] = \"PlayZone\";\r\n    RankData[RankData[\"NT_Zone\"]
+    = 1100] = \"NT_Zone\";\r\n    RankData[RankData[\"JG_Zone\"] = 1200] = \"JG_Zone\";\r\n   
+    RankData[RankData[\"StageZone\"] = 2100] = \"StageZone\";\r\n    RankData[RankData[\"RunwayZone\"]
+    = 2200] = \"RunwayZone\";\r\n    /* Recycle Datas */\r\n    RankData[RankData[\"Rank_Start\"]
+    = 1] = \"Rank_Start\";\r\n    RankData[RankData[\"Rank_End\"] = 10] = \"Rank_End\";\r\n   
+    RankData[\"Empty\"] = \"\";\r\n    RankData[\"Zero\"] = \"0\";\r\n    RankData[\"Empty_Line\"]
+    = \"------\";\r\n    RankData[\"Zero_Time\"] = \"00:00:00\";\r\n})(RankData =
+    exports.RankData || (exports.RankData = {}));\r\nvar BalloonCamType;\r\n(function
+    (BalloonCamType) {\r\n    BalloonCamType[BalloonCamType[\"FPS\"] = 0] = \"FPS\";\r\n   
+    BalloonCamType[BalloonCamType[\"AirCam\"] = 1] = \"AirCam\";\r\n    BalloonCamType[BalloonCamType[\"Default\"]
+    = 2] = \"Default\";\r\n})(BalloonCamType = exports.BalloonCamType || (exports.BalloonCamType
+    = {}));\r\nvar BumperCarType;\r\n(function (BumperCarType) {\r\n    BumperCarType[BumperCarType[\"NONE\"]
+    = -1] = \"NONE\";\r\n    BumperCarType[BumperCarType[\"Yellow\"] = 0] = \"Yellow\";\r\n   
+    BumperCarType[BumperCarType[\"Green\"] = 1] = \"Green\";\r\n    BumperCarType[BumperCarType[\"Red\"]
+    = 2] = \"Red\";\r\n    BumperCarType[BumperCarType[\"Blue\"] = 3] = \"Blue\";\r\n})(BumperCarType
+    = exports.BumperCarType || (exports.BumperCarType = {}));\r\nvar JoystickType;\r\n(function
+    (JoystickType) {\r\n    JoystickType[JoystickType[\"NONE\"] = -1] = \"NONE\";\r\n   
+    JoystickType[JoystickType[\"ToRight\"] = 0] = \"ToRight\";\r\n    JoystickType[JoystickType[\"ToLeft\"]
+    = 1] = \"ToLeft\";\r\n    JoystickType[JoystickType[\"ToBack\"] = 2] = \"ToBack\";\r\n   
+    JoystickType[JoystickType[\"ToFront\"] = 3] = \"ToFront\";\r\n})(JoystickType
+    = exports.JoystickType || (exports.JoystickType = {}));\r\nvar SizeType;\r\n(function
+    (SizeType) {\r\n    SizeType[SizeType[\"Large\"] = 1] = \"Large\";\r\n    SizeType[SizeType[\"Middle\"]
+    = 5] = \"Middle\";\r\n    SizeType[SizeType[\"Small\"] = 10] = \"Small\";\r\n})(SizeType
+    = exports.SizeType || (exports.SizeType = {}));\r\nvar PlayItemConditions;\r\n(function
+    (PlayItemConditions) {\r\n    PlayItemConditions[PlayItemConditions[\"Item_Time\"]
+    = 1000] = \"Item_Time\";\r\n    PlayItemConditions[PlayItemConditions[\"Item_Star\"]
+    = 3000] = \"Item_Star\";\r\n})(PlayItemConditions = exports.PlayItemConditions
+    || (exports.PlayItemConditions = {}));\r\n////////////////////////////////////////////////
+    Others\r\n/* Other String Datas Collection */\r\nvar Datas;\r\n(function (Datas)
+    {\r\n    // Names\r\n    Datas[\"Cake\"] = \"Cake\";\r\n    Datas[\"Balloon\"]
+    = \"Balloon\";\r\n    Datas[\"Balloon_A\"] = \"Balloon_A\";\r\n    Datas[\"Balloon_B\"]
+    = \"Balloon_B\";\r\n    Datas[\"Balloon_C\"] = \"Balloon_C\";\r\n    // World
+    Id\r\n    Datas[\"WorldId_Land\"] = \"com.kofice.kwonderland\";\r\n    Datas[\"WorldId_Stage\"]
+    = \"com.kofice.kwonderlandpop\";\r\n    Datas[\"WorldId_Studio\"] = \"com.kofice.kwonderdrama\";\r\n   
+    Datas[\"WorldId_Awards\"] = \"com.kofice.kwonderawards\";\r\n    // Transform
+    Point\r\n    Datas[\"SpawnPoint\"] = \"SpawnPoint\";\r\n    Datas[\"TeleportPoint\"]
+    = \"TeleportPoint\";\r\n    // Layer\r\n    Datas[\"Button\"] = \"Button\";\r\n   
+    Datas[\"Render_Frame\"] = \"Render Frame\";\r\n    Datas[\"Render_Item\"] = \"Render
+    Item\";\r\n    // Game Message\r\n    Datas[\"READY\"] = \"READY\";\r\n    Datas[\"START\"]
+    = \"START!\";\r\n    Datas[\"FINISH\"] = \"FINISH\";\r\n    Datas[\"TIME_UP\"]
+    = \"TIME''S UP!\";\r\n    Datas[\"CLEAR\"] = \"GAME CLEAR!\";\r\n    Datas[\"GAME_OVER\"]
+    = \"GAME OVER\";\r\n    Datas[\"Successed\"] = \"Successed\";\r\n    Datas[\"Failed\"]
+    = \"Failed\";\r\n    // Picture\r\n    Datas[\"FeedMessage\"] = \"#K-WONDERLAND
+    #WHATEVERYOUDREAM\";\r\n    // others\r\n    Datas[\"Zero\"] = \"0\";\r\n   
+    Datas[\"One\"] = \"1\";\r\n    Datas[\"NULL\"] = \"null\";\r\n    Datas[\"Empty\"]
+    = \"\";\r\n})(Datas = exports.Datas || (exports.Datas = {}));\r\n/* Tags */\r\nvar
+    Tags;\r\n(function (Tags) {\r\n    Tags[\"SpawnPoint\"] = \"SpawnPoint\";\r\n   
+    Tags[\"LocalPlayer\"] = \"LocalPlayer\";\r\n    Tags[\"Player\"] = \"Player\";\r\n   
+    Tags[\"Trigger\"] = \"Trigger\";\r\n    Tags[\"Weapon\"] = \"Weapon\";\r\n   
+    Tags[\"Loading\"] = \"Loading\";\r\n    Tags[\"BumperCar\"] = \"BumperCar\";\r\n   
+    Tags[\"ShootTarget\"] = \"ShootTarget\";\r\n    Tags[\"ShootSource\"] = \"ShootSource\";\r\n})(Tags
+    = exports.Tags || (exports.Tags = {}));\r\n/* Animation Clip Name Datas */\r\nvar
+    Anim;\r\n(function (Anim) {\r\n    Anim[\"State\"] = \"State\";\r\n    Anim[\"WonderState\"]
+    = \"WonderState\";\r\n    Anim[\"MoveState\"] = \"MoveState\";\r\n    Anim[\"JumpState\"]
+    = \"JumpState\";\r\n    Anim[\"LandingState\"] = \"LandingState\";\r\n    Anim[\"MotionSpeed\"]
+    = \"MotionSpeed\";\r\n    Anim[\"FallSpeed\"] = \"FallSpeed\";\r\n    Anim[\"Acceleration\"]
+    = \"Acceleration\";\r\n    Anim[\"MoveProgress\"] = \"MoveProgress\";\r\n   
+    Anim[\"isSit\"] = \"isSit\";\r\n    Anim[\"isHold\"] = \"isHold\";\r\n    //
+    Wonder\r\n    Anim[\"Play\"] = \"Play\";\r\n    Anim[\"Active\"] = \"Active\";\r\n   
+    Anim[\"AnimationSpeed\"] = \"AnimationSpeed\";\r\n    Anim[\"PhotoPose\"] = \"PhotoPose\";\r\n   
+    // NPC Animation\r\n    Anim[\"isNPC\"] = \"isNPC\";\r\n    Anim[\"isReport\"]
+    = \"isReport\";\r\n})(Anim = exports.Anim || (exports.Anim = {}));\r\n/* Default
+    ScreenShot Render Result Toast Data */\r\nvar TOAST_MESSAGE;\r\n(function (TOAST_MESSAGE)
+    {\r\n    TOAST_MESSAGE[\"feedUploading\"] = \"Uploading...\";\r\n    TOAST_MESSAGE[\"feedCompleted\"]
+    = \"Done\";\r\n    TOAST_MESSAGE[\"feedFailed\"] = \"Failed\";\r\n    TOAST_MESSAGE[\"screenShotSaveCompleted\"]
+    = \"Saved!\";\r\n})(TOAST_MESSAGE = exports.TOAST_MESSAGE || (exports.TOAST_MESSAGE
+    = {}));\r\n/* Default ScreenShot Render Result Layer Data */\r\nvar LAYER;\r\n(function
+    (LAYER) {\r\n    LAYER[LAYER[\"everything\"] = -1] = \"everything\";\r\n    LAYER[LAYER[\"nothing\"]
+    = 0] = \"nothing\";\r\n    LAYER[LAYER[\"UI\"] = 5] = \"UI\";\r\n    LAYER[LAYER[\"Button\"]
+    = 6] = \"Button\";\r\n    LAYER[LAYER[\"Render_Frame\"] = 7] = \"Render_Frame\";\r\n   
+    LAYER[LAYER[\"Render_Item\"] = 8] = \"Render_Item\";\r\n    LAYER[LAYER[\"Wall\"]
+    = 10] = \"Wall\";\r\n    LAYER[LAYER[\"NPC\"] = 20] = \"NPC\";\r\n    LAYER[LAYER[\"Player\"]
+    = 21] = \"Player\";\r\n})(LAYER = exports.LAYER || (exports.LAYER = {}));\r\n/*
+    Console Error */\r\nvar ERROR;\r\n(function (ERROR) {\r\n    ERROR[\"NOT_ENOUGH\"]
+    = \"NOT ENOUGH....\";\r\n    ERROR[\"NOT_MATCHED\"] = \"NOT MATCHED....\";\r\n   
+    ERROR[\"ALREADY_OPENED\"] = \"ALREADY OPENED....\";\r\n    ERROR[\"NOT_FOUND_ITEM\"]
+    = \"NOT FOUND ITEM........\";\r\n    ERROR[\"ITS_FULL_PLAYERS\"] = \"IT''S FULL
+    PLAYERS....\";\r\n    ERROR[\"NOT_SELECTED_TYPE\"] = \"NOT SELECTED TYPE....\";\r\n   
+    ERROR[\"NOT_FOUND_PLAYER\"] = \"NOT FOUND PLAYER........\";\r\n    ERROR[\"ROOM_DISCONNECTION\"]
+    = \"ROOM DISCONNECTION......\";\r\n    ERROR[\"NOT_FOUND_LOCAL_PLAYER\"] = \"NOT
+    FOUND LOCAL PLAYER....\";\r\n    ERROR[\"MINI_GAME_MANAGER_OVERLAPED\"] = \"MINI
+    GAME MANAGER OVERLAPED......\";\r\n    ERROR[\"NOT_FOUND_ZEPETO_ID_FROM_USER_ID\"]
+    = \"NOT FOUND ZEPETO ID FROM USER ID........\";\r\n    ERROR[\"TRANSLATE_NOT_FOUND\"]
+    = \"Please, Attached component of text type!\";\r\n})(ERROR = exports.ERROR ||
+    (exports.ERROR = {}));\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVHlwZU1hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJUeXBlTWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQSxpQ0FBd0M7QUFDeEMsNkNBQXVJO0FBQ3ZJLG1EQUFxRDtBQUVyRCxNQUFxQixXQUFXO0NBQy9CO0FBREQsOEJBQ0M7QUFFRCxzQ0FBc0M7QUFDdEMsSUFBWSxRQU1YO0FBTkQsV0FBWSxRQUFRO0lBQ2hCLHVCQUFXLENBQUE7SUFDWCx5QkFBYSxDQUFBO0lBQ2IsMkdBQStGLENBQUE7SUFDL0YsMkdBQStGLENBQUE7SUFDL0Ysa0NBQXNCLENBQUE7QUFDMUIsQ0FBQyxFQU5XLFFBQVEsR0FBUixnQkFBUSxLQUFSLGdCQUFRLFFBTW5CO0FBOEJELElBQVksTUFNWDtBQU5ELFdBQVksTUFBTTtJQUNkLHFDQUFTLENBQUE7SUFDVCxxQ0FBUyxDQUFBO0lBQ1QscUNBQVMsQ0FBQTtJQUNULGlDQUFPLENBQUE7SUFDUCxxQ0FBUyxDQUFBO0FBQ2IsQ0FBQyxFQU5XLE1BQU0sR0FBTixjQUFNLEtBQU4sY0FBTSxRQU1qQjtBQVFELElBQVksY0FLWDtBQUxELFdBQVksY0FBYztJQUN0Qix5QkFBTyxDQUFBO0lBQ1AsNkJBQVcsQ0FBQTtJQUNYLDZCQUFXLENBQUE7SUFDWCwrQkFBYSxDQUFBO0FBQ2pCLENBQUMsRUFMVyxjQUFjLEdBQWQsc0JBQWMsS0FBZCxzQkFBYyxRQUt6QjtBQXFERCxJQUFZLFNBSVg7QUFKRCxXQUFZLFNBQVM7SUFDakIsaUNBQW9CLENBQUE7SUFDcEIsbUNBQXNCLENBQUE7SUFDdEIscUNBQXdCLENBQUE7QUFDNUIsQ0FBQyxFQUpXLFNBQVMsR0FBVCxpQkFBUyxLQUFULGlCQUFTLFFBSXBCO0FBRUQsSUFBWSxPQUtYO0FBTEQsV0FBWSxPQUFPO0lBQ2Ysa0RBQXVDLENBQUE7SUFDdkMsc0RBQTJDLENBQUE7SUFDM0MscURBQTBDLENBQUE7SUFDMUMsc0RBQTJDLENBQUE7QUFDL0Ms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","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/TypeManager.ts","manifest":{"properties":[],"name":"TypeManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 4c8abf9e4ef69fd1756c86a33cbad8a6
+  onlyWriteTrigger: 0

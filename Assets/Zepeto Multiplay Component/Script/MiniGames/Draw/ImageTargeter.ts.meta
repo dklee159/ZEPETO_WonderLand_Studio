@@ -1,0 +1,87 @@
+fileFormatVersion: 2
+guid: d4e44a069913c6d47928852a373d6814
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    UnityEngine_EventSystems_1 = require(\"UnityEngine.EventSystems\");\r\nconst
+    System_Collections_Generic_1 = require(\"System.Collections.Generic\");\r\nconst
+    RaycastUtilities_1 = require(\"./RaycastUtilities\");\r\nclass ImageTargeter
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
+    super(...arguments);\r\n        this.targetImgs = new ($generic(System_Collections_Generic_1.List$1,
+    UnityEngine_UI_1.Image))();\r\n        this.imgInfos = new Map();\r\n       
+    this.targetRawImgs = new ($generic(System_Collections_Generic_1.List$1, UnityEngine_UI_1.RawImage))();\r\n       
+    this.rawImgInfos = new Map();\r\n    }\r\n    get TargetImgs() { return this.targetImgs;
+    }\r\n    set TargetImgs(value) { this.targetImgs = value; }\r\n    get TargetRawImgs()
+    { return this.targetRawImgs; }\r\n    set TargetRawImgs(value) { this.targetRawImgs
+    = value; }\r\n    IsTargetHit() {\r\n        const mousePos = new UnityEngine_1.Vector2(UnityEngine_1.Input.mousePosition.x,
+    UnityEngine_1.Input.mousePosition.y);\r\n        let isPointHit = false;\r\n       
+    for (let i = 0; i < this.TargetImgs.Count; i++) {\r\n            // isPointHit
+    = RaycastUtilities.PointerIsInVertex(mousePos, this.TargetImgs[i].gameObject);\r\n           
+    isPointHit = RaycastUtilities_1.default.PointerIsInVertex(mousePos, this.TargetImgs.get_Item(i).gameObject);\r\n           
+    if (isPointHit)\r\n                return isPointHit;\r\n        }\r\n       
+    return isPointHit;\r\n    }\r\n    GetConvertPoint(isSetOffset = false) {\r\n       
+    const mousePos = new UnityEngine_1.Vector2(UnityEngine_1.Input.mousePosition.x,
+    UnityEngine_1.Input.mousePosition.y);\r\n        let isPointHit = null;\r\n       
+    for (let i = 0; i < this.TargetRawImgs.Count; i++) {\r\n            // isPointHit
+    = RaycastUtilities.PointerIsInVertex(mousePos, this.TargetImgs[i].gameObject);\r\n           
+    isPointHit = RaycastUtilities_1.default.GetPointConverToLocal(mousePos, this.TargetRawImgs.get_Item(i).gameObject,
+    isSetOffset);\r\n            if (isPointHit)\r\n                return isPointHit;\r\n       
+    }\r\n    }\r\n    GetImageAsPos(pos) {\r\n        for (let i = 0; i < this.TargetImgs.Count;
+    i++) {\r\n            const isPointHit = RaycastUtilities_1.default.PointerIsInVertex(pos,
+    this.TargetImgs.get_Item(i).gameObject);\r\n            if (isPointHit)\r\n               
+    return this.TargetImgs.get_Item(i).gameObject;\r\n        }\r\n        return
+    null;\r\n    }\r\n    GetImageByName(imgName) {\r\n        return this.imgInfos.has(imgName)
+    ? this.imgInfos.get(imgName) : null;\r\n    }\r\n    GetTargetImageByName(imgName)
+    {\r\n        return this.TargetImgs.Contains(this.GetImageByName(imgName)) ?
+    this.GetImageByName(imgName) : null;\r\n    }\r\n    AddTargetImageByName(imgName)
+    {\r\n        if (this.imgInfos.has(imgName))\r\n            this.AddTargetImage(this.imgInfos.get(imgName));\r\n   
+    }\r\n    RemoveTargetImageByName(imgName) {\r\n        if (this.imgInfos.has(imgName))\r\n           
+    this.RemoveTargetImage(this.imgInfos.get(imgName));\r\n    }\r\n    AddTargetImage(img)
+    {\r\n        this.TargetImgs.Add(img);\r\n        this.imgInfos.set(img.gameObject.name,
+    img);\r\n    }\r\n    RemoveTargetImage(img) {\r\n        if (this.TargetImgs.Contains(img))
+    {\r\n            this.TargetImgs.Remove(img);\r\n            this.imgInfos.delete(img.gameObject.name);\r\n       
+    }\r\n    }\r\n    AddTargetRawImage(img) {\r\n        this.TargetRawImgs.Add(img);\r\n       
+    this.rawImgInfos.set(img.gameObject.name, img);\r\n    }\r\n}\r\nexports.default
+    = ImageTargeter;\r\n// class RaycastUtilities {\r\n//     public static PointerIsOverUI(screenPos
+    : Vector2, obj : GameObject) : boolean {\r\n//         const hitObject : GameObject
+    = this.UIRaycast(this.ScreenPosToPointerData(screenPos));\r\n//         return
+    hitObject != null && hitObject.layer == LayerMask.NameToLayer(\"UI\") && hitObject.gameObject
+    == obj.gameObject;\r\n//     }\r\n//     public static PointerIsInVertex(screenPos
+    : Vector2, obj : GameObject) : boolean {\r\n//         const hitObject : GameObject
+    = this.UIRaycast(this.ScreenPosToPointerData(screenPos));\r\n//         if (hitObject
+    != null && hitObject == obj) {\r\n//             const coll = hitObject.GetComponent<PolygonCollider2D>();\r\n//            
+    const mousePos = Input.mousePosition;\r\n//             mousePos.z = -Camera.main.transform.position.z;\r\n//            
+    const currentPosition : Vector3 = Camera.main.ScreenToWorldPoint(mousePos);\r\n//            
+    const Vector2Pos = new Vector2(currentPosition.x / 0.1, currentPosition.y / 0.1
+    - 9);\r\n//             const isHit = coll.OverlapPoint(Vector2Pos);\r\n//            
+    // Debug.Log(`${isHit}, ${Vector2Pos.x}, ${Vector2Pos.y}`);\r\n//            
+    return hitObject.layer == LayerMask.NameToLayer(\"UI\") && isHit;\r\n//        
+    }\r\n//         else {\r\n//             return false;\r\n//         }\r\n//    
+    }\r\n//     public static UIRaycast(pointerData : PointerEventData) : GameObject
+    {\r\n//         let results = new List$1<RaycastResult>();\r\n//         EventSystem.current.RaycastAll(pointerData,
+    results);\r\n//         return results.Count < 1 ? null : results[0].gameObject;\r\n//    
+    }\r\n//     private static ScreenPosToPointerData(screenPos : Vector2) : PointerEventData
+    {\r\n//         const event = new PointerEventData(EventSystem.current);\r\n//        
+    event.position = screenPos;\r\n//         return event;\r\n//     }\r\n// }\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSW1hZ2VUYXJnZXRlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkltYWdlVGFyZ2V0ZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBcUQ7QUFDckQsbURBQWlEO0FBQ2pELDZDQUErRztBQUMvRyx1RUFBd0Y7QUFDeEYsMkVBQW9EO0FBQ3BELHlEQUFrRDtBQUVsRCxNQUFxQixhQUFjLFNBQVEscUNBQXFCO0lBQWhFOztRQUNZLGVBQVUsaUJBQXVCLG1DQUFNLEVBQUMsc0JBQUssS0FBSTtRQUtqRCxhQUFRLEdBQXdCLElBQUksR0FBRyxFQUFpQixDQUFDO1FBRXpELGtCQUFhLGlCQUEwQixtQ0FBTSxFQUFDLHlCQUFRLEtBQUk7UUFLMUQsZ0JBQVcsR0FBMkIsSUFBSSxHQUFHLEVBQW9CLENBQUM7SUFvRTlFLENBQUM7SUE5RUcsSUFBVyxVQUFVLEtBQXFCLE9BQU8sSUFBSSxDQUFDLFVBQVUsQ0FBQyxDQUFDLENBQUM7SUFDbkUsSUFBVyxVQUFVLENBQUMsS0FBcUIsSUFBSSxJQUFJLENBQUMsVUFBVSxHQUFHLEtBQUssQ0FBQyxDQUFDLENBQUM7SUFNekUsSUFBVyxhQUFhLEtBQXdCLE9BQU8sSUFBSSxDQUFDLGFBQWEsQ0FBQyxDQUFDLENBQUM7SUFDNUUsSUFBVyxhQUFhLENBQUMsS0FBd0IsSUFBSSxJQUFJLENBQUMsYUFBYSxHQUFHLEtBQUssQ0FBQyxDQUFDLENBQUM7SUFLM0UsV0FBVztRQUNkLE1BQU0sUUFBUSxHQUFHLElBQUkscUJBQU8sQ0FBQyxtQkFBSyxDQUFDLGFBQWEsQ0FBQyxDQUFDLEVBQUUsbUJBQUssQ0FBQyxhQUFhLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDM0UsSUFBSSxVQUFVLEdBQWEsS0FBSyxDQUFDO1FBQ2pDLEtBQUksSUFBSSxDQUFDLEdBQUcsQ0FBQyxFQUFFLENBQUMsR0FBRyxJQUFJLENBQUMsVUFBVSxDQUFDLEtBQUssRUFBRSxDQUFDLEVBQUUsRUFBRTtZQUMzQyw0RkFBNEY7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","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/MiniGames/Draw/ImageTargeter.ts","manifest":{"properties":[],"name":"ImageTargeter","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: e579b9041ae3db46248fbb6bc8db737e
+  onlyWriteTrigger: 0

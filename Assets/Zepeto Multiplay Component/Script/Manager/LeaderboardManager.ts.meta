@@ -1,0 +1,73 @@
+fileFormatVersion: 2
+guid: a5696b9db955bff448dec08907b9db1c
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    ZEPETO_Script_Leaderboard_1 = require(\"ZEPETO.Script.Leaderboard\");\r\nconst
+    ZEPETO_World_1 = require(\"ZEPETO.World\");\r\nconst UIManager_1 = require(\"./UIManager\");\r\nconst
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst MultiplayManager_1 =
+    require(\"../../ZepetoScript/Common/MultiplayManager\");\r\nconst UnityEngine_1
+    = require(\"UnityEngine\");\r\nconst ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    DebugController_1 = require(\"../Controllers/DebugController\");\r\nclass LeaderboardManager
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
+    super(...arguments);\r\n        this.leaderboardId = \"7039ce8b-4930-4fd3-8635-378fb3d94a44\";\r\n       
+    this.rankStart = 1;\r\n        this.rankFinish = 100;\r\n    }\r\n    Start()
+    {\r\n        this.closeBtn.onClick.AddListener(() => {\r\n            this.rankingUI.gameObject.SetActive(false);\r\n       
+    });\r\n        // LeaderboardAPI.GetLeaderboard(this.leaderboardId, (result :
+    GetLeaderboardResponse) => {\r\n        //     console.log(result.isSuccess);\r\n       
+    //     if(result.leaderboard) {\r\n        //         console.log(`id : ${result.leaderboard.id},
+    name : ${result.leaderboard.name}`);\r\n        //     }\r\n        // }, (error
+    : string) => {});\r\n        ZEPETO_Script_Leaderboard_1.LeaderboardAPI.GetRangeRank(this.leaderboardId,
+    this.rankStart, this.rankFinish, ZEPETO_Script_Leaderboard_1.ResetRule.week,
+    true, (result) => {\r\n            let rankList = \"\";\r\n            let userIds
+    = [];\r\n            let scores = [];\r\n            result.rankInfo.rankList.forEach((rank,
+    index) => {\r\n                // const player = ZepetoPlayers.instance.GetPlayerWithUserId(rank.member);\r\n               
+    const score = rank.score;\r\n                userIds[userIds.length] = rank.member;\r\n               
+    scores[scores.length] = rank.score.toString();\r\n            });\r\n           
+    ZEPETO_World_1.ZepetoWorldHelper.GetUserInfo(userIds, (users) => {\r\n               
+    users.forEach((user, index) => {\r\n                    rankList = rankList +
+    `${user.zepetoId} ] ${scores[index]}\\n`;\r\n                });\r\n               
+    console.log(rankList);\r\n            }, (error) => {\r\n            });\r\n           
+    console.log(`rank num : ${result.rankInfo.rankList.length}`);\r\n        });\r\n   
+    }\r\n    SetRanking(score) {\r\n        if (DebugController_1.default.Instance.IsJetski)\r\n           
+    return;\r\n        const _id = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.userId;\r\n       
+    const id = [_id];\r\n        let getScore = 0;\r\n        ZEPETO_Script_Leaderboard_1.LeaderboardAPI.GetRank(this.leaderboardId,
+    id, ZEPETO_Script_Leaderboard_1.ResetRule.week, false, (result) => {\r\n           
+    getScore = result.rankInfo.myRank.score;\r\n            ZEPETO_Script_Leaderboard_1.LeaderboardAPI.SetScore(this.leaderboardId,
+    getScore + score, (result) => {\r\n                console.log(result.score);\r\n           
+    }, (error) => {\r\n                console.log(\"leaderboard error\");\r\n           
+    });\r\n        });\r\n    }\r\n    ShowRanking() {\r\n        ZEPETO_Script_Leaderboard_1.LeaderboardAPI.GetRangeRank(this.leaderboardId,
+    1, 10, ZEPETO_Script_Leaderboard_1.ResetRule.week, false, (result) => {\r\n           
+    console.log(result.isSuccess);\r\n            result.rankInfo.rankList.forEach((rank,
+    index) => {\r\n                const name = rank.name;\r\n                const
+    score = rank.score;\r\n                const rankingInfo = this.rankingImage.GetChild(index);\r\n               
+    rankingInfo.GetChild(1).GetComponent($typeof(UnityEngine_UI_1.Text)).text = name;\r\n               
+    rankingInfo.GetChild(2).GetComponent($typeof(UnityEngine_UI_1.Text)).text = rank.score.toString();\r\n               
+    const mem = rank.member;\r\n                ZEPETO_World_1.ZepetoWorldHelper.GetProfileTexture(mem,
+    (texture) => {\r\n                    const rect = new UnityEngine_1.Rect(0,
+    0, texture.width, texture.height);\r\n                    const sprite = UnityEngine_1.Sprite.Create(texture,
+    rect, new UnityEngine_1.Vector2(0.5, 0.5));\r\n                    rankingInfo.GetChild(0).GetChild(0).GetComponent($typeof(UnityEngine_UI_1.Image)).sprite
+    = sprite;\r\n                }, (error) => {\r\n                    console.log(error);\r\n               
+    });\r\n            });\r\n        });\r\n        this.rankingUI.gameObject.SetActive(true);\r\n       
+    console.log(\"Show Ranking\");\r\n    }\r\n}\r\nexports.default = LeaderboardManager;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTGVhZGVyYm9hcmRNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiTGVhZGVyYm9hcmRNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXFEO0FBQ3JELHlFQUE2SjtBQUM3SiwrQ0FBc0U7QUFFdEUsMkNBQW9DO0FBQ3BDLG1EQUFxRDtBQUNyRCxpRkFBMEU7QUFFMUUsNkNBQW1GO0FBRW5GLDZFQUE0RDtBQUM1RCxvRUFBNkQ7QUFFN0QsTUFBcUIsa0JBQW1CLFNBQVEscUNBQXFCO0lBQXJFOztRQUNxQixrQkFBYSxHQUFZLHNDQUFzQyxDQUFDO1FBTS9ELGNBQVMsR0FBWSxDQUFDLENBQUM7UUFDdkIsZUFBVSxHQUFZLEdBQUcsQ0FBQztJQWlGaEQsQ0FBQztJQS9FRyxLQUFLO1FBQ0QsSUFBSSxDQUFDLFFBQVEsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUNuQyxJQUFJLENBQUMsU0FBUyxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7UUFDL0MsQ0FBQyxDQUFDLENBQUM7UUFFSCwyRkFBMkY7UUFDM0YscUNBQXFDO1FBQ3JDLCtCQUErQjtRQUMvQiwyRkFBMkY7UUFDM0YsUUFBUTtRQUNSLDhCQUE4QjtRQUU5QiwwQ0FBYyxDQUFDLFlBQVksQ0FBQyxJQUFJLENBQUMsYUFBYSxFQUFFLElBQUksQ0FBQyxTQUFTLEVBQUUsSUFBSSxDQUFDLFVBQVUsRUFBRSxxQ0FBUyxDQUFDLElBQUksRUFBRSxJQUFJLEVBQUUsQ0FBQyxNQUF3QixFQUFFLEVBQUU7WUFDaEksSUFBSSxRQUFRLEdBQVksRUFBRSxDQUFDO1lBQzNCLElBQUksT0FBTyxHQUFjLEVBQUUsQ0FBQztZQUM1QixJQUFJLE1BQU0sR0FBYyxFQUFFLENBQUM7WUFFM0IsTUFBTSxDQUFDLFFBQVEsQ0FBQyxRQUFRLENBQUMsT0FBTyxDQUFDLENBQUMsSUFBVyxFQUFFLEtBQWMsRUFBRSxFQUFFO2dC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","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/Manager/LeaderboardManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"rankingUI","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"rankingImage","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"closeBtn","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"rankStart","type":"System.Single","isArray":false,"initValue":["1"],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"rankFinish","type":"System.Single","isArray":false,"initValue":["100"],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"LeaderboardManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 7a542177c544f1e6d004556cb9af3308
+  onlyWriteTrigger: 0

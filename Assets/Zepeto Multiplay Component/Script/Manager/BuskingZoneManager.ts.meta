@@ -1,0 +1,88 @@
+fileFormatVersion: 2
+guid: ea15db717734fd44993bdc7c87b9b971
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: "{\"source\":\"\\\"use strict\\\";\\r\\nObject.defineProperty(exports,
+    \\\"__esModule\\\", { value: true });\\r\\nconst UnityEngine_1 = require(\\\"UnityEngine\\\");\\r\\nconst
+    ZEPETO_Multiplay_1 = require(\\\"ZEPETO.Multiplay\\\");\\r\\nconst ZEPETO_Character_Controller_1
+    = require(\\\"ZEPETO.Character.Controller\\\");\\r\\nconst ZEPETO_Script_1 =
+    require(\\\"ZEPETO.Script\\\");\\r\\nconst ZEPETO_World_1 = require(\\\"ZEPETO.World\\\");\\r\\nconst
+    SyncIndexManager_1 = require(\\\"../../ZepetoScript/Common/SyncIndexManager\\\");\\r\\nconst
+    MultiplayManager_1 = require(\\\"../../ZepetoScript/Common/MultiplayManager\\\");\\r\\nconst
+    TypeManager_1 = require(\\\"../TypeManager\\\");\\r\\nconst InteractionBtn_1
+    = require(\\\"../Interaction/InteractionBtn\\\");\\r\\nconst TMPro_1 = require(\\\"TMPro\\\");\\r\\nclass
+    BuskingZoneManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\\r\\n    constructor()
+    {\\r\\n        super(...arguments);\\r\\n        /* Properties */\\r\\n       
+    this.isPoint1Play = false;\\r\\n        this.isPoint2Play = false;\\r\\n       
+    this.gestureName = \\\"\uB9AC\uB4EC\uB304\uC2A4\\\";\\r\\n    }\\r\\n    /* Getter
+    Setter */\\r\\n    get HeartNum_1() { return this.heartNum_1; }\\r\\n    get
+    HeartNum_2() { return this.heartNum_2; }\\r\\n    set HeartNum_1(value) {\\r\\n       
+    this.heartNum_1 = value;\\r\\n        if (value == -1) {\\r\\n            this.heartText_1.gameObject.SetActive(false);\\r\\n       
+    }\\r\\n        else {\\r\\n            this.heartText_1.gameObject.SetActive(true);\\r\\n           
+    this.heartText_1.text = value.toString();\\r\\n        }\\r\\n    }\\r\\n   
+    set HeartNum_2(value) {\\r\\n        this.heartNum_2 = value;\\r\\n        if
+    (value == -1) {\\r\\n            this.heartText_2.gameObject.SetActive(false);\\r\\n       
+    }\\r\\n        else {\\r\\n            this.heartText_2.gameObject.SetActive(true);\\r\\n           
+    this.heartText_2.text = value.toString();\\r\\n        }\\r\\n    }\\r\\n   
+    Start() {\\r\\n        ZEPETO_World_1.ZepetoWorldContent.RequestOfficialContentList(ZEPETO_World_1.OfficialContentType.All,
+    contents => {\\r\\n            for (const con of contents) {\\r\\n               
+    if (con.Title == this.gestureName) {\\r\\n                    this.content =
+    con;\\r\\n                    con.DownloadAnimation(() => {\\r\\n                       
+    this.animClip = con.AnimationClip;\\r\\n                    });\\r\\n                   
+    break;\\r\\n                }\\r\\n            }\\r\\n        });\\r\\n    }\\r\\n   
+    StartGesture() {\\r\\n        const _myCharacter = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;\\r\\n       
+    if (!this.animClip) {\\r\\n            this.content.DownloadAnimation(() => {\\r\\n               
+    this.animClip = this.content.AnimationClip;\\r\\n                _myCharacter.SetGesture(this.animClip);\\r\\n           
+    });\\r\\n        }\\r\\n        else {\\r\\n            _myCharacter.SetGesture(this.animClip);\\r\\n       
+    }\\r\\n    }\\r\\n    BuskingIsStart(pointNum, isStart) {\\r\\n        const
+    data = new ZEPETO_Multiplay_1.RoomData();\\r\\n        data.Add(\\\"Point\\\",
+    pointNum);\\r\\n        data.Add(\\\"IsStart\\\", isStart);\\r\\n        if (isStart)
+    {\\r\\n            this.StartCoroutine(this.BuskingStart(pointNum));\\r\\n       
+    }\\r\\n        else {\\r\\n        }\\r\\n        MultiplayManager_1.default.instance.Room.Send(TypeManager_1.MESSAGE.Busking,
+    data.GetObject());\\r\\n    }\\r\\n    *BuskingStart(pointNum) {\\r\\n       
+    const character = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;\\r\\n       
+    if (pointNum == 1) {\\r\\n            // character.transform.position = this.buskingPoint_1.position;\\r\\n           
+    // character.transform.rotation = this.buskingPoint_2.rotation;\\r\\n           
+    character.Teleport(this.buskingPoint_1.position, this.buskingPoint_1.rotation);\\r\\n       
+    }\\r\\n        else {\\r\\n            character.Teleport(this.buskingPoint_2.position,
+    this.buskingPoint_2.rotation);\\r\\n        }\\r\\n        yield new UnityEngine_1.WaitForSeconds(1);\\r\\n       
+    this.StartGesture();\\r\\n        while (true) {\\r\\n            if (character.tryJump
+    || character.tryMove)\\r\\n                break;\\r\\n            yield null;\\r\\n       
+    }\\r\\n        character.ZepetoAnimator.SetInteger(\\\"State\\\", 1);\\r\\n       
+    this.BuskingIsStart(pointNum, false);\\r\\n    }\\r\\n    OnBuskingIsStart(pointNum,
+    isStart) {\\r\\n        console.log(\\\"clinet receive\\\");\\r\\n        if
+    (pointNum == 1) {\\r\\n            this.isPoint1Play = isStart;\\r\\n           
+    this.buskingInteraction_1.gameObject.SetActive(!isStart);\\r\\n            this.heartInteraction_1.gameObject.SetActive(isStart);\\r\\n           
+    if (isStart) {\\r\\n                this.HeartNum_1 = 0;\\r\\n            }\\r\\n           
+    else {\\r\\n                this.HeartNum_1 = -1;\\r\\n            }\\r\\n       
+    }\\r\\n        else {\\r\\n            this.isPoint2Play = isStart;\\r\\n           
+    this.buskingInteraction_2.gameObject.SetActive(!isStart);\\r\\n            this.heartInteraction_2.gameObject.SetActive(isStart);\\r\\n           
+    if (isStart) {\\r\\n                this.HeartNum_2 = 0;\\r\\n            }\\r\\n           
+    else {\\r\\n                this.HeartNum_2 = -1;\\r\\n            }\\r\\n       
+    }\\r\\n    }\\r\\n    SendAddHeart(pointNum) {\\r\\n        const data = new
+    ZEPETO_Multiplay_1.RoomData();\\r\\n        data.Add(\\\"Point\\\", pointNum);\\r\\n       
+    MultiplayManager_1.default.instance.Room.Send(TypeManager_1.MESSAGE.BuskingHeart,
+    data.GetObject());\\r\\n    }\\r\\n    AddHeart(pointNum) {\\r\\n        if (pointNum
+    == 1 && this.isPoint1Play) {\\r\\n            this.HeartNum_1++;\\r\\n       
+    }\\r\\n        else if (pointNum == 2 && this.isPoint1Play) {\\r\\n           
+    this.HeartNum_2++;\\r\\n        }\\r\\n    }\\r\\n}\\r\\nexports.default = BuskingZoneManager;\\r\\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQnVza2luZ1pvbmVNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiQnVza2luZ1pvbmVNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQW1GO0FBQ25GLHVEQUFrRDtBQUNsRCw2RUFBNEQ7QUFDNUQsaURBQXFEO0FBQ3JELCtDQUE4RjtBQUM5RixpRkFBMEU7QUFDMUUsaUZBQTBFO0FBQzFFLGdEQUFtRDtBQUNuRCxrRUFBMkQ7QUFDM0QsaUNBQXFEO0FBRXJELE1BQXFCLGtCQUFtQixTQUFRLHFDQUFxQjtJQUFyRTs7UUFZSSxnQkFBZ0I7UUFDUixpQkFBWSxHQUFhLEtBQUssQ0FBQztRQUMvQixpQkFBWSxHQUFhLEtBQUssQ0FBQztRQUl0QixnQkFBVyxHQUFHLE1BQU0sQ0FBQztJQW1JMUMsQ0FBQztJQWpJRyxtQkFBbUI7SUFDbkIsSUFBVyxVQUFVLEtBQWMsT0FBTyxJQUFJLENBQUMsVUFBVSxDQUFDLENBQUMsQ0FBQztJQUM1RCxJQUFXLFVBQVUsS0FBYyxPQUFPLElBQUksQ0FBQyxVQUFVLENBQUMsQ0FBQyxDQUFDO0lBQzVELElBQVcsVUFBVSxDQUFDLEtBQWM7UUFDaEMsSUFBSSxDQUFDLFVBQVUsR0FBRyxLQUFLLENBQUM7UUFDeEIsSUFBSSxLQUFLLElBQUksQ0FBQyxDQUFDLEVBQUU7WUFDYixJQUFJLENBQUMsV0FBVyxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7U0FDaEQ7YUFDSTtZQUNELElBQUksQ0FBQyxXQUFXLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsQ0FBQztZQUM1QyxJQUFJLENBQUMsV0FBVyxDQUFDLElBQUksR0FBRyxLQUFLLENBQUMsUUFBUSxFQUFFLENBQUM7U0FDNUM7SUFDTCxDQUFDO0lBQ0QsSUFBVyxVQUFVLENBQUMsS0FBYztRQUNoQyxJQUFJLENBQUMsVUFBVSxHQUFHLEtBQUssQ0FBQztRQUN4QixJQUFJLEtBQUss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\",\"assetPath\":\"Assets/Zepeto
+    Multiplay Component/Script/Manager/BuskingZoneManager.ts\",\"manifest\":{\"properties\":[{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"buskingPoint_1\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"buskingPoint_2\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"buskingInteraction_1\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"buskingInteraction_2\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"heartInteraction_1\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"heartInteraction_2\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"Unity.TextMeshPro\",\"name\":\"heartText_1\",\"type\":\"TMPro.TextMeshPro\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"Unity.TextMeshPro\",\"name\":\"heartText_2\",\"type\":\"TMPro.TextMeshPro\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]}],\"name\":\"BuskingZoneManager\",\"description\":\"\",\"hasAnimatorMove\":false},\"isCompiled\":true}"
+  typescriptHash: d4e76d84b1543a2a3f541cc15da8c9a8
+  onlyWriteTrigger: 0

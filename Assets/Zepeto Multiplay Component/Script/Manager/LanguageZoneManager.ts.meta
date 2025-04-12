@@ -1,0 +1,45 @@
+fileFormatVersion: 2
+guid: eb9b621bcc2c7a44b8431a3c9053de4f
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: "{\"source\":\"\\\"use strict\\\";\\r\\nObject.defineProperty(exports,
+    \\\"__esModule\\\", { value: true });\\r\\nconst UnityEngine_1 = require(\\\"UnityEngine\\\");\\r\\nconst
+    ZEPETO_Character_Controller_1 = require(\\\"ZEPETO.Character.Controller\\\");\\r\\nconst
+    ZEPETO_Script_1 = require(\\\"ZEPETO.Script\\\");\\r\\nconst UIManager_1 = require(\\\"./UIManager\\\");\\r\\nclass
+    LanguageZoneManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\\r\\n   
+    MoveToLanguageZone() {\\r\\n        const character = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;\\r\\n       
+    // const dialgueStrings : string[] = [\\\"K-\uB7AD\uADC0\uC9C0\uC874\uC5D0 \uC628\uAC83\uC744
+    \uD658\uC601\uD574!\\\\n\uC774\uACF3\uC5D0\uC11C\uB294 \uB2E4\uC591\uD55C \uD55C\uAE00
+    \uB2E8\uC5B4\uB97C \uB4E4\uC5B4\uBCF4\uACE0 \uB9D0\uD574\uBCF4\uACE0 \uC368\uBCF4\uB294
+    \uACF5\uAC04\uC774\uC57C.\\\\n\\\\n\uC6B0\uC120 \uCC45\uC0C1\uC5D0 \uC549\uC544\uC11C
+    \uAE30\uCD08\uB97C \uB2E4\uC9C0\uACE0\\\\n\uB108\uC758 \uC2E4\uB825\uC744 \uCE60\uD310\uC5D0\uC11C
+    \uD14C\uC2A4\uD2B8 \uD574\uBD10!\\\"];\\r\\n        UIManager_1.default.instance.SetDialogueUI(null,
+    3, 4, 5);\\r\\n        // UIManager.Instance.SetDialogueUI(dialgueStrings, null);\\r\\n       
+    character.Teleport(this.spawnPoint.position, this.spawnPoint.rotation);\\r\\n   
+    }\\r\\n    ReturnToPoint() {\\r\\n        const character = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;\\r\\n       
+    character.Teleport(this.returnPoint.position, this.returnPoint.rotation);\\r\\n   
+    }\\r\\n    PlaySound(sfx) {\\r\\n        sfx.Play();\\r\\n        const audioLength
+    = sfx.clip.length;\\r\\n        if (this.soundCor)\\r\\n            this.StopCoroutine(this.soundCor);\\r\\n       
+    this.soundCor = this.StartCoroutine(this.OnPlaySound(audioLength));\\r\\n   
+    }\\r\\n    *OnPlaySound(len) {\\r\\n        this.bgm.volume = 0.1;\\r\\n       
+    yield new UnityEngine_1.WaitForSeconds(len + 1);\\r\\n        this.bgm.volume
+    = 1;\\r\\n    }\\r\\n}\\r\\nexports.default = LanguageZoneManager;\\r\\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTGFuZ3VhZ2Vab25lTWFuYWdlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkxhbmd1YWdlWm9uZU1hbmFnZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBZ0Y7QUFDaEYsNkVBQTREO0FBQzVELGlEQUFxRDtBQUNyRCwyQ0FBb0M7QUFFcEMsTUFBcUIsbUJBQW9CLFNBQVEscUNBQXFCO0lBUTNELGtCQUFrQjtRQUNyQixNQUFNLFNBQVMsR0FBRywyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsWUFBWSxDQUFDLFNBQVMsQ0FBQztRQUM1RSwySUFBMkk7UUFDM0ksbUJBQVMsQ0FBQyxRQUFRLENBQUMsYUFBYSxDQUFDLElBQUksRUFBRSxDQUFDLEVBQUUsQ0FBQyxFQUFFLENBQUMsQ0FBQyxDQUFDO1FBQ2hELDBEQUEwRDtRQUMxRCxTQUFTLENBQUMsUUFBUSxDQUFDLElBQUksQ0FBQyxVQUFVLENBQUMsUUFBUSxFQUFFLElBQUksQ0FBQyxVQUFVLENBQUMsUUFBUSxDQUFDLENBQUM7SUFDM0UsQ0FBQztJQUVNLGFBQWE7UUFDaEIsTUFBTSxTQUFTLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLFlBQVksQ0FBQyxTQUFTLENBQUM7UUFDNUUsU0FBUyxDQUFDLFFBQVEsQ0FBQyxJQUFJLENBQUMsV0FBVyxDQUFDLFFBQVEsRUFBRSxJQUFJLENBQUMsV0FBVyxDQUFDLFFBQVEsQ0FBQyxDQUFDO0lBQzdFLENBQUM7SUFFTSxTQUFTLENBQUMsR0FBaUI7UUFDOUIsR0FBRyxDQUFDLElBQUksRUFBRSxDQUFDO1FBQ1gsTUFBTSxXQUFXLEdBQUcsR0FBRyxDQUFDLElBQUksQ0FBQyxNQUFNLENBQUM7UUFDcEMsSUFBSSxJQUFJLENBQUMsUUFBUTtZQUFFLElBQUksQ0FBQyxhQUFhLENBQUMsSUFBSSxDQUFDLFFBQVEsQ0FBQyxDQUFDO1FBQ3JELElBQUksQ0FBQyxRQUFRLEdBQUcsSUFBSSxDQUFDLGNBQWMsQ0FBQyxJQUFJLENBQUMsV0FBVyxDQUFDLFdBQVcsQ0FBQyxDQUFDLENBQUM7SUFDdkUsQ0FBQztJQUVPLENBQUUsV0FBVyxDQUFDLEdBQVk7UUFDOUIsSUFBSSxDQUFDLEdBQUcsQ0FBQyxNQUFNLEdBQUcsR0FBRyxDQUFDO1FBRXRCLE1BQU0sSUFBSSw0QkFBYyxDQUFDLEdBQUcsR0FBRyxDQUFDLENBQUMsQ0FBQztRQUVsQyxJQUFJLENBQUMsR0FBRyxDQUFDLE1BQU0sR0FBRyxDQUFDLENBQUM7SUFDeEIsQ0FBQztDQUNKO0FBbkNELHNDQW1DQyJ9\",\"assetPath\":\"Assets/Zepeto
+    Multiplay Component/Script/Manager/LanguageZoneManager.ts\",\"manifest\":{\"properties\":[{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"spawnPoint\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"returnPoint\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.AudioModule\",\"name\":\"bgm\",\"type\":\"UnityEngine.AudioSource\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]}],\"name\":\"LanguageZoneManager\",\"description\":\"\",\"hasAnimatorMove\":false},\"isCompiled\":true}"
+  typescriptHash: fbb6ebf5b182d3dd253dc2a5d89d4249
+  onlyWriteTrigger: 0

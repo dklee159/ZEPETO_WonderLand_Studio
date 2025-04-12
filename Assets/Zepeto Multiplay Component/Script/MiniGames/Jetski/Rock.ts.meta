@@ -1,0 +1,39 @@
+fileFormatVersion: 2
+guid: 805795004d193a3418a26eda4672459c
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst JetskiManager_1 = require(\"./JetskiManager\");\r\nclass
+    Rock extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    get Speed() { return
+    this.speed; }\r\n    set Speed(value) { this.speed = value; }\r\n    get Dir()
+    { return this.dir; }\r\n    set Dir(value) { this.dir = value; }\r\n    StartMove(jetskiMgr)
+    {\r\n        this.jetskiMgr = jetskiMgr;\r\n        this.StartCoroutine(this.Move());\r\n   
+    }\r\n    StopMove() {\r\n        this.StopCoroutine(this.Move);\r\n        this.rb.velocity
+    = UnityEngine_1.Vector3.zero;\r\n    }\r\n    *Move() {\r\n        this.rb =
+    this.GetComponent($typeof(UnityEngine_1.Rigidbody));\r\n        while (!this.gameObject.IsDestroyed)
+    {\r\n            this.rb.velocity = UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.op_Multiply(this.Dir,
+    this.Speed), 800), UnityEngine_1.Time.deltaTime);\r\n            yield null;\r\n       
+    }\r\n    }\r\n    OnTriggerEnter(coll) {\r\n        if (coll.CompareTag(\"Jetski\"))
+    {\r\n            this.onDestroy.Invoke();\r\n            this.jetskiMgr.RideStop(false);\r\n       
+    }\r\n        else if (coll.CompareTag(\"RockDestroyer\")) {\r\n            this.onDestroy.Invoke();\r\n       
+    }\r\n    }\r\n}\r\nexports.default = Rock;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiUm9jay5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlJvY2sudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBbUY7QUFFbkYsaURBQXFEO0FBQ3JELG1EQUE0QztBQUU1QyxNQUFxQixJQUFLLFNBQVEscUNBQXFCO0lBV25ELElBQVcsS0FBSyxLQUFLLE9BQU8sSUFBSSxDQUFDLEtBQUssQ0FBQyxDQUFDLENBQUM7SUFDekMsSUFBVyxLQUFLLENBQUMsS0FBYyxJQUFJLElBQUksQ0FBQyxLQUFLLEdBQUcsS0FBSyxDQUFDLENBQUMsQ0FBQztJQUN4RCxJQUFXLEdBQUcsS0FBSyxPQUFPLElBQUksQ0FBRSxHQUFHLENBQUMsQ0FBQyxDQUFDO0lBQ3RDLElBQVcsR0FBRyxDQUFDLEtBQWUsSUFBSSxJQUFJLENBQUMsR0FBRyxHQUFHLEtBQUssQ0FBQyxDQUFDLENBQUM7SUFFOUMsU0FBUyxDQUFDLFNBQXlCO1FBQ3RDLElBQUksQ0FBQyxTQUFTLEdBQUcsU0FBUyxDQUFDO1FBQzNCLElBQUksQ0FBQyxjQUFjLENBQUMsSUFBSSxDQUFDLElBQUksRUFBRSxDQUFDLENBQUM7SUFDckMsQ0FBQztJQUVNLFFBQVE7UUFDWCxJQUFJLENBQUMsYUFBYSxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsQ0FBQztRQUM5QixJQUFJLENBQUMsRUFBRSxDQUFDLFFBQVEsR0FBRyxxQkFBTyxDQUFDLElBQUksQ0FBQztJQUNwQyxDQUFDO0lBRU8sQ0FBRSxJQUFJO1FBQ1YsSUFBSSxDQUFDLEVBQUUsR0FBRyxJQUFJLENBQUMsWUFBWSxTQUFDLHVCQUFTLEVBQUcsQ0FBQztRQUV6QyxPQUFPLENBQUMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxXQUFXLEVBQUU7WUFDakMsSUFBSSxDQUFDLEVBQUUsQ0FBQyxRQUFRLEdBbkNULHFCQUFPLENBa0RvaXBCLFdBQVksQ0FsRHZqcEIscUJBQU8sQ0FrRG9pcEIsV0FBWSxDQWxEdmpwQixxQkFBTyxDQWtEb2lwQixXQUFZLENBZjNpcEIsSUFBSSxDQUFDLEdBQUcsRUFBRyxJQUFJLENBQUMsS0FBSyxHQUFHLEdBQUcsR0FBRyxrQkFBSSxDQUFDLFNBQVMsQ0FBQSxDQUFDO1lBQ2hFLE1BQU0sSUFBSSxDQUFDO1NBQ2Q7SUFDTCxDQUFDO0lBRU8sY0FBYyxDQUFDLElBQWU7UUFDbEMsSUFBSSxJQUFJLENBQUMsVUFBVSxDQUFDLFFBQVEsQ0FBQyxFQUFFO1lBQzNCLElBQUksQ0FBQyxTQUFTLENBQUMsTUFBTSxFQUFFLENBQUM7WUFDeEIsSUFBSSxDQUFDLFNBQVMsQ0FBQyxRQUFRLENBQUMsS0FBSyxDQUFDLENBQUM7U0FDbEM7YUFDSSxJQUFJLElBQUksQ0FBQyxVQUFVLENBQUMsZUFBZSxDQUFDLEVBQUU7WUFDdkMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxNQUFNLEVBQUUsQ0FBQztTQUMzQjtJQUNMLENBQUM7Q0FDSjtBQTVDRCx1QkE0Q0MifQ==","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/MiniGames/Jetski/Rock.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"onDestroy","type":"UnityEngine.Events.UnityEvent","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"Rock","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 68d9b71520fa741f7da08902188aca82
+  onlyWriteTrigger: 0

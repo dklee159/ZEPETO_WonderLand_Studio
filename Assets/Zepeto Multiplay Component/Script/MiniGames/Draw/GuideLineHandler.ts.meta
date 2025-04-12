@@ -1,0 +1,77 @@
+fileFormatVersion: 2
+guid: 215cee03b29e231458ce26ec66b8912c
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
+    GuideLineHandler extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
+    {\r\n        super(...arguments);\r\n        this.startRange = 0.02;\r\n       
+    this.detectRange = 0.035;\r\n        this.guideLines = new Array();\r\n       
+    this.lineIndex = 0;\r\n        this.lineNum = 0;\r\n        this.isSuccess =
+    false;\r\n        this.successDrawNums = [];\r\n    }\r\n    get IsSuccess()
+    { return this.isSuccess; }\r\n    set IsSuccess(value) {\r\n        this.isSuccess
+    = value;\r\n        if (value) {\r\n            this.guideImage.sprite = this.drawnSprite;\r\n       
+    }\r\n        else {\r\n            this.guideImage.sprite = this.guideSprite;\r\n       
+    }\r\n    }\r\n    OnEnable() {\r\n        if (this.guideImage == null)\r\n           
+    this.guideImage = this.GetComponent($typeof(UnityEngine_UI_1.Image));\r\n       
+    this.SetGuideLine(this.guideImage);\r\n        this.IsSuccess = false;\r\n   
+    }\r\n    SetGuideLine(img) {\r\n        this.lineNum = img.transform.childCount;\r\n       
+    this.lineIndex = 0;\r\n        // clear guide lines;\r\n        while (this.guideLines.length
+    > 0)\r\n            this.guideLines.pop();\r\n        // set guide lines;\r\n       
+    for (let i = 0; i < this.lineNum; i++) {\r\n            const line = img.transform.GetChild(i);\r\n           
+    const pointNum = line.transform.childCount;\r\n            const pointArr = new
+    Array(pointNum);\r\n            for (let j = 0; j < pointNum; j++) {\r\n               
+    const point = line.GetChild(j);\r\n                // const pointToVec2 = new
+    Vector2(point.position.x, point.position.y);\r\n                pointArr[j] =
+    point.position;\r\n            }\r\n            this.guideLines[i] = new GuideLine(pointArr,
+    pointNum);\r\n        }\r\n    }\r\n    GetCurrentLine() {\r\n        if (this.guideLines[this.lineIndex]
+    != null)\r\n            return this.guideLines[this.lineIndex];\r\n    }\r\n   
+    GetStartPoint() {\r\n        const line = this.GetCurrentLine();\r\n        return
+    line.GetPoint(0);\r\n    }\r\n    InitLinePoints() {\r\n        const line =
+    this.GetCurrentLine();\r\n        line.InitPoint();\r\n    }\r\n    CanDrawLineStart(pos)
+    {\r\n        if (this.IsSuccess)\r\n            return false;\r\n        const
+    distance = UnityEngine_1.Vector3.Distance(pos, this.GetStartPoint());\r\n       
+    const canDraw = distance < this.startRange;\r\n        if (canDraw)\r\n           
+    this.InitLinePoints();\r\n        return canDraw;\r\n    }\r\n    DrawingLine(pos)
+    {\r\n        const line = this.GetCurrentLine();\r\n        const distToNext
+    = UnityEngine_1.Vector3.Distance(pos, line.GetCurrentPoint());\r\n        if
+    (distToNext <= this.detectRange) {\r\n            const hasNextPoint = line.SetNextPoint();\r\n           
+    if (!hasNextPoint)\r\n                return true;\r\n        }\r\n        return
+    false;\r\n    }\r\n    GetCurrentLineStartPoint() {\r\n        const line = this.GetCurrentLine();\r\n       
+    return line.startPoint;\r\n    }\r\n    GetCurrentLineEndPoint() {\r\n       
+    const line = this.GetCurrentLine();\r\n        return line.endPoint;\r\n    }\r\n   
+    SetNextGuideLine(drawNum) {\r\n        this.lineIndex++;\r\n        if (this.lineIndex
+    >= this.lineNum) {\r\n            this.IsSuccess = true;\r\n        }\r\n       
+    this.successDrawNums[this.successDrawNums.length] = drawNum;\r\n        return
+    this.lineIndex < this.lineNum;\r\n    }\r\n    GetSuccessDrawNums() {\r\n       
+    return this.successDrawNums;\r\n    }\r\n}\r\nexports.default = GuideLineHandler;\r\nclass
+    GuideLine {\r\n    constructor(points, pointNum) {\r\n        this.points = [];\r\n       
+    this.pointIndex = 0;\r\n        this.points = points;\r\n        this.pointNum
+    = pointNum;\r\n        this.startPoint = points[0];\r\n        this.endPoint
+    = points[points.length - 1];\r\n    }\r\n    InitPoint() {\r\n        this.pointIndex
+    = 0;\r\n    }\r\n    GetPoint(index) {\r\n        return this.points[index];\r\n   
+    }\r\n    GetCurrentPoint() {\r\n        return this.GetPoint(this.pointIndex);\r\n   
+    }\r\n    GetNextPoint() {\r\n        return this.GetPoint(this.pointIndex + 1);\r\n   
+    }\r\n    SetNextPoint() {\r\n        this.pointIndex++;\r\n        return this.pointIndex
+    < this.pointNum;\r\n    }\r\n    isSuccess() {\r\n        return this.pointIndex
+    >= this.pointNum - 1;\r\n    }\r\n}\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR3VpZGVMaW5lSGFuZGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkd1aWRlTGluZUhhbmRsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxtREFBdUM7QUFDdkMsNkNBQXVEO0FBQ3ZELGlEQUFxRDtBQUVyRCxNQUFxQixnQkFBaUIsU0FBUSxxQ0FBcUI7SUFBbkU7O1FBQ1ksZUFBVSxHQUFZLElBQUksQ0FBQztRQUMzQixnQkFBVyxHQUFZLEtBQUssQ0FBQztRQUs3QixlQUFVLEdBQWlCLElBQUksS0FBSyxFQUFhLENBQUM7UUFDbEQsY0FBUyxHQUFZLENBQUMsQ0FBQztRQUN2QixZQUFPLEdBQVksQ0FBQyxDQUFDO1FBQ3JCLGNBQVMsR0FBYSxLQUFLLENBQUM7UUFDNUIsb0JBQWUsR0FBYyxFQUFFLENBQUM7SUFzRzVDLENBQUM7SUFwR0csSUFBVyxTQUFTLEtBQUssT0FBTyxJQUFJLENBQUMsU0FBUyxDQUFDLENBQUMsQ0FBQztJQUNqRCxJQUFXLFNBQVMsQ0FBQyxLQUFlO1FBQ2hDLElBQUksQ0FBQyxTQUFTLEdBQUcsS0FBSyxDQUFDO1FBQ3ZCLElBQUksS0FBSyxFQUFFO1lBQ1AsSUFBSSxDQUFDLFVBQVUsQ0FBQyxNQUFNLEdBQUcsSUFBSSxDQUFDLFdBQVcsQ0FBQztTQUM3QzthQUNJO1lBQ0QsSUFBSSxDQUFDLFVBQVUsQ0FBQyxNQUFNLEdBQUcsSUFBSSxDQUFDLFdBQVcsQ0FBQztTQUM3QztJQUNMLENBQUM7SUFFRCxRQUFRO1FBQ0osSUFBRyxJQUFJLENBQUMsVUFBVSxJQUFJLElBQUk7WUFBRSxJQUFJLENBQUMsVUFBVSxHQUFHLElBQUksQ0FBQyxZQUFZLFNBQUMsc0JBQUssRUFBRyxDQUFDO1FBQ3pFLElBQUksQ0FBQyxZQUFZLENBQUMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxDQUFDO1FBQ25DLElBQUksQ0FBQyxTQUFTLEdBQUcsS0FBSyxDQUFDO0lBQzNCLENBQUM7SUFFTyxZQUFZLENBQUMsR0FBVztR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","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/MiniGames/Draw/GuideLineHandler.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"guideSprite","type":"UnityEngine.Sprite","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"drawnSprite","type":"UnityEngine.Sprite","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"GuideLineHandler","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 7f01112dc67e52ed894243ddee426aa1
+  onlyWriteTrigger: 0

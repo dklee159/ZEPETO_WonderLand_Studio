@@ -1,0 +1,42 @@
+fileFormatVersion: 2
+guid: 4f94a9bebbfb18a4981928a36024a00e
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nexports.TeleportType = void 0;\r\nconst __UnityEngine__
+    = require(\"UnityEngine\");\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst ZEPETO_World_1 = require(\"ZEPETO.World\");\r\nclass
+    MoveToWorld extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    OnTriggerEnter(coll)
+    {\r\n        if (__UnityEngine__.Object.op_Equality(coll.gameObject, ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject))
+    {\r\n            ZEPETO_World_1.ZepetoWorldContent.MoveToWorld(this.worldId,
+    (errCode, errMsg) => {\r\n                // Example of error callback processing\r\n               
+    // (When implementing,try to implement it in various ways, such as pop-up windows)\r\n               
+    console.log(`${errCode} - ${errMsg}`);\r\n            });\r\n        }\r\n   
+    }\r\n}\r\nexports.default = MoveToWorld;\r\nvar WorldId;\r\n(function (WorldId)
+    {\r\n    WorldId[\"Wonder\"] = \"com.kofice.kwonderland\";\r\n    WorldId[\"Studio\"]
+    = \"com.kofice.kwonderdrama\";\r\n    WorldId[\"Stage\"] = \"com.kofice.kwonderlandpop\";\r\n   
+    WorldId[\"Awards\"] = \"com.kofice.kwonderawards\";\r\n})(WorldId || (WorldId
+    = {}));\r\nvar TeleportType;\r\n(function (TeleportType) {\r\n    TeleportType[\"Wonder\"]
+    = \"Wonder\";\r\n    TeleportType[\"Studio\"] = \"Studio\";\r\n    TeleportType[\"Stage\"]
+    = \"Stage\";\r\n    TeleportType[\"Awards\"] = \"Awards\";\r\n})(TeleportType
+    = exports.TeleportType || (exports.TeleportType = {}));\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTW92ZVRvV29ybGQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJNb3ZlVG9Xb3JsZC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUEsNkNBQXVDO0FBQ3ZDLDZFQUdxQztBQUNyQyxpREFBc0Q7QUFDdEQsK0NBQWtEO0FBRWxELE1BQXFCLFdBQVksU0FBUSxxQ0FBcUI7SUFJbEQsY0FBYyxDQUFDLElBQWM7UUFDakMsMkJBMEJzeFQsV0FBWSxDQXpCOXhULElBQUksQ0FBQyxVQUFVLEVBQ2YsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLFlBQVksQ0FBQyxTQUFTLENBQUMsVUFBVSxHQUN0RTtZQUNFLGlDQUFrQixDQUFDLFdBQVcsQ0FBQyxJQUFJLENBQUMsT0FBTyxFQUFFLENBQUMsT0FBTyxFQUFFLE1BQU0sRUFBRSxFQUFFO2dCQUM3RCx1Q0FBdUM7Z0JBQ3ZDLGtGQUFrRjtnQkFDbEYsT0FBTyxDQUFDLEdBQUcsQ0FBQyxHQUFHLE9BQU8sTUFBTSxNQUFNLEVBQUUsQ0FBQyxDQUFDO1lBQzFDLENBQUMsQ0FBQyxDQUFDO1NBQ047SUFDTCxDQUFDO0NBQ0o7QUFoQkQsOEJBZ0JDO0FBRUQsSUFBSyxPQUtKO0FBTEQsV0FBSyxPQUFPO0lBQ1IsNENBQWlDLENBQUE7SUFDakMsNkNBQWtDLENBQUE7SUFDbEMsOENBQW1DLENBQUE7SUFDbkMsOENBQW1DLENBQUE7QUFDdkMsQ0FBQyxFQUxJLE9BQU8sS0FBUCxPQUFPLFFBS1g7QUFFRCxJQUFZLFlBS1g7QUFMRCxXQUFZLFlBQVk7SUFDcEIsaUNBQWlCLENBQUE7SUFDakIsaUNBQWlCLENBQUE7SUFDakIsK0JBQWUsQ0FBQTtJQUNmLGlDQUFpQixDQUFBO0FBQ3JCLENBQUMsRUFMVyxZQUFZLEdBQVosb0JBQVksS0FBWixvQkFBWSxRQUt2QiJ9","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/Controllers/MoveToWorld.ts","manifest":{"properties":[{"assembly":"","name":"teleportType","type":"TeleportType","isArray":false,"initValue":[],"enumKeys":["Wonder","Studio","Stage","Awards"],"enumValues":["Wonder","Studio","Stage","Awards"],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"worldId","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"MoveToWorld","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: f555141c36995a5ec6f7745e7ea37970
+  onlyWriteTrigger: 0

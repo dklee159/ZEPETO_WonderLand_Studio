@@ -1,0 +1,39 @@
+fileFormatVersion: 2
+guid: 60653bbb34cc5584e8939052244075cf
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst TMPro_1 = require(\"TMPro\");\r\nconst UnityEngine_1
+    = require(\"UnityEngine\");\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst TypeManager_1 = require(\"../TypeManager\");\r\nclass
+    ToastController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Toast(text,
+    activeMainCanvas) {\r\n        this.StartCoroutine(this.ShowToastMessage(text,
+    activeMainCanvas));\r\n    }\r\n    *ShowToastMessage(text, activeMainCanvas)
+    {\r\n        if (!this.waitForSecond)\r\n            this.waitForSecond = new
+    UnityEngine_1.WaitForSeconds(1);\r\n        yield this.waitForSecond;\r\n       
+    // Choice Target\r\n        const isFailed = (text == TypeManager_1.TOAST_MESSAGE.feedFailed);\r\n       
+    const targetMessgae = isFailed ? this.toastErrorMessage : this.toastSuccessMessage;\r\n       
+    // Instantiate GameObject\r\n        const toastMessage = UnityEngine_1.GameObject.Instantiate(targetMessgae);\r\n       
+    toastMessage.transform.SetParent(activeMainCanvas ? this.mainCanvas : this.animationCanvas);\r\n       
+    // Set Target Text\r\n        toastMessage.GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = text;\r\n        // Finish\r\n        UnityEngine_1.GameObject.Destroy(toastMessage,
+    1);\r\n    }\r\n}\r\nexports.default = ToastController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVG9hc3RDb250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVG9hc3RDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaUNBQXdDO0FBQ3hDLDZDQUFvRTtBQUNwRSxtREFBc0M7QUFDdEMsaURBQXFEO0FBQ3JELGdEQUErQztBQUUvQyxNQUFxQixlQUFnQixTQUFRLHFDQUFxQjtJQWF2RCxLQUFLLENBQUMsSUFBVyxFQUFFLGdCQUF3QjtRQUM5QyxJQUFJLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxJQUFJLEVBQUUsZ0JBQWdCLENBQUMsQ0FBQyxDQUFDO0lBQ3ZFLENBQUM7SUFFTyxDQUFFLGdCQUFnQixDQUFDLElBQVcsRUFBRSxnQkFBd0I7UUFDNUQsSUFBRyxDQUFDLElBQUksQ0FBQyxhQUFhO1lBQUUsSUFBSSxDQUFDLGFBQWEsR0FBRyxJQUFJLDRCQUFjLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDbkUsTUFBTSxJQUFJLENBQUMsYUFBYSxDQUFDO1FBRXpCLGdCQUFnQjtRQUNoQixNQUFNLFFBQVEsR0FBRyxDQUFDLElBQUksSUFBSSwyQkFBYSxDQUFDLFVBQVUsQ0FBQyxDQUFDO1FBQ3BELE1BQU0sYUFBYSxHQUFHLFFBQVEsQ0FBQyxDQUFDLENBQUMsSUFBSSxDQUFDLGlCQUFpQixDQUFDLENBQUMsQ0FBQyxJQUFJLENBQUMsbUJBQW1CLENBQUM7UUFFbkYseUJBQXlCO1FBQ3pCLE1BQU0sWUFBWSxHQUFjLHdCQUFVLENBQUMsV0FBVyxDQUFhLGFBQWEsQ0FBQyxDQUFDO1FBQ2xGLFlBQVksQ0FBQyxTQUFTLENBQUMsU0FBUyxDQUFDLGdCQUFnQixDQUFDLENBQUMsQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLENBQUMsQ0FBQSxJQUFJLENBQUMsZUFBZSxDQUFDLENBQUM7UUFFM0Ysa0JBQWtCO1FBQ2xCLFlBQVksQ0FBQyxzQkFBc0IsU0FBQyxxQkFBSSxHQUFJLElBQUksR0FBRyxJQUFJLENBQUM7UUFFeEQsU0FBUztRQUNULHdCQUFVLENBQUMsT0FBTyxDQUFDLFlBQVksRUFBRSxDQUFDLENBQUMsQ0FBQztJQUN4QyxDQUFDO0NBQ0o7QUFuQ0Qsa0NBbUNDIn0=","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/Controllers/ToastController.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"toastErrorMessage","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"toastSuccessMessage","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"mainCanvas","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"animationCanvas","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"Unity.TextMeshPro","name":"textAnimation_Text","type":"TMPro.TextMeshProUGUI","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"","name":"textAnimation","type":"Animation","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"Unity.TextMeshPro","name":"textAnimation_OneSec_Text","type":"TMPro.TextMeshProUGUI","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"","name":"textAnimation_OneSec","type":"Animation","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"ToastController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 5f3231e83bfcac266d2b898b68331ad5
+  onlyWriteTrigger: 0

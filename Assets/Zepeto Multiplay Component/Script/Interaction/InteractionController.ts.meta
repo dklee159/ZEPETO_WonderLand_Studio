@@ -1,0 +1,78 @@
+fileFormatVersion: 2
+guid: b33e00622a502f44f8b67897c96e030c
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: "{\"source\":\"\\\"use strict\\\";\\r\\nObject.defineProperty(exports,
+    \\\"__esModule\\\", { value: true });\\r\\nconst UnityEngine_1 = require(\\\"UnityEngine\\\");\\r\\nconst
+    ZEPETO_Character_Controller_1 = require(\\\"ZEPETO.Character.Controller\\\");\\r\\nconst
+    ZEPETO_Script_1 = require(\\\"ZEPETO.Script\\\");\\r\\nconst InteractionBtn_1
+    = require(\\\"../InteractionBtn\\\");\\r\\nclass InteractionController extends
+    ZEPETO_Script_1.ZepetoScriptBehaviour {\\r\\n    constructor() {\\r\\n       
+    super(...arguments);\\r\\n        this.isSnapBone = true;\\r\\n        this.allowOverlap
+    = false;\\r\\n        this.outPos = null;\\r\\n        this.cameraOffsetX = 0;\\r\\n       
+    this.cameraOffsetY = 0;\\r\\n        this.cameraOffsetZ = 0;\\r\\n        this._outPosition
+    = null;\\r\\n    }\\r\\n    RemoteStart() {\\r\\n        this._interactionBtn
+    = this.GetComponent($typeof(InteractionBtn_1.default));\\r\\n        this._localCharacter
+    = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;\\r\\n       
+    this.cameraOffset = new UnityEngine_1.Vector3(this.cameraOffsetX, this.cameraOffsetY,
+    this.cameraOffsetZ);\\r\\n        if (this.outPos)\\r\\n            this._outPosition
+    = this.outPos.position;\\r\\n    }\\r\\n    SendSignal() {\\r\\n        // this._outPosition
+    = this.transform.position;\\r\\n        if (this.isSnapBone) {\\r\\n           
+    //is place empty\\r\\n            if (this.allowOverlap || this.FindOtherPlayerNum()
+    < 1) {\\r\\n                //\uC790\uB9AC\uAC00 \uBE44\uC5B4\uC788\uC74C           
+    \\r\\n                this._localCharacter.SetGesture(this.animationClip);\\r\\n               
+    this.StartCoroutine(this.SnapBone());\\r\\n                this.StartCoroutine(this.WaitForExit());\\r\\n           
+    }\\r\\n            else {\\r\\n                this._interactionBtn.HideIcon();\\r\\n           
+    }\\r\\n        }\\r\\n        else {\\r\\n            this._localCharacter.SetGesture(this.animationClip);\\r\\n           
+    this.StartCoroutine(this.WaitForExit());\\r\\n        }\\r\\n    }\\r\\n    //
+    The exact method must go through the server code, but it is calculated by the
+    local client for server optimization.\\r\\n    FindOtherPlayerNum() {\\r\\n       
+    const hitInfos = UnityEngine_1.Physics.OverlapSphere(this.transPos.position,
+    0.1);\\r\\n        let playerNum = 0;\\r\\n        if (hitInfos.length > 0) {\\r\\n           
+    hitInfos.forEach((hitInfo) => {\\r\\n                if (hitInfo.transform.GetComponent($typeof(ZEPETO_Character_Controller_1.ZepetoCharacter)))
+    {\\r\\n                    playerNum++;\\r\\n                }\\r\\n           
+    });\\r\\n        }\\r\\n        return playerNum;\\r\\n    }\\r\\n    *SnapBone()
+    {\\r\\n        const animator = this._localCharacter.ZepetoAnimator;\\r\\n       
+    const bone = animator.GetBoneTransform(this.bodyBone);\\r\\n        if (UnityEngine_1.Vector3.op_Inequality(this.cameraOffset,
+    UnityEngine_1.Vector3.zero))\\r\\n            ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoCamera.additionalOffset
+    = this.cameraOffset;\\r\\n        let idx = 0;\\r\\n        while (true) {\\r\\n           
+    const distance = UnityEngine_1.Vector3.op_Subtraction(bone.position, this._localCharacter.transform.position);\\r\\n           
+    const newPos = UnityEngine_1.Vector3.op_Subtraction(this.transPos.position, distance);\\r\\n           
+    this._playerGesturePosition = newPos;\\r\\n            this._localCharacter.transform.position
+    = this._playerGesturePosition;\\r\\n            this._localCharacter.transform.rotation
+    = this.transPos.rotation;\\r\\n            yield new UnityEngine_1.WaitForEndOfFrame();\\r\\n           
+    idx++;\\r\\n            // Calibrate position during 5 frames of animation.\\r\\n           
+    if (idx > 5)\\r\\n                return;\\r\\n        }\\r\\n    }\\r\\n   
+    *WaitForExit() {\\r\\n        if (this._localCharacter) {\\r\\n            while
+    (true) {\\r\\n                if (this._localCharacter.tryJump || this._localCharacter.tryMove)
+    {\\r\\n                    // \uC81C\uC2A4\uCCD0 \uCDE8\uC18C\\r\\n                   
+    if (UnityEngine_1.Vector3.op_Inequality(this.cameraOffset, UnityEngine_1.Vector3.zero))\\r\\n                       
+    ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoCamera.additionalOffset
+    = UnityEngine_1.Vector3.zero;\\r\\n                    this._localCharacter.CancelGesture();\\r\\n                   
+    if (this.outPos) {\\r\\n                        this._localCharacter.transform.position
+    = this.outPos.position;\\r\\n                        this._localCharacter.transform.rotation
+    = this.outPos.rotation;\\r\\n                    }\\r\\n                    this._interactionBtn.ShowIcon();\\r\\n                   
+    break;\\r\\n                }\\r\\n                else if (this.isSnapBone &&
+    UnityEngine_1.Vector3.op_Inequality(this._playerGesturePosition, this._localCharacter.transform.position))
+    {\\r\\n                    this._interactionBtn.ShowIcon();\\r\\n                   
+    break;\\r\\n                }\\r\\n                yield;\\r\\n            }\\r\\n       
+    }\\r\\n    }\\r\\n}\\r\\nexports.default = InteractionController;\\r\\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSW50ZXJhY3Rpb25Db250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiSW50ZXJhY3Rpb25Db250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQXNIO0FBQ3RILDZFQUE2RTtBQUM3RSxpREFBcUQ7QUFDckQsc0RBQStDO0FBRy9DLE1BQXFCLHFCQUFzQixTQUFRLHFDQUFxQjtJQUF4RTs7UUFHOEIsZUFBVSxHQUFZLElBQUksQ0FBQztRQUUzQixpQkFBWSxHQUFZLEtBQUssQ0FBQztRQUU5QixXQUFNLEdBQWMsSUFBSSxDQUFDO1FBQ3pCLGtCQUFhLEdBQVksQ0FBQyxDQUFDO1FBQzNCLGtCQUFhLEdBQVksQ0FBQyxDQUFDO1FBQzNCLGtCQUFhLEdBQVksQ0FBQyxDQUFDO1FBTzdDLGlCQUFZLEdBQVksSUFBSSxDQUFDO0lBMkZ6QyxDQUFDO0lBekZVLFdBQVc7UUFDZCxJQUFJLENBQUMsZUFBZSxHQUFHLElBQUksQ0FBQyxZQUFZLFNBQUMsd0JBQWMsRUFBRyxDQUFDO1FBQzNELElBQUksQ0FBQyxlQUFlLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLFlBQVksQ0FBQyxTQUFTLENBQUM7UUFDakYsSUFBSSxDQUFDLFlBQVksR0FBRyxJQUFJLHFCQUFPLENBQUMsSUFBSSxDQUFDLGFBQWEsRUFBRSxJQUFJLENBQUMsYUFBYSxFQUFFLElBQUksQ0FBQyxhQUFhLENBQUMsQ0FBQztRQUM1RixJQUFJLElBQUksQ0FBQyxNQUFNO1lBQUUsSUFBSSxDQUFDLFlBQVksR0FBRyxJQUFJLENBQUMsTUFBTSxDQUFDLFFBQVEsQ0FBQztJQUM5RCxDQUFDO0lBRU0sVUFBVTtRQUNiLCtDQUErQztRQUUvQyxJQUFJLElBQUksQ0FBQyxVQUFVLEVBQUU7WUFDakIsZ0JBQWdCO1lBQ2hCLElBQUksSUFBSSxDQUFDLFlBQVksSUFBSSxJQUFJLENBQUMsa0JBQWtCLEVBQUUsR0FBRyxDQUFDLEVBQUU7Z0JB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\",\"assetPath\":\"Assets/Zepeto
+    Multiplay Component/Script/Interaction/InteractionController.ts\",\"manifest\":{\"properties\":[{\"assembly\":\"UnityEngine.AnimationModule\",\"name\":\"animationClip\",\"type\":\"UnityEngine.AnimationClip\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"mscorlib\",\"name\":\"isSnapBone\",\"type\":\"System.Boolean\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.AnimationModule\",\"name\":\"bodyBone\",\"type\":\"UnityEngine.HumanBodyBones\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"mscorlib\",\"name\":\"allowOverlap\",\"type\":\"System.Boolean\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"transPos\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"outPos\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"mscorlib\",\"name\":\"cameraOffsetX\",\"type\":\"System.Single\",\"isArray\":false,\"initValue\":[\"0\"],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"mscorlib\",\"name\":\"cameraOffsetY\",\"type\":\"System.Single\",\"isArray\":false,\"initValue\":[\"0\"],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"mscorlib\",\"name\":\"cameraOffsetZ\",\"type\":\"System.Single\",\"isArray\":false,\"initValue\":[\"0\"],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]}],\"name\":\"InteractionController\",\"description\":\"\",\"hasAnimatorMove\":false},\"isCompiled\":true}"
+  typescriptHash: f34915cefc4b791a194392f527319d7a
+  onlyWriteTrigger: 0

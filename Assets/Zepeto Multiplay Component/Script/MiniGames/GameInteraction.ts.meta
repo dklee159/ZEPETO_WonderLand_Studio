@@ -1,0 +1,112 @@
+fileFormatVersion: 2
+guid: d1fd038ca7759c947bb6fc620318948f
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nexports.InteractionType = void 0;\r\nconst ZEPETO_Script_1
+    = require(\"ZEPETO.Script\");\r\nconst InteractionBtn_1 = require(\"../Interaction/InteractionBtn\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst DrawManager_1 = require(\"./Draw/DrawManager\");\r\nconst
+    JetskiManager_1 = require(\"./Jetski/JetskiManager\");\r\nconst FoodManager_1
+    = require(\"../Manager/FoodManager\");\r\nconst PhotoBoothManager_1 = require(\"../Manager/PhotoBoothManager\");\r\nconst
+    LanguageZoneManager_1 = require(\"../Manager/LanguageZoneManager\");\r\nconst
+    GameManager_1 = require(\"../GameManager\");\r\nconst QuizGameManager_1 = require(\"./QuizGame/QuizGameManager\");\r\nconst
+    BuskingZoneManager_1 = require(\"../Manager/BuskingZoneManager\");\r\nconst LeaderboardManager_1
+    = require(\"../Manager/LeaderboardManager\");\r\nconst ChairController_1 = require(\"../Controllers/ChairController\");\r\nclass
+    GameInteraction extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start()
+    {\r\n        this._interactionBtn = this.GetComponent($typeof(InteractionBtn_1.default));\r\n       
+    this._interactionBtn.onClickEvent.AddListener(() => {\r\n            GameManager_1.default.instance.InteractionCallback();\r\n           
+    if (!(this._interactionType == InteractionType.LanguageAudio || this._interactionType
+    == InteractionType.BuskingHeart_1 || this._interactionType == InteractionType.BuskingHeart_2))\r\n               
+    this._interactionBtn.HideIcon();\r\n            this.DoInteraction();\r\n       
+    });\r\n    }\r\n    DoInteraction() {\r\n        switch (this._interactionType)
+    {\r\n            case InteractionType.LanguageZone:\r\n                this._managerComponent
+    = this._manager.GetComponent($typeof(LanguageZoneManager_1.default));\r\n               
+    this._managerComponent.MoveToLanguageZone();\r\n                break;\r\n           
+    case InteractionType.ReturnAtLanguage:\r\n                this._managerComponent
+    = this._manager.GetComponent($typeof(LanguageZoneManager_1.default));\r\n               
+    this._managerComponent.ReturnToPoint();\r\n                break;\r\n           
+    case InteractionType.QuizGame:\r\n                this._managerComponent = this._manager.GetComponent($typeof(QuizGameManager_1.default));\r\n               
+    this._managerComponent.StartQuiz();\r\n                break;\r\n           
+    case InteractionType.DrawWord:\r\n                this._managerComponent = this._manager.GetComponent($typeof(DrawManager_1.default));\r\n               
+    this._managerComponent.DrawStart();\r\n                break;\r\n           
+    case InteractionType.LanguageAudio:\r\n                this._managerComponent
+    = this._manager.GetComponent($typeof(LanguageZoneManager_1.default));\r\n               
+    this._managerComponent.PlaySound(this.GetComponent($typeof(UnityEngine_1.AudioSource)));\r\n               
+    break;\r\n            case InteractionType.Jetski:\r\n                this._managerComponent
+    = this._manager.GetComponent($typeof(JetskiManager_1.default));\r\n               
+    this._managerComponent.UIActivate();\r\n                break;\r\n           
+    case InteractionType.Ranking:\r\n                this._managerComponent = this._manager.GetComponent($typeof(LeaderboardManager_1.default));\r\n               
+    this._managerComponent.ShowRanking();\r\n                break;\r\n           
+    case InteractionType.PhotoBooth:\r\n                this._managerComponent =
+    this._manager.GetComponent($typeof(PhotoBoothManager_1.default));\r\n               
+    this._managerComponent.PhotoBoothStart();\r\n                break;\r\n           
+    case InteractionType.Busking_1:\r\n                this._managerComponent = this._manager.GetComponent($typeof(BuskingZoneManager_1.default));\r\n               
+    this._managerComponent.BuskingIsStart(1, true);\r\n                break;\r\n           
+    case InteractionType.BuskingHeart_1:\r\n                this._managerComponent
+    = this._manager.GetComponent($typeof(BuskingZoneManager_1.default));\r\n               
+    this._managerComponent.AddHeart(1);\r\n                break;\r\n           
+    case InteractionType.Busking_2:\r\n                this._managerComponent = this._manager.GetComponent($typeof(BuskingZoneManager_1.default));\r\n               
+    this._managerComponent.BuskingIsStart(2, true);\r\n                break;\r\n           
+    case InteractionType.BuskingHeart_2:\r\n                this._managerComponent
+    = this._manager.GetComponent($typeof(BuskingZoneManager_1.default));\r\n               
+    this._managerComponent.AddHeart(2);\r\n                break;\r\n           
+    case InteractionType.Ttekbokki:\r\n                this._managerComponent = this._manager.GetComponent($typeof(FoodManager_1.default));\r\n               
+    this._managerComponent.OpenPurchaseUI(this._interactionType);\r\n               
+    break;\r\n            case InteractionType.RawMeat:\r\n                this._managerComponent
+    = this._manager.GetComponent($typeof(FoodManager_1.default));\r\n               
+    this._managerComponent.OpenPurchaseUI(this._interactionType);\r\n               
+    break;\r\n            case InteractionType.Jeon:\r\n                this._managerComponent
+    = this._manager.GetComponent($typeof(FoodManager_1.default));\r\n               
+    this._managerComponent.OpenPurchaseUI(this._interactionType);\r\n               
+    break;\r\n            case InteractionType.Bibim:\r\n                this._managerComponent
+    = this._manager.GetComponent($typeof(FoodManager_1.default));\r\n               
+    this._managerComponent.OpenPurchaseUI(this._interactionType);\r\n               
+    break;\r\n            case InteractionType.Chicken:\r\n                this._managerComponent
+    = this._manager.GetComponent($typeof(FoodManager_1.default));\r\n               
+    this._managerComponent.OpenPurchaseUI(this._interactionType);\r\n               
+    break;\r\n            case InteractionType.TwistedBread:\r\n                this._managerComponent
+    = this._manager.GetComponent($typeof(FoodManager_1.default));\r\n               
+    this._managerComponent.OpenPurchaseUI(this._interactionType);\r\n               
+    break;\r\n            case InteractionType.ChairSit:\r\n                this._managerComponent
+    = this._manager.GetComponent($typeof(ChairController_1.default));\r\n               
+    this._managerComponent.SitOnChair();\r\n                break;\r\n           
+    default:\r\n                break;\r\n        }\r\n    }\r\n}\r\nexports.default
+    = GameInteraction;\r\nvar InteractionType;\r\n(function (InteractionType) {\r\n   
+    InteractionType[InteractionType[\"PhotoBooth\"] = 50] = \"PhotoBooth\";\r\n   
+    InteractionType[InteractionType[\"LanguageZone\"] = 60] = \"LanguageZone\";\r\n   
+    InteractionType[InteractionType[\"DrawWord\"] = 61] = \"DrawWord\";\r\n    InteractionType[InteractionType[\"QuizGame\"]
+    = 62] = \"QuizGame\";\r\n    InteractionType[InteractionType[\"LanguageAudio\"]
+    = 63] = \"LanguageAudio\";\r\n    InteractionType[InteractionType[\"ReturnAtLanguage\"]
+    = 64] = \"ReturnAtLanguage\";\r\n    InteractionType[InteractionType[\"Busking_1\"]
+    = 70] = \"Busking_1\";\r\n    InteractionType[InteractionType[\"Busking_2\"]
+    = 71] = \"Busking_2\";\r\n    InteractionType[InteractionType[\"BuskingHeart_1\"]
+    = 72] = \"BuskingHeart_1\";\r\n    InteractionType[InteractionType[\"BuskingHeart_2\"]
+    = 73] = \"BuskingHeart_2\";\r\n    InteractionType[InteractionType[\"Jetski\"]
+    = 80] = \"Jetski\";\r\n    InteractionType[InteractionType[\"Ranking\"] = 81]
+    = \"Ranking\";\r\n    InteractionType[InteractionType[\"Ttekbokki\"] = 90] =
+    \"Ttekbokki\";\r\n    InteractionType[InteractionType[\"RawMeat\"] = 91] = \"RawMeat\";\r\n   
+    InteractionType[InteractionType[\"Jeon\"] = 93] = \"Jeon\";\r\n    InteractionType[InteractionType[\"Bibim\"]
+    = 98] = \"Bibim\";\r\n    InteractionType[InteractionType[\"Chicken\"] = 99]
+    = \"Chicken\";\r\n    InteractionType[InteractionType[\"TwistedBread\"] = 100]
+    = \"TwistedBread\";\r\n    InteractionType[InteractionType[\"ChairSit\"] = 110]
+    = \"ChairSit\";\r\n})(InteractionType = exports.InteractionType || (exports.InteractionType
+    = {}));\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR2FtZUludGVyYWN0aW9uLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiR2FtZUludGVyYWN0aW9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBLGlEQUFxRDtBQUNyRCxrRUFBMEQ7QUFDMUQsNkNBQXNEO0FBQ3RELG9EQUE2QztBQUM3QywwREFBbUQ7QUFDbkQsd0RBQWlEO0FBQ2pELG9FQUE2RDtBQUM3RCx3RUFBaUU7QUFDakUsZ0RBQXlDO0FBQ3pDLGdFQUF5RDtBQUN6RCxzRUFBK0Q7QUFDL0Qsc0VBQStEO0FBQy9ELG9FQUE2RDtBQUU3RCxNQUFxQixlQUFnQixTQUFRLHFDQUFxQjtJQVE5RCxLQUFLO1FBQ0QsSUFBSSxDQUFDLGVBQWUsR0FBRyxJQUFJLENBQUMsWUFBWSxTQUFDLHdCQUFjLEVBQUcsQ0FBQztRQUMzRCxJQUFJLENBQUMsZUFBZSxDQUFDLFlBQVksQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQy9DLHFCQUFXLENBQUMsUUFBUSxDQUFDLG1CQUFtQixFQUFFLENBQUM7WUFDM0MsSUFBSSxDQUFDLENBQUMsSUFBSSxDQUFDLGdCQUFnQixJQUFJLGVBQWUsQ0FBQyxhQUFhLElBQUcsSUFBSSxDQUFDLGdCQUFnQixJQUFJLGVBQWUsQ0FBQyxjQUFjLElBQUksSUFBSSxDQUFDLGdCQUFnQixJQUFJLGVBQWUsQ0FBQyxjQUFjLENBQUM7Z0JBQUUsSUFBSSxDQUFDLGVBQWUsQ0FBQyxRQUFRLEVBQUUsQ0FBQztZQUVwTixJQUFJLENBQUMsYUFBYSxFQUFFLENBQUM7UUFDekIsQ0FBQyxDQUFDLENBQUE7SUFDTixDQUFDO0lBRU0sYUFBYTtRQUNoQixRQUFRLElBQUksQ0FBQyxnQkFBZ0IsRUFBRTtZQUMzQixLQUFLLGVBQWUsQ0FBQyxZQUFZO2dCQUM3QixJQUFJLENBQUMsaUJBQWlCLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxZQUFZLFNBQUMsNkJBQW1CLEVBQUcsQ0FBQztnQkFDM0UsSUFBSSxDQUFDLGlCQUFpQixDQUFDLGtCQUFrQixFQUFFLENBQUM7Z0JBQzVDLE1BQU07WUFDVixLQUFLLGVBQWUsQ0FBQyxnQkFBZ0I7Z0JBQ2pDLElBQUksQ0FBQyxpQkFBaUIsR0FBRyxJQUFJLENBQUMsUUFBUSxDQUFDLFlBQVksU0FBQyw2QkFBbUIsRUFBRyxDQUFDO2dCQUMzRSxJQUFJLENBQUMsaUJBQWlCLENBQUMsYUFBYSxFQUFFLENBQUM7Z0JBQ3ZDLE1BQU07WUFDVixLQUFLLGVBQWUsQ0FBQyxRQUFRO2dCQUN6QixJQUFJLENBQUMsaUJBQWlCLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxZQUFZLFNBQUMseUJBQWUsRUFBRyxDQUFDO2dCQUN2RSxJQUFJLENBQUMsaUJBQWlCLENBQUMsU0FBUyxFQUFFLENBQUM7Z0JBQ25DLE1BQU07WUFDVixLQUFLLGVBQWUsQ0FBQyxRQUFRO2dCQUN6QixJQUFJLENBQUMsaUJBQWlCLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxZQUFZLFNBQUMscUJBQVcsRUFBRyxDQUFDO2dCQUNuRSxJQUFJLENBQUMsaUJBQWlCLENBQUMsU0FBUyxFQUFFLENBQUM7Z0JBQ25DLE1BQU07WUFDVixLQUFLLGVBQWUsQ0FBQyxhQUFhO2dCQUM5QixJQUFJLENBQUMsaUJBQWlCLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxZQUFZLFNBQUMsNkJBQW1CLEVBQUcsQ0FBQztnQkFDM0UsSUFBSSxDQUFDLGlCQUFpQixDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsWUFBWSxTQUFDLHlCQUFXLEdBQUksQ0FBQztnQkFDbkUsTUFBTTtZQUNWLEtBQUssZUFBZSxDQUFDLE1BQU07Z0JBQ3ZCLElBQUksQ0FBQyxpQkFBaUIsR0FBRyxJQUFJLENBQUMsUUFBUSxDQUFDLFlBQVksU0FBQyx1QkFBYSxFQUFHLENBQUM7Z0JBQ3JFLElBQUksQ0FBQyxpQkFBaUIsQ0FBQyxVQUFVLEVBQUUsQ0FBQztnQkFDcEMsTUFBTTtZQUNWLEtBQUssZUFBZSxDQUFDLE9BQU87Z0JBQ3hCLElBQUksQ0FBQyxpQkFBaUIsR0FBRyxJQUFJLENBQUMsUUFBUSxDQUFDLFlBQVksU0FBQyw0QkFBa0IsRUFBRyxDQUFDO2dCQUMxRSxJQUFJLENBQUMsaUJBQWlCLENBQUMsV0FBVyxFQUFFLENBQUM7Z0JBQ3JDLE1BQU07WUFDVixLQUFLLGVBQWUsQ0FBQyxVQUFVO2dCQUMzQixJQUFJLENBQUMsaUJBQWlCLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxZQUFZLFNBQUMsMkJBQWlCLEVBQUcsQ0FBQztnQkFDekUsSUFBSSxDQUFDLGlCQUFpQixDQUFDLGVBQWUsRUFBRSxDQUFDO2dCQUN6QyxNQUFNO1lBQ1YsS0FBSyxlQUFlLENBQUMsU0FBUztnQkFDMUIsSUFBSSxDQUFDLGlCQUFpQixHQUFHLElBQUksQ0FBQyxRQUFRLENBQUMsWUFBWSxTQUFDLDRCQUFrQixFQUFHLENBQUM7Z0JBQzFFLElBQUksQ0FBQyxpQkFBaUIsQ0FBQyxjQUFjLENBQUMsQ0FBQyxFQUFFLElBQUksQ0FBQyxDQUFDO2dCQUMvQyxNQUFNO1lBQ1YsS0FBSyxlQUFlLENBQUMsY0FBYztnQkFDL0IsSUFBSSxDQUFDLGlCQUFpQixHQUFHLElBQUksQ0FBQyxRQUFRLENBQUMsWUFBWSxTQUFDLDRCQUFrQixFQUFHLENBQUM7Z0JBQzFFLElBQUksQ0FBQyxpQkFBaUIsQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLENBQUM7Z0JBQ25DLE1BQU07WUFDVixLQUFLLGVBQWUsQ0FBQyxTQUFTO2dCQUMxQixJQUFJLENBQUMsaUJBQWlCLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxZQUFZLFNBQUMsNEJBQWtCLEVBQUcsQ0FBQztnQkFDMUUsSUFBSSxDQUFDLGlCQUFpQixDQUFDLGNBQWMsQ0FBQyxDQUFDLEVBQUUsSUFBSSxDQUFDLENBQUM7Z0JBQy9DLE1BQU07WUFDVixLQUFLLGVBQWUsQ0FBQyxjQUFjO2dCQUMvQixJQUFJLENBQUMsaUJBQWlCLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxZQUFZLFNBQUMsNEJBQWtCLEVBQUcsQ0FBQztnQkFDMUUsSUFBSSxDQUFDLGlCQUFpQixDQUFDLFFBQVEsQ0FBQyxDQUFDLENBQUMsQ0FBQztnQkFDbkMsTUFBTTtZQUNWLEtBQUssZUFBZSxDQUFDLFNBQVM7Z0JBQzFCLElBQUksQ0FBQyxpQkFBaUIsR0FBRyxJQUFJLENBQUMsUUFBUSxDQUFDLFlBQVksU0FBQyxxQkFBVyxFQUFHLENBQUM7Z0JBQ25FLElBQUksQ0FBQyxpQkFBaUIsQ0FBQyxjQUFjLENBQUMsSUFBSSxDQUFDLGdCQUFnQixDQUFDLENBQUM7Z0JBQzdELE1BQU07WUFDVixLQUFLLGVBQWUsQ0FBQyxPQUFPO2dCQUN4QixJQUFJLENBQUMsaUJBQWlCLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxZQUFZLFNBQUMscUJBQVcsRUFBRyxDQUFDO2dCQUNuRSxJQUFJLENBQUMsaUJBQWlCLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxDQUFDO2dCQUM3RCxNQUFNO1lBQ1YsS0FBSyxlQUFlLENBQUMsSUFBSTtnQkFDckIsSUFBSSxDQUFDLGlCQUFpQixHQUFHLElBQUksQ0FBQyxRQUFRLENBQUMsWUFBWSxTQUFDLHFCQUFXLEVBQUcsQ0FBQztnQkFDbkUsSUFBSSxDQUFDLGlCQUFpQixDQUFDLGNBQWMsQ0FBQyxJQUFJLENBQUMsZ0JBQWdCLENBQUMsQ0FBQztnQkFDN0QsTUFBTTtZQUNWLEtBQUssZUFBZSxDQUFDLEtBQUs7Z0JBQ3RCLElBQUksQ0FBQyxpQkFBaUIsR0FBRyxJQUFJLENBQUMsUUFBUSxDQUFDLFlBQVksU0FBQyxxQkFBVyxFQUFHLENBQUM7Z0JBQ25FLElBQUksQ0FBQyxpQkFBaUIsQ0FBQyxjQUFjLENBQUMsSUFBSSxDQUFDLGdCQUFnQixDQUFDLENBQUM7Z0JBQzdELE1BQU07WUFDVixLQUFLLGVBQWUsQ0FBQyxPQUFPO2dCQUN4QixJQUFJLENBQUMsaUJBQWlCLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxZQUFZLFNBQUMscUJBQVcsRUFBRyxDQUFDO2dCQUNuRSxJQUFJLENBQUMsaUJBQWlCLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxDQUFDO2dCQUM3RCxNQUFNO1lBQ1YsS0FBSyxlQUFlLENBQUMsWUFBWTtnQkFDN0IsSUFBSSxDQUFDLGlCQUFpQixHQUFHLElBQUksQ0FBQyxRQUFRLENBQUMsWUFBWSxTQUFDLHFCQUFXLEVBQUcsQ0FBQztnQkFDbkUsSUFBSSxDQUFDLGlCQUFpQixDQUFDLGNBQWMsQ0FBQyxJQUFJLENBQUMsZ0JBQWdCLENBQUMsQ0FBQztnQkFDN0QsTUFBTTtZQUNWLEtBQUssZUFBZSxDQUFDLFFBQVE7Z0JBQ3pCLElBQUksQ0FBQyxpQkFBaUIsR0FBRyxJQUFJLENBQUMsUUFBUSxDQUFDLFlBQVksU0FBQyx5QkFBZSxFQUFHLENBQUM7Z0JBQ3ZFLElBQUksQ0FBQyxpQkFBaUIsQ0FBQyxVQUFVLEVBQUUsQ0FBQztnQkFDcEMsTUFBTTtZQUNWO2dCQUNJLE1BQU07U0FDYjtJQUNMLENBQUM7Q0FDSjtBQXBHRCxrQ0FvR0M7QUFFRCxJQUFZLGVBb0JYO0FBcEJELFdBQVksZUFBZTtJQUN2QixrRUFBZSxDQUFBO0lBQ2Ysc0VBQWlCLENBQUE7SUFDakIsOERBQWEsQ0FBQTtJQUNiLDhEQUFhLENBQUE7SUFDYix3RUFBa0IsQ0FBQTtJQUNsQiw4RUFBcUIsQ0FBQTtJQUNyQixnRUFBYyxDQUFBO0lBQ2QsZ0VBQWMsQ0FBQTtJQUNkLDBFQUFtQixDQUFBO0lBQ25CLDBFQUFtQixDQUFBO0lBQ25CLDBEQUFXLENBQUE7SUFDWCw0REFBWSxDQUFBO0lBQ1osZ0VBQWMsQ0FBQTtJQUNkLDREQUFZLENBQUE7SUFDWixzREFBUyxDQUFBO0lBQ1Qsd0RBQVUsQ0FBQTtJQUNWLDREQUFZLENBQUE7SUFDWix1RUFBa0IsQ0FBQTtJQUNsQiwrREFBYyxDQUFBO0FBQ2xCLENBQUMsRUFwQlcsZUFBZSxHQUFmLHVCQUFlLEtBQWYsdUJBQWUsUUFvQjFCIn0=","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/MiniGames/GameInteraction.ts","manifest":{"properties":[{"assembly":"","name":"_interactionType","type":"InteractionType","isArray":false,"initValue":[],"enumKeys":["PhotoBooth","LanguageZone","DrawWord","QuizGame","LanguageAudio","ReturnAtLanguage","Busking_1","Busking_2","BuskingHeart_1","BuskingHeart_2","Jetski","Ranking","Ttekbokki","RawMeat","Jeon","Bibim","Chicken","TwistedBread","ChairSit"],"enumValues":["50","60","61","62","63","64","70","71","72","73","80","81","90","91","93","98","99","100","110"],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"_manager","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"GameInteraction","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 8968d0a29fb8ece6128367cdcaadb3c0
+  onlyWriteTrigger: 0

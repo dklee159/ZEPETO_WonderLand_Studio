@@ -1,0 +1,151 @@
+fileFormatVersion: 2
+guid: 947d3ca3c21d8284f8c94cd7069ebfa9
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst __UnityEngine__ = require(\"UnityEngine\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst GameManager_1 = require(\"../GameManager\");\r\nconst
+    AnimationManager_1 = require(\"./AnimationManager\");\r\nconst TMPro_1 = require(\"TMPro\");\r\nconst
+    LocalizeExternText_1 = require(\"../Lang/LocalizeExternText\");\r\nconst TypeManager_1
+    = require(\"../TypeManager\");\r\nconst MultiplayManager_1 = require(\"../../ZepetoScript/Common/MultiplayManager\");\r\nconst
+    GiftController_1 = require(\"../Controllers/GiftController\");\r\nclass UIManager
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
+    super(...arguments);\r\n        this.wonderCoinTexts = [];\r\n        this.dialogueTexts
+    = [];\r\n        this.dialogueIndex = 0;\r\n    }\r\n    /* Getter Setter */\r\n   
+    get openUI() { return this._openUI; }\r\n    set openUI(value) {\r\n        if
+    (!this._openUI) {\r\n            this._openUI = value;\r\n            this._openUI.SetActive(true);\r\n       
+    }\r\n        else {\r\n            console.error(\"ALREADY OPENED....\");\r\n       
+    }\r\n    }\r\n    static get instance() {\r\n        if (!UIManager._instance)
+    {\r\n            const managerObj = UnityEngine_1.GameObject.Find(\"UIManager\");\r\n           
+    if (managerObj)\r\n                UIManager._instance = managerObj.GetComponent($typeof(UIManager));\r\n       
+    }\r\n        return UIManager._instance;\r\n    }\r\n    Awake() {\r\n       
+    UIManager._instance = this;\r\n    }\r\n    Start() {\r\n        // init dialogue;\r\n       
+    this.dialogueCloseBtn = this.dialogueUI.GetChild(1).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    this.dialogueNextBtn = this.dialogueUI.GetChild(2).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    this.dialogueText = this.dialogueUI.GetChild(3).GetComponent($typeof(UnityEngine_UI_1.Text));\r\n       
+    // panel init\r\n        const mainButtonPanel = this.buttonPanel.GetChild(0);\r\n       
+    const posePanel = this.buttonPanel.GetChild(1);\r\n        const lockPanel =
+    this.buttonPanel.GetChild(2);\r\n        // button init\r\n        const hiddenButton
+    = mainButtonPanel.GetChild(0).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    const badgeButton = mainButtonPanel.GetChild(1).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    const questButton = mainButtonPanel.GetChild(2).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    const visitButton = mainButtonPanel.GetChild(3).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    const poseButton_1 = posePanel.GetChild(0).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    const poseButton_2 = posePanel.GetChild(1).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    const poseButton_3 = posePanel.GetChild(2).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    const awardPoseButton_1 = posePanel.GetChild(3).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    const awardPoseButton_2 = posePanel.GetChild(4).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    const awardPoseButton_3 = posePanel.GetChild(5).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    poseButton_1.onClick.AddListener(() => {\r\n            GameManager_1.default.instance.PoseButtonPushed(AnimationManager_1.WonderState.Panel_Pose_1);\r\n       
+    });\r\n        poseButton_2.onClick.AddListener(() => {\r\n            GameManager_1.default.instance.PoseButtonPushed(AnimationManager_1.WonderState.Panel_Pose_2);\r\n       
+    });\r\n        poseButton_3.onClick.AddListener(() => {\r\n            GameManager_1.default.instance.PoseButtonPushed(AnimationManager_1.WonderState.Panel_Pose_3);\r\n       
+    });\r\n        awardPoseButton_1.onClick.AddListener(() => {\r\n            GameManager_1.default.instance.PoseButtonPushed(AnimationManager_1.WonderState.Panel_LOCK_Pose_1);\r\n       
+    });\r\n        awardPoseButton_2.onClick.AddListener(() => {\r\n            GameManager_1.default.instance.PoseButtonPushed(AnimationManager_1.WonderState.Panel_LOCK_Pose_2);\r\n       
+    });\r\n        awardPoseButton_3.onClick.AddListener(() => {\r\n            GameManager_1.default.instance.PoseButtonPushed(AnimationManager_1.WonderState.Panel_LOCK_Pose_3);\r\n       
+    });\r\n        hiddenButton.onClick.AddListener(() => {\r\n            this.openUI
+    = this.hiddenUI.gameObject;\r\n        });\r\n        badgeButton.onClick.AddListener(()
+    => {\r\n            this.openUI = this.badgeUI.gameObject;\r\n        });\r\n       
+    questButton.onClick.AddListener(() => {\r\n            this.openUI = this.questUI.gameObject;\r\n       
+    });\r\n        visitButton.onClick.AddListener(() => {\r\n            this.openUI
+    = this.visitUI.gameObject;\r\n        });\r\n        this.dialogueNextBtn.onClick.AddListener(()
+    => {\r\n            this.OnNextDialogue();\r\n        });\r\n        this.dialogueCloseBtn.onClick.AddListener(()
+    => {\r\n            this.OnCloseDialogue();\r\n        });\r\n        this.SetBadgeUI();\r\n       
+    this.SetHiddenUI();\r\n        this.SetQuestUI();\r\n        this.SetEventUI();\r\n   
+    }\r\n    RemoteStart() {\r\n        this.UpdateHiddenUI();\r\n        this.UpdateBadgeUI();\r\n       
+    this.UpdateVisitCount();\r\n    }\r\n    UpdateBadgeUI() {\r\n        const badgeGroup
+    = this.badgeUI.GetChild(2);\r\n        const wonderCollection = GameManager_1.default.instance.playerDB.wonderCollection;\r\n       
+    for (const item of wonderCollection) {\r\n            if (item.id == TypeManager_1.WonderCollectionList.Wonder_Badge_Hall)
+    {\r\n                // item.has = SyncIndexManager.BADGE_HALL;\r\n               
+    badgeGroup.GetChild(0).gameObject.SetActive(item.has);\r\n                //
+    if(item.has) GameManager.Instance.MissionAllClear();\r\n            }\r\n           
+    else if (item.id == TypeManager_1.WonderCollectionList.Wonder_Badge_Stage) {\r\n               
+    badgeGroup.GetChild(1).gameObject.SetActive(item.has);\r\n            }\r\n           
+    else if (item.id == TypeManager_1.WonderCollectionList.Wonder_Badge_Studio) {\r\n               
+    badgeGroup.GetChild(2).gameObject.SetActive(item.has);\r\n            }\r\n       
+    }\r\n    }\r\n    UpdateHiddenUI() {\r\n        const wonderCollections = GameManager_1.default.instance.playerDB.wonderCollection;\r\n       
+    let hasHidden = false;\r\n        for (const wonderCollection of wonderCollections)
+    {\r\n            if (wonderCollection.id == TypeManager_1.WonderCollectionList.Hiddle_Collection)
+    {\r\n                hasHidden = wonderCollection.has;\r\n                break;\r\n           
+    }\r\n        }\r\n        this.giftController.GetComponent($typeof(GiftController_1.default)).SetInteractable(hasHidden);\r\n       
+    if (hasHidden) {\r\n            const itemGroup = this.hiddenUI.GetChild(0).GetChild(2).GetChild(6);\r\n           
+    itemGroup.gameObject.SetActive(hasHidden);\r\n            // Lock Pose\r\n           
+    const lockPanel = this.buttonPanel.GetChild(2);\r\n            lockPanel.gameObject.SetActive(!hasHidden);\r\n       
+    }\r\n    }\r\n    GetGiftController() {\r\n        return this.giftController.GetComponent($typeof(GiftController_1.default));\r\n   
+    }\r\n    GetLoadingImage() {\r\n        for (let i = this.canvas.transform.childCount
+    - 1; i >= 0; i--) {\r\n            const ui = this.canvas.transform.GetChild(i);\r\n           
+    console.log(`GetLoadingImage ...... ${i} === ${ui.tag}`);\r\n            if (ui.CompareTag(`Loading`))\r\n               
+    return ui.gameObject;\r\n        }\r\n        return null;\r\n    }\r\n    SetDialogueUI(callback,
+    ...indexs) {\r\n        if (this.dialogueText == null)\r\n            this.dialogueUI.GetComponentInChildren($typeof(UnityEngine_UI_1.Text));\r\n       
+    this.dialogueIndex = 0;\r\n        this.dialogueUI.gameObject.SetActive(true);\r\n       
+    const localText = this.dialogueText.GetComponent($typeof(LocalizeExternText_1.default));\r\n       
+    this.dialogueTexts = localText.GetArrayText(...indexs);\r\n        this.dialogueText.text
+    = this.dialogueTexts[0];\r\n        if (callback != null)\r\n            this.dialogueCallback
+    = callback;\r\n    }\r\n    OnNextDialogue() {\r\n        this.dialogueIndex++;\r\n       
+    if (this.dialogueIndex == this.dialogueTexts.length) {\r\n            if (this.dialogueCallback
+    != null)\r\n                this.dialogueCallback();\r\n            this.OnCloseDialogue();\r\n       
+    }\r\n        else {\r\n            this.dialogueText.text = this.dialogueTexts[this.dialogueIndex];\r\n       
+    }\r\n    }\r\n    OnCloseDialogue() {\r\n        while (this.dialogueTexts.length
+    > 0)\r\n            this.dialogueTexts.pop();\r\n        this.dialogueCallback
+    = null;\r\n        this.dialogueUI.gameObject.SetActive(false);\r\n    }\r\n   
+    SetBadgeUI() {\r\n        const closeButton = this.badgeUI.GetChild(1).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    const badgeGroup = this.badgeUI.GetChild(2);\r\n        closeButton.onClick.AddListener(()
+    => {\r\n            this.DeactiveOpenUI(this.badgeUI.gameObject);\r\n       
+    });\r\n        badgeGroup.GetChild(0).gameObject.SetActive(false);\r\n       
+    badgeGroup.GetChild(1).gameObject.SetActive(false);\r\n        badgeGroup.GetChild(2).gameObject.SetActive(false);\r\n       
+    this.badgeUI.gameObject.SetActive(false);\r\n    }\r\n    SetHiddenUI() {\r\n       
+    const closeButton = this.hiddenUI.GetChild(1).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    const itemGroup = this.hiddenUI.GetChild(0).GetChild(2).GetChild(6);\r\n       
+    closeButton.onClick.AddListener(() => {\r\n            this.DeactiveOpenUI(this.hiddenUI.gameObject);\r\n       
+    });\r\n        // Item OFF\r\n        itemGroup.gameObject.SetActive(false);\r\n       
+    this.hiddenUI.gameObject.SetActive(false);\r\n    }\r\n    SetQuestUI() {\r\n       
+    const closeButton = this.questUI.GetChild(0).GetChild(1).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    closeButton.onClick.AddListener(() => {\r\n            this.DeactiveOpenUI(this.questUI.gameObject);\r\n       
+    });\r\n        this.questUI.gameObject.SetActive(false);\r\n    }\r\n    SetEventUI()
+    {\r\n        const closeButton = this.visitUI.GetChild(0).GetChild(1).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    closeButton.onClick.AddListener(() => {\r\n            this.DeactiveOpenUI(this.visitUI.gameObject);\r\n       
+    });\r\n        this.visitUI.gameObject.SetActive(false);\r\n    }\r\n    UpdateVisitCount()
+    {\r\n        const mainButtonPanel = this.buttonPanel.GetChild(0);\r\n       
+    const visitCount = mainButtonPanel.GetChild(3).GetComponentInChildren($typeof(UnityEngine_UI_1.Text));\r\n       
+    // console.log(JSON.stringify(GameManager.instance.playerDB));\r\n        visitCount.text
+    = GameManager_1.default.instance.playerDB.totalVisit.toString();\r\n    }\r\n   
+    UpdateCoinUI() {\r\n        const coin = GameManager_1.default.instance.playerDB.wonderCoin;\r\n       
+    for (const text of this.wonderCoinTexts)\r\n            text.text = this.ProcessingScore(coin);\r\n       
+    // const playerDB = JSON.stringify(GameManager.Instance.playerDB);\r\n       
+    // MultiplayManager.Instance.Room?.Send(MESSAGE.PlayerDB, playerDB);\r\n    }\r\n   
+    OpenEntryTicket(amount) {\r\n    }\r\n    SetDefaultPlayerController(isOn) {\r\n       
+    const controller = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.gameObject.GetComponentInChildren($typeof(ZEPETO_Character_Controller_1.UIZepetoPlayerControl));\r\n       
+    if (controller == null)\r\n            return;\r\n        if (isOn)\r\n           
+    ZEPETO_Character_Controller_1.ZepetoPlayers.instance.controllerData.inputAsset.Enable();\r\n       
+    else\r\n            ZEPETO_Character_Controller_1.ZepetoPlayers.instance.controllerData.inputAsset.Disable();\r\n       
+    const moveController = controller.transform.GetChild(0).GetChild(1);\r\n       
+    const jumpController = controller.transform.GetChild(0).GetChild(2);\r\n       
+    moveController.gameObject.SetActive(isOn);\r\n        jumpController.gameObject.SetActive(isOn);\r\n   
+    }\r\n    SetDefaultButton(isOn) {\r\n        this.buttonPanel.gameObject.SetActive(isOn);\r\n       
+    this.zepetoScreenShotModule.gameObject.SetActive(isOn);\r\n    }\r\n    DeactiveOpenUI(ui)
+    {\r\n        if (this.openUI)\r\n            this.openUI.SetActive(false);\r\n       
+    if (ui)\r\n            ui.SetActive(false);\r\n        if (__UnityEngine__.Object.op_Equality(this.openUI,
+    ui)) {\r\n            this._openUI = null;\r\n            return true;\r\n       
+    }\r\n        return false;\r\n    }\r\n    ProcessingScore(num) {\r\n       
+    return num.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, '','');\r\n    }\r\n}\r\nexports.default
+    = UIManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBLDZDQUEyRDtBQUMzRCxtREFBOEM7QUFDOUMsNkVBQW1GO0FBQ25GLGlEQUFxRDtBQUNyRCxnREFBeUM7QUFDekMseURBQW1FO0FBQ25FLGlDQUFxRDtBQUNyRCxtRUFBNEQ7QUFDNUQsZ0RBQStEO0FBQy9ELGlGQUEwRTtBQUMxRSxrRUFBMkQ7QUFHM0QsTUFBcUIsU0FBVSxTQUFRLHFDQUFxQjtJQUE1RDs7UUFXOEIsb0JBQWUsR0FBc0IsRUFBRSxDQUFDO1FBTzFELGtCQUFhLEdBQWMsRUFBRSxDQUFDO1FBQzlCLGtCQUFhLEdBQVksQ0FBQyxDQUFDO0lBdVN2QyxDQUFDO0lBblNHLG1CQUFtQjtJQUNuQixJQUFXLE1BQU0sS0FBaUIsT0FBTyxJQUFJLENBQUMsT0FBTyxDQUFDLENBQUMsQ0FBQztJQUN4RCxJQUFXLE1BQU0sQ0FBQyxLQUFpQjtRQUMvQixJQUFHLENBQUMsSUFBSSxDQUFDLE9BQU8sRUFBRTtZQUNkLElBQUksQ0FBQyxPQUFPLEdBQUcsS0FBSyxDQUFDO1lBQ3JCLElBQUksQ0FBQyxPQUFPLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO1NBQ2hDO2FBQU07WUFDSCxPQUFPLENBQUMsS0FBSyxDQUFDLG9CQUFvQixDQUFDLENBQUM7U0FDdkM7SUFDTCxDQUFDO0lBSU0sTUFBTSxLQUFLLFFBQVE7UUFDdEIsSUFBSSxDQUFDLFNBQVMsQ0FBQyxTQUFTLEVBQUU7WUFDdEIsTUFBTSxVQUFVLEdBQUcsd0JBQVUsQ0FBQyxJQUFJLENBQUMsV0FBVyxDQUFDLENBQUM7WUFDaEQsSUFBSSxVQUFVO2dCQUFFLFNBQVMsQ0FBQyxTQUFTLEdBQUcsVUFBVSxDQUFDLFlBQVksU0FBQyxTQUFTLEVBQUcsQ0FBQztTQUM5RTtRQUNELE9BQU8sU0FBUyxDQUFDLFNBQVMsQ0FBQztJQUMvQixDQUFD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","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/Manager/UIManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"dialogueUI","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"UIs\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"canvas","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"buttonPanel","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"hiddenUI","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"badgeUI","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"questUI","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"visitUI","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"zepetoScreenShotModule","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"Unity.TextMeshPro","name":"wonderCoinTexts","type":"TMPro.TextMeshProUGUI[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"giftController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"UIManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 8ecf38436505fecac9a9eb471a07e0c2
+  onlyWriteTrigger: 0

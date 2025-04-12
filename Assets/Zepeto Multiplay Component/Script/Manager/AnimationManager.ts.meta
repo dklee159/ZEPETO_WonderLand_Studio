@@ -1,0 +1,80 @@
+fileFormatVersion: 2
+guid: 20b915b111112b04083001ba8beab260
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nexports.AnimParamType = exports.AnimParamName = exports.WonderState
+    = void 0;\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
+    AnimationManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    static
+    SetCharacterAnimation(sessionId, paramType, paramName, value) {\r\n        const
+    animator = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(sessionId).character.ZepetoAnimator;\r\n       
+    switch (paramType) {\r\n            case AnimParamType.Bool:\r\n               
+    animator.SetBool(paramName, value);\r\n                break;\r\n           
+    case AnimParamType.Int:\r\n                animator.SetInteger(paramName, value);\r\n               
+    break;\r\n            default:\r\n                break;\r\n        }\r\n   
+    }\r\n    static SetWonderAnimation(wonderState) {\r\n        const animator =
+    ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.ZepetoAnimator;\r\n       
+    animator.SetInteger(AnimParamName.WonderState, wonderState);\r\n    }\r\n   
+    static StopWonderAnimation() {\r\n        const animator = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.ZepetoAnimator;\r\n       
+    animator.SetInteger(AnimParamName.WonderState, 0);\r\n    }\r\n    static GetBone(sessionId,
+    bone) {\r\n        const animator = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(sessionId).character.ZepetoAnimator;\r\n       
+    return animator.GetBoneTransform(bone);\r\n    }\r\n}\r\nexports.default = AnimationManager;\r\nvar
+    WonderState;\r\n(function (WonderState) {\r\n    WonderState[WonderState[\"NONE\"]
+    = 0] = \"NONE\";\r\n    WonderState[WonderState[\"Hold_RightHand_Upper\"] = 51]
+    = \"Hold_RightHand_Upper\";\r\n    WonderState[WonderState[\"Hold_RightHand_Side\"]
+    = 52] = \"Hold_RightHand_Side\";\r\n    /** Wonder **/\r\n    // Panel Button\r\n   
+    WonderState[WonderState[\"Panel_Pose_1\"] = 131] = \"Panel_Pose_1\";\r\n    WonderState[WonderState[\"Panel_Pose_2\"]
+    = 132] = \"Panel_Pose_2\";\r\n    WonderState[WonderState[\"Panel_Pose_3\"] =
+    133] = \"Panel_Pose_3\";\r\n    WonderState[WonderState[\"Panel_LOCK_Pose_1\"]
+    = 134] = \"Panel_LOCK_Pose_1\";\r\n    WonderState[WonderState[\"Panel_LOCK_Pose_2\"]
+    = 135] = \"Panel_LOCK_Pose_2\";\r\n    WonderState[WonderState[\"Panel_LOCK_Pose_3\"]
+    = 136] = \"Panel_LOCK_Pose_3\";\r\n    // PhotoBooth\r\n    WonderState[WonderState[\"High_Pose_1\"]
+    = 301] = \"High_Pose_1\";\r\n    WonderState[WonderState[\"High_Pose_2\"] = 302]
+    = \"High_Pose_2\";\r\n    WonderState[WonderState[\"High_Pose_3\"] = 303] = \"High_Pose_3\";\r\n   
+    WonderState[WonderState[\"High_Pose_4\"] = 304] = \"High_Pose_4\";\r\n    WonderState[WonderState[\"High_Pose_5\"]
+    = 305] = \"High_Pose_5\";\r\n    WonderState[WonderState[\"High_Pose_6\"] = 306]
+    = \"High_Pose_6\";\r\n    WonderState[WonderState[\"High_Pose_7\"] = 307] = \"High_Pose_7\";\r\n   
+    WonderState[WonderState[\"High_Pose_8\"] = 308] = \"High_Pose_8\";\r\n    WonderState[WonderState[\"High_Pose_9\"]
+    = 309] = \"High_Pose_9\";\r\n    WonderState[WonderState[\"High_Pose_10\"] =
+    310] = \"High_Pose_10\";\r\n    WonderState[WonderState[\"Front_Pose_1\"] = 401]
+    = \"Front_Pose_1\";\r\n    WonderState[WonderState[\"Front_Pose_2\"] = 402] =
+    \"Front_Pose_2\";\r\n    WonderState[WonderState[\"Front_Pose_3\"] = 403] = \"Front_Pose_3\";\r\n   
+    WonderState[WonderState[\"Front_Pose_4\"] = 404] = \"Front_Pose_4\";\r\n    WonderState[WonderState[\"Front_Pose_5\"]
+    = 405] = \"Front_Pose_5\";\r\n    WonderState[WonderState[\"Front_Pose_6\"] =
+    406] = \"Front_Pose_6\";\r\n    WonderState[WonderState[\"Front_Pose_7\"] = 407]
+    = \"Front_Pose_7\";\r\n    WonderState[WonderState[\"Front_Pose_8\"] = 408] =
+    \"Front_Pose_8\";\r\n    WonderState[WonderState[\"Low_Pose_1\"] = 501] = \"Low_Pose_1\";\r\n   
+    WonderState[WonderState[\"Low_Pose_2\"] = 502] = \"Low_Pose_2\";\r\n    WonderState[WonderState[\"Low_Pose_3\"]
+    = 503] = \"Low_Pose_3\";\r\n    WonderState[WonderState[\"Low_Pose_4\"] = 504]
+    = \"Low_Pose_4\";\r\n    WonderState[WonderState[\"Low_Pose_5\"] = 505] = \"Low_Pose_5\";\r\n   
+    WonderState[WonderState[\"Low_Pose_6\"] = 506] = \"Low_Pose_6\";\r\n    WonderState[WonderState[\"Low_Pose_7\"]
+    = 507] = \"Low_Pose_7\";\r\n    WonderState[WonderState[\"Low_Pose_8\"] = 508]
+    = \"Low_Pose_8\";\r\n})(WonderState = exports.WonderState || (exports.WonderState
+    = {}));\r\nvar AnimParamName;\r\n(function (AnimParamName) {\r\n    AnimParamName[\"Jetski\"]
+    = \"isJetskiRiding\";\r\n    AnimParamName[\"FoodHold\"] = \"isHold\";\r\n   
+    AnimParamName[\"WonderState\"] = \"WonderState\";\r\n    AnimParamName[\"PhotoBooth\"]
+    = \"PhotoBooth\";\r\n    AnimParamName[\"IsSit\"] = \"isSit\";\r\n})(AnimParamName
+    = exports.AnimParamName || (exports.AnimParamName = {}));\r\nvar AnimParamType;\r\n(function
+    (AnimParamType) {\r\n    AnimParamType[\"Bool\"] = \"AnimBool\";\r\n    AnimParamType[\"Int\"]
+    = \"AnimInteger\";\r\n})(AnimParamType = exports.AnimParamType || (exports.AnimParamType
+    = {}));\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQW5pbWF0aW9uTWFuYWdlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkFuaW1hdGlvbk1hbmFnZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUEsNkNBQXdEO0FBQ3hELDZFQUE0RDtBQUM1RCxpREFBcUQ7QUFFckQsTUFBcUIsZ0JBQWlCLFNBQVEscUNBQXFCO0lBQ3hELE1BQU0sQ0FBQyxxQkFBcUIsQ0FBQyxTQUFrQixFQUFFLFNBQXlCLEVBQUUsU0FBeUIsRUFBRSxLQUFXO1FBQ3JILE1BQU0sUUFBUSxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxTQUFTLENBQUMsQ0FBQyxTQUFTLENBQUMsY0FBYyxDQUFDO1FBQ3RGLFFBQVEsU0FBUyxFQUFFO1lBQ2YsS0FBSyxhQUFhLENBQUMsSUFBSTtnQkFDbkIsUUFBUSxDQUFDLE9BQU8sQ0FBQyxTQUFTLEVBQUUsS0FBSyxDQUFDLENBQUM7Z0JBQ25DLE1BQU07WUFDVixLQUFLLGFBQWEsQ0FBQyxHQUFHO2dCQUNsQixRQUFRLENBQUMsVUFBVSxDQUFDLFNBQVMsRUFBRSxLQUFLLENBQUMsQ0FBQztnQkFDdEMsTUFBTTtZQUNWO2dCQUNJLE1BQU07U0FDYjtJQUNMLENBQUM7SUFFTSxNQUFNLENBQUMsa0JBQWtCLENBQUMsV0FBeUI7UUFDdEQsTUFBTSxRQUFRLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLFlBQVksQ0FBQyxTQUFTLENBQUMsY0FBYyxDQUFDO1FBQzFGLFFBQVEsQ0FBQyxVQUFVLENBQUMsYUFBYSxDQUFDLFdBQVcsRUFBRSxXQUFXLENBQUMsQ0FBQztJQUNoRSxDQUFDO0lBRU0sTUFBTSxDQUFDLG1CQUFtQjtRQUM3QixNQUFNLFFBQVEsR0FBRywyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsWUFBWSxDQUFDLFNBQVMsQ0FBQyxjQUFjLENBQUM7UUFDMUYsUUFBUSxDQUFDLFVBQVUsQ0FBQyxhQUFhLENBQUMsV0FBVyxFQUFFLENBQUMsQ0FBQyxDQUFDO0lBQ3RELENBQUM7SUFFTSxNQUFNLENBQUMsT0FBTyxDQUFDLFNBQWtCLEVBQUUsSUFBcUI7UUFDM0QsTUFBTSxRQUFRLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLFNBQVMsQ0FBQyxDQUFDLFNBQVMsQ0FBQyxjQUFjLENBQUM7UUFDdEYsT0FBTyxRQUFRLENBQUMsZ0JBQWdCLENBQUMsSUFBSSxDQUFDLENBQUM7SUFDM0MsQ0FBQztDQUNKO0FBN0JELG1DQTZCQztBQUVELElBQVksV0FnQlg7QUFoQkQsV0FBWSxXQUFXO0lBQ25CLDZDQUFRLENBQUE7SUFDUiw4RUFBeUIsQ0FBQTtJQUFFLDRFQUF3QixDQUFBO0lBRW5ELGNBQWM7SUFFZCxlQUFlO0lBQ2YsK0RBQWtCLENBQUE7SUFBRSwrREFBa0IsQ0FBQTtJQUFFLCtEQUFrQixDQUFBO0lBQzFELHlFQUF1QixDQUFBO0lBQUUseUVBQXVCLENBQUE7SUFBRSx5RUFBdUIsQ0FBQTtJQUV6RSxhQUFhO0lBQ2IsNkRBQWlCLENBQUE7SUFBRSw2REFBaUIsQ0FBQTtJQUFFLDZEQUFpQixDQUFBO0lBQUUsNkRBQWlCLENBQUE7SUFBRSw2REFBaUIsQ0FBQTtJQUFFLDZEQUFpQixDQUFBO0lBQUUsNkRBQWlCLENBQUE7SUFBRSw2REFBaUIsQ0FBQTtJQUFFLDZEQUFpQixDQUFBO0lBQUUsK0RBQWtCLENBQUE7SUFFN0wsK0RBQWtCLENBQUE7SUFBRSwrREFBa0IsQ0FBQTtJQUFFLCtEQUFrQixDQUFBO0lBQUUsK0RBQWtCLENBQUE7SUFBRSwrREFBa0IsQ0FBQTtJQUFFLCtEQUFrQixDQUFBO0lBQUUsK0RBQWtCLENBQUE7SUFBRSwrREFBa0IsQ0FBQTtJQUU5SiwyREFBZ0IsQ0FBQTtJQUFFLDJEQUFnQixDQUFBO0lBQUUsMkRBQWdCLENBQUE7SUFBRSwyREFBZ0IsQ0FBQTtJQUFFLDJEQUFnQixDQUFBO0lBQUUsMkRBQWdCLENBQUE7SUFBRSwyREFBZ0IsQ0FBQTtJQUFFLDJEQUFnQixDQUFBO0FBQ2xKLENBQUMsRUFoQlcsV0FBVyxHQUFYLG1CQUFXLEtBQVgsbUJBQVcsUUFnQnRCO0FBRUQsSUFBWSxhQU1YO0FBTkQsV0FBWSxhQUFhO0lBQ3JCLDBDQUF5QixDQUFBO0lBQ3pCLG9DQUFtQixDQUFBO0lBQ25CLDRDQUEyQixDQUFBO0lBQzNCLDBDQUF5QixDQUFBO0lBQ3pCLGdDQUFlLENBQUE7QUFDbkIsQ0FBQyxFQU5XLGFBQWEsR0FBYixxQkFBYSxLQUFiLHFCQUFhLFFBTXhCO0FBRUQsSUFBWSxhQUdYO0FBSEQsV0FBWSxhQUFhO0lBQ3JCLGtDQUFpQixDQUFBO0lBQ2pCLG9DQUFtQixDQUFBO0FBQ3ZCLENBQUMsRUFIVyxhQUFhLEdBQWIscUJBQWEsS0FBYixxQkFBYSxRQUd4QiJ9","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/Manager/AnimationManager.ts","manifest":{"properties":[],"name":"AnimationManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 21fa0782e178203a14f0393ddebd0414
+  onlyWriteTrigger: 0

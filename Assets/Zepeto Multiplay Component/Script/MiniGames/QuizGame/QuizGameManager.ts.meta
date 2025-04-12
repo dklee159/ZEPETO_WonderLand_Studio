@@ -1,0 +1,112 @@
+fileFormatVersion: 2
+guid: 83691be0172553443bbd590fc2aac265
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: "{\"source\":\"\\\"use strict\\\";\\r\\nObject.defineProperty(exports,
+    \\\"__esModule\\\", { value: true });\\r\\nconst System_Collections_Generic_1
+    = require(\\\"System.Collections.Generic\\\");\\r\\nconst UnityEngine_1 = require(\\\"UnityEngine\\\");\\r\\nconst
+    UnityEngine_UI_1 = require(\\\"UnityEngine.UI\\\");\\r\\nconst ZEPETO_Script_1
+    = require(\\\"ZEPETO.Script\\\");\\r\\nconst UIManager_1 = require(\\\"../../Manager/UIManager\\\");\\r\\nconst
+    QuestManager_1 = require(\\\"../../Manager/QuestManager\\\");\\r\\nconst LocalizeExternText_1
+    = require(\\\"../../Lang/LocalizeExternText\\\");\\r\\nclass QuizGameManager
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\\r\\n    constructor() {\\r\\n       
+    super(...arguments);\\r\\n        this.correctList = [];\\r\\n        /* Buttons
+    */\\r\\n        this.quizSelectBtns = [];\\r\\n        /* Sprites */\\r\\n       
+    this.quizSprites = [];\\r\\n        /* Variables */\\r\\n        this.quizIndex
+    = 0;\\r\\n        this.maxIndex = 5;\\r\\n        this.quizStrings = [\\\"\uAC00\uC871\\\",
+    \\\"\uB098\uBE44\\\", \\\"\uB2E4\uB78C\uC950\\\", \\\"\uB77C\uBA74\\\", \\\"\uB9C8\uB298\\\",
+    \\\"\uBC14\uB2E4\\\", \\\"\uC0AC\uC790\\\", \\\"\uC544\uAE30\\\", \\\"\uC790\uB3D9\uCC28\\\",
+    \\\"\uCC28\uD0A4\\\", \\\"\uCE74\uBA54\uB77C\\\", \\\"\uD0C0\uC870\\\", \\\"\uD30C\uB791\\\",
+    \\\"\uD558\uB298\\\"];\\r\\n        this.quizMapping = new Map();\\r\\n       
+    this.score = 0;\\r\\n        this.selectedIndex = new ($generic(System_Collections_Generic_1.List$1,
+    $typeof(\\\"System.Double\\\")))();\\r\\n    }\\r\\n    Start() {\\r\\n       
+    this.quizStrings.forEach((quizName, index) => {\\r\\n            this.quizMapping.set(quizName,
+    this.quizSprites[index]);\\r\\n        });\\r\\n        this.quizSelectBtns.forEach((btn,
+    index) => {\\r\\n            btn.onClick.AddListener(() => {\\r\\n               
+    this.OnBtnClick(btn);\\r\\n            });\\r\\n        });\\r\\n        this.closeBtn.onClick.AddListener(()
+    => {\\r\\n            this.FinishQuiz();\\r\\n        });\\r\\n    }\\r\\n   
+    StartQuiz() {\\r\\n        this.quizUI.SetActive(true);\\r\\n        this.quizPanel.SetActive(true);\\r\\n       
+    this.resultPanel.gameObject.SetActive(false);\\r\\n        this.correctList.forEach((correct)
+    => {\\r\\n            correct.gameObject.SetActive(false);\\r\\n        });\\r\\n       
+    this.quizIndex = 0;\\r\\n        this.score = 0;\\r\\n        this.indexText.text
+    = `${this.indexText.GetComponent($typeof(LocalizeExternText_1.default)).text})${1}`;\\r\\n       
+    this.selectedIndex.Clear();\\r\\n        UIManager_1.default.instance.SetDefaultButton(false);\\r\\n       
+    UIManager_1.default.instance.SetDefaultPlayerController(false);\\r\\n       
+    this.SetQuiz();\\r\\n    }\\r\\n    OnBtnClick(btn) {\\r\\n        if (btn ==
+    this.correctBtn) {\\r\\n            this.correctList[this.quizIndex].GetComponent($typeof(UnityEngine_UI_1.Image)).sprite
+    = this.correctSprite;\\r\\n            this.score += 20;\\r\\n        }\\r\\n       
+    else {\\r\\n            this.correctList[this.quizIndex].GetComponent($typeof(UnityEngine_UI_1.Image)).sprite
+    = this.incorrectSprite;\\r\\n        }\\r\\n        this.correctList[this.quizIndex].gameObject.SetActive(true);\\r\\n       
+    if (this.quizIndex >= this.maxIndex - 1) {\\r\\n            this.ShowResult();\\r\\n       
+    }\\r\\n        else {\\r\\n            this.SetQuiz();\\r\\n        }\\r\\n       
+    this.indexText.text = `${this.indexText.GetComponent($typeof(LocalizeExternText_1.default)).text})${this.quizIndex
+    + 2}`;\\r\\n        this.quizIndex++;\\r\\n    }\\r\\n    SetQuiz() {\\r\\n       
+    let correctIndex = UnityEngine_1.Mathf.Floor(UnityEngine_1.Random.Range(0, this.quizStrings.length));\\r\\n       
+    if (this.selectedIndex.Contains(correctIndex)) {\\r\\n            while (true)
+    {\\r\\n                correctIndex = UnityEngine_1.Mathf.Floor(UnityEngine_1.Random.Range(0,
+    this.quizStrings.length));\\r\\n                if (!this.selectedIndex.Contains(correctIndex))\\r\\n                   
+    break;\\r\\n            }\\r\\n        }\\r\\n        this.selectedIndex.Add(correctIndex);\\r\\n       
+    const incorrectIndex_1 = UnityEngine_1.Mathf.Floor(UnityEngine_1.Random.Range(1,
+    5)) + correctIndex;\\r\\n        const incorrectIndex_2 = UnityEngine_1.Mathf.Floor(UnityEngine_1.Random.Range(1,
+    5)) + incorrectIndex_1;\\r\\n        const incorrectIndex_3 = UnityEngine_1.Mathf.Floor(UnityEngine_1.Random.Range(1,
+    5)) + incorrectIndex_2;\\r\\n        const incorrectCheck_1 = incorrectIndex_1
+    >= this.quizStrings.length ? incorrectIndex_1 - this.quizStrings.length : incorrectIndex_1;\\r\\n       
+    const incorrectCheck_2 = incorrectIndex_2 >= this.quizStrings.length ? incorrectIndex_2
+    - this.quizStrings.length : incorrectIndex_2;\\r\\n        const incorrectCheck_3
+    = incorrectIndex_3 >= this.quizStrings.length ? incorrectIndex_3 - this.quizStrings.length
+    : incorrectIndex_3;\\r\\n        const correctString = this.quizStrings[correctIndex];\\r\\n       
+    const correctImage = this.quizMapping.get(correctString);\\r\\n        this.quizImage.sprite
+    = correctImage;\\r\\n        const incorrectString_1 = this.quizStrings[incorrectCheck_1];\\r\\n       
+    const incorrectString_2 = this.quizStrings[incorrectCheck_2];\\r\\n        const
+    incorrectString_3 = this.quizStrings[incorrectCheck_3];\\r\\n        const correctButtonIndex
+    = UnityEngine_1.Mathf.Floor(UnityEngine_1.Random.Range(0, 4));\\r\\n        if
+    (correctButtonIndex == 0) {\\r\\n            this.quizSelectBtns[0].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = correctString;\\r\\n            this.correctBtn = this.quizSelectBtns[0];\\r\\n           
+    this.quizSelectBtns[1].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = incorrectString_3;\\r\\n            this.quizSelectBtns[2].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = incorrectString_2;\\r\\n            this.quizSelectBtns[3].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = incorrectString_1;\\r\\n        }\\r\\n        else if (correctButtonIndex
+    == 1) {\\r\\n            this.quizSelectBtns[1].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = correctString;\\r\\n            this.correctBtn = this.quizSelectBtns[1];\\r\\n           
+    this.quizSelectBtns[2].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = incorrectString_3;\\r\\n            this.quizSelectBtns[3].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = incorrectString_2;\\r\\n            this.quizSelectBtns[0].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = incorrectString_1;\\r\\n        }\\r\\n        else if (correctButtonIndex
+    == 2) {\\r\\n            this.quizSelectBtns[2].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = correctString;\\r\\n            this.correctBtn = this.quizSelectBtns[2];\\r\\n           
+    this.quizSelectBtns[3].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = incorrectString_3;\\r\\n            this.quizSelectBtns[0].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = incorrectString_2;\\r\\n            this.quizSelectBtns[1].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = incorrectString_1;\\r\\n        }\\r\\n        else if (correctButtonIndex
+    == 3) {\\r\\n            this.quizSelectBtns[3].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = correctString;\\r\\n            this.correctBtn = this.quizSelectBtns[3];\\r\\n           
+    this.quizSelectBtns[0].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = incorrectString_3;\\r\\n            this.quizSelectBtns[1].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = incorrectString_2;\\r\\n            this.quizSelectBtns[2].GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = incorrectString_1;\\r\\n        }\\r\\n    }\\r\\n    ShowResult() {\\r\\n       
+    this.scoreImage.GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text =
+    `${this.score}\uC810`;\\r\\n        this.quizPanel.SetActive(false);\\r\\n       
+    this.resultPanel.gameObject.SetActive(true);\\r\\n    }\\r\\n    FinishQuiz()
+    {\\r\\n        QuestManager_1.default.Instance.OnPlayGame();\\r\\n        this.resultPanel.gameObject.SetActive(false);\\r\\n       
+    this.quizUI.SetActive(false);\\r\\n        UIManager_1.default.instance.SetDefaultButton(true);\\r\\n       
+    UIManager_1.default.instance.SetDefaultPlayerController(true);\\r\\n    }\\r\\n}\\r\\nexports.default
+    = QuizGameManager;\\r\\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiUXVpekdhbWVNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiUXVpekdhbWVNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsMkVBQW9EO0FBQ3BELDZDQUEyRTtBQUMzRSxtREFBcUQ7QUFDckQsaURBQXFEO0FBQ3JELHVEQUFnRDtBQUNoRCw2REFBc0Q7QUFDdEQsc0VBQStEO0FBRS9ELE1BQXFCLGVBQWdCLFNBQVEscUNBQXFCO0lBQWxFOztRQUk4QixnQkFBVyxHQUFpQixFQUFFLENBQUM7UUFPekQsYUFBYTtRQUVhLG1CQUFjLEdBQWEsRUFBRSxDQUFDO1FBR3hELGFBQWE7UUFFYSxnQkFBVyxHQUFjLEVBQUUsQ0FBQztRQU90RCxlQUFlO1FBQ1AsY0FBUyxHQUFZLENBQUMsQ0FBQztRQUN2QixhQUFRLEdBQUcsQ0FBQyxDQUFDO1FBRWIsZ0JBQVcsR0FBYyxDQUFDLElBQUksRUFBRSxJQUFJLEVBQUUsS0FBSyxFQUFFLElBQUksRUFBRSxJQUFJLEVBQUUsSUFBSSxFQUFFLElBQUksRUFBRSxJQUFJLEVBQUUsS0FBSyxFQUFFLElBQUksRUFBRSxLQUFLLEVBQUUsSUFBSSxFQUFFLElBQUksRUFBRSxJQUFJLENBQUMsQ0FBQztRQUNqSCxnQkFBVyxHQUF5QixJQUFJLEdBQUcsRUFBa0IsQ0FBQztRQUM5RCxVQUFLLEdBQVksQ0FBQyxDQUFDO1FBQ25CLGtCQUFhLGlCQUF3QixtQ0FBTSwrQkFBVztJQWlJbEUsQ0FBQztJQS9IRyxLQUFLO1FBQ0QsSUFBSSxDQUFDLFdBQVcsQ0FBQyxPQUFPLENBQUMsQ0FBQyxRQUFpQixFQUFFLEtBQWMsRUFBRSxFQUFFO1lBQzNELElBQUksQ0FBQyxXQUFXLENBQUMsR0FBRyxDQUFDLFFBQVEsRUFBRSxJQUFJLENBQUMsV0FBVyxDQUFDLEtBQUssQ0FBQyxDQUFDLENBQUM7UUFDNUQsQ0FBQyxDQUFDLENBQUM7UUFFSCxJQUFJLENBQUMsY0FBYyxDQUFDLE9BQU8sQ0FBQyxD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\",\"assetPath\":\"Assets/Zepeto
+    Multiplay Component/Script/MiniGames/QuizGame/QuizGameManager.ts\",\"manifest\":{\"properties\":[{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"quizUI\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"quizPanel\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"resultPanel\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"correctList\",\"type\":\"UnityEngine.Transform[]\",\"isArray\":true,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"quizImage\",\"type\":\"UnityEngine.UI.Image\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"Header\",\"args\":[\"\\\"Images\\\"\"]},{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"scoreImage\",\"type\":\"UnityEngine.UI.Image\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"quizSelectBtns\",\"type\":\"UnityEngine.UI.Button[]\",\"isArray\":true,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"Header\",\"args\":[\"\\\"Buttons\\\"\"]},{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"closeBtn\",\"type\":\"UnityEngine.UI.Button\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"quizSprites\",\"type\":\"UnityEngine.Sprite[]\",\"isArray\":true,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"Header\",\"args\":[\"\\\"Sprites\\\"\"]},{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"correctSprite\",\"type\":\"UnityEngine.Sprite\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"incorrectSprite\",\"type\":\"UnityEngine.Sprite\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"indexText\",\"type\":\"UnityEngine.UI.Text\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"Header\",\"args\":[\"\\\"Texts\\\"\"]},{\"name\":\"SerializeField\",\"args\":[]}]}],\"name\":\"QuizGameManager\",\"description\":\"\",\"hasAnimatorMove\":false},\"isCompiled\":true}"
+  typescriptHash: 604a57a724cb86516a77cc56d275702e
+  onlyWriteTrigger: 0

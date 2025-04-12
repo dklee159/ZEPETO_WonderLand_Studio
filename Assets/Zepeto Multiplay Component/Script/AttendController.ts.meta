@@ -1,0 +1,115 @@
+fileFormatVersion: 2
+guid: 42131ab939cb50e408a37de4265734ee
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst TMPro_1 = require(\"TMPro\");\r\nconst UnityEngine_1
+    = require(\"UnityEngine\");\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst GameManager_1 = require(\"./GameManager\");\r\nconst
+    UIManager_1 = require(\"./Manager/UIManager\");\r\nconst HttpDataConnectionService_1
+    = require(\"./HttpDataConnectionService\");\r\nclass AttendController extends
+    ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n        super(...arguments);\r\n       
+    this.attendPanels = [];\r\n        this._dateIndex = -1;\r\n        this.coinList
+    = [5, 50, 100, 200, 500];\r\n        this.attending = false;\r\n        this.isFirst
+    = true;\r\n        this.exceptIds = [];\r\n    }\r\n    get dateIndex() {\r\n       
+    return this._dateIndex;\r\n    }\r\n    set dateIndex(value) {\r\n        if
+    (!this.attendPanels || this.attendPanels.length < 20 || value < 0 || value >
+    this.attendPanels.length) {\r\n            console.error(`NOT_MATCHED`);\r\n       
+    }\r\n        else {\r\n            this._dateIndex = value;\r\n            console.log(`this._dateIndex
+    ${this._dateIndex}`);\r\n        }\r\n    }\r\n    get month() { return this._month;
+    }\r\n    set month(value) { this._month = value; }\r\n    get dateId() { return
+    this._dateId; }\r\n    set dateId(value) { this._dateId = value; }\r\n    //
+    private _yesterDateId: string;\r\n    // public get yesterDateId(): string {
+    return this._yesterDateId; }\r\n    // private set yesterDateId(value: string)
+    { this._yesterDateId = value; }\r\n    /* GameManager */\r\n    RemoteStart()
+    {\r\n        /* Init Id */\r\n        const today = new Date();\r\n        //
+    const yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate()
+    -1);\r\n        this.month = `${today.getMonth() + 1}`;\r\n        this.dateId
+    = this.FormatDate(today);\r\n        // this.yesterDateId = this.FormatDate(yesterday);\r\n       
+    /* Set Init */\r\n        this.SetAttendUI();\r\n    }\r\n    ShowDialogue()
+    {\r\n        if (this.isFirst) {\r\n            this.isFirst = false;\r\n           
+    // UIManager.Instance.SetDialogueUI(this.dialgueStrings, null);\r\n           
+    UIManager_1.default.instance.SetDialogueUI(null, 0, 1, 2);\r\n        }\r\n   
+    }\r\n    SetAttendUI() {\r\n        //\r\n        const closeButton = this.attendUI.GetChild(1).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    const attendGroup = this.attendUI.GetChild(2);\r\n        const coinUI = this.attendUI.GetChild(3);\r\n       
+    // Attend\r\n        closeButton.onClick.AddListener(() => {\r\n            //
+    if (coinUI.gameObject.activeSelf) return;\r\n            // if (this.attending)
+    return;\r\n            this.ShowDialogue();\r\n            this.attendUI.gameObject.SetActive(false);\r\n       
+    });\r\n        for (let i = 0; i < attendGroup.childCount; i++) {\r\n           
+    const attendPanel = attendGroup.GetChild(i);\r\n            const highlight =
+    attendPanel.GetChild(0);\r\n            const lock = attendPanel.GetChild(1);\r\n           
+    attendPanel.gameObject.SetActive(false);\r\n            const data = {\r\n               
+    gameObject: attendPanel.gameObject,\r\n                transform: attendPanel,\r\n               
+    highlight: highlight.gameObject,\r\n                lock: lock.gameObject,\r\n               
+    index: i,\r\n            };\r\n            this.attendPanels.push(data);\r\n       
+    }\r\n        // Coin\r\n        const yButton_coin = coinUI.GetChild(1).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    const nButton_coin = coinUI.GetChild(2).GetComponent($typeof(UnityEngine_UI_1.Button));\r\n       
+    yButton_coin.onClick.AddListener(() => {\r\n            coinUI.gameObject.SetActive(false);\r\n           
+    //   if (this.attending) this.OnGetCoin(this.dateIndex);\r\n        });\r\n       
+    nButton_coin.onClick.AddListener(() => {\r\n            coinUI.gameObject.SetActive(false);\r\n           
+    //   if (this.attending) this.OnGetCoin(this.dateIndex);\r\n        });\r\n       
+    this.coinText = coinUI.GetChild(3).GetComponent($typeof(TMPro_1.TextMeshProUGUI));\r\n       
+    coinUI.gameObject.SetActive(false);\r\n    }\r\n    UpdateAttendData(attendData)
+    {\r\n        /* new version */\r\n        const isFirst = attendData.lastDate
+    == null || attendData.lastDate == \"\" || attendData.lastDate.length < 1;\r\n       
+    if (isFirst) {\r\n            attendData.lastDate = `0_0_0`;\r\n            attendData.count
+    = 0;\r\n        }\r\n        // Attend Check Last Month\r\n        const date
+    = attendData.lastDate.split(\"_\");\r\n        if (this.month != date[1]) {\r\n           
+    attendData.count = 0;\r\n        }\r\n        // Lock\r\n        for (let i =
+    0; i < attendData.count; i++)\r\n            this.LockCoin(i);\r\n        this.dateIndex
+    = attendData.count;\r\n        // This Month complete\r\n        const complete
+    = attendData.count >= 20;\r\n        if (complete) {\r\n            const attend
+    = GameManager_1.default.instance.playerDB.attend;\r\n            if (attend.lastDate
+    != this.dateId)\r\n                attend.lastDate = this.dateId;\r\n           
+    this.ShowDialogue();\r\n            return;\r\n        }\r\n        // Attend
+    Already Today\r\n        if (this.dateId == attendData.lastDate) {\r\n           
+    this.ShowDialogue();\r\n            return;\r\n        }\r\n        // Set Date\r\n       
+    const today = this.attendPanels[attendData.count];\r\n        today.gameObject.SetActive(true);\r\n       
+    today.highlight.SetActive(true);\r\n        today.lock.SetActive(false);\r\n       
+    this.OnGetCoin(this.dateIndex);\r\n        const coin = this.coinList[this.SelectCoin(attendData.count)];\r\n       
+    this.coinText.text = this.FormatText(coin);\r\n        this.StartCoroutine(this.AttendChecker(attendData));\r\n   
+    }\r\n    /* Animation */\r\n    *AttendChecker(attendData) {\r\n        const
+    wait = new UnityEngine_1.WaitForSeconds(1);\r\n        this.attending = true;\r\n       
+    if (this.exceptIds.includes(GameManager_1.default.instance.zepetoId))\r\n           
+    return;\r\n        UIManager_1.default.instance.SetDefaultPlayerController(false);\r\n       
+    yield wait;\r\n        this.attendUI.gameObject.SetActive(true);\r\n        yield
+    wait;\r\n        const coinUI = this.attendUI.GetChild(3);\r\n        coinUI.gameObject.SetActive(true);\r\n       
+    const anim = coinUI.GetComponent($typeof(UnityEngine_1.Animator));\r\n       
+    anim.SetTrigger(`Active`);\r\n    }\r\n    LockCoin(index) {\r\n        if (index
+    < 0)\r\n            return;\r\n        const data = this.attendPanels[index];\r\n       
+    data.gameObject.SetActive(true);\r\n        data.highlight.SetActive(false);\r\n       
+    data.lock.SetActive(true);\r\n    }\r\n    OnGetCoin(index) {\r\n        if (index
+    < 0)\r\n            return;\r\n        // Lock\r\n        this.LockCoin(index);\r\n       
+    // Update Attend Data\r\n        const attend = GameManager_1.default.instance.playerDB.attend;\r\n       
+    attend.count = this.NextDate(index);\r\n        attend.lastDate = this.dateId;\r\n       
+    console.log(`client last data : ${attend.lastDate}`);\r\n        // Update Coin
+    Data\r\n        const coin = this.coinList[this.SelectCoin(index)];\r\n       
+    GameManager_1.default.instance.playerDB.wonderCoin = UnityEngine_1.Mathf.Clamp(GameManager_1.default.instance.playerDB.wonderCoin
+    + coin, 0, HttpDataConnectionService_1.default.coinLimit);\r\n        // Finish\r\n       
+    UIManager_1.default.instance.SetDefaultPlayerController(true);\r\n        UIManager_1.default.instance.UpdateCoinUI();\r\n       
+    this.attending = false;\r\n    }\r\n    /** Methods **/\r\n    SelectCoin(index)
+    {\r\n        if ((index + 1) % 5 == 0)\r\n            return UnityEngine_1.Mathf.Floor((index
+    + 1) / 5);\r\n        return 0;\r\n    }\r\n    FormatText(coin) {\r\n       
+    return `COIN ${coin}`;\r\n    }\r\n    NextDate(index) {\r\n        return index
+    + 1 < 20 ? index + 1 : 0;\r\n    }\r\n    FormatDate(date) {\r\n        return
+    `${date.getDate()}_${date.getMonth() + 1}_${date.getFullYear()}`;\r\n    }\r\n}\r\nexports.default
+    = AttendController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQXR0ZW5kQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkF0dGVuZENvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpQ0FBcUQ7QUFDckQsNkNBQXlFO0FBQ3pFLG1EQUE4QztBQUM5QyxpREFBc0Q7QUFDdEQsK0NBQXdDO0FBQ3hDLG1EQUE0QztBQUU1QywyRUFBb0U7QUFFcEUsTUFBcUIsZ0JBQWlCLFNBQVEscUNBQXFCO0lBQW5FOztRQUdZLGlCQUFZLEdBQWtCLEVBQUUsQ0FBQztRQUVqQyxlQUFVLEdBQVcsQ0FBQyxDQUFDLENBQUM7UUFhZixhQUFRLEdBQUcsQ0FBQyxDQUFDLEVBQUUsRUFBRSxFQUFFLEdBQUcsRUFBRSxHQUFHLEVBQUUsR0FBRyxDQUFDLENBQUM7UUFDM0MsY0FBUyxHQUFZLEtBQUssQ0FBQztRQUMzQixZQUFPLEdBQWEsSUFBSSxDQUFDO1FBVWYsY0FBUyxHQUFjLEVBQUUsQ0FBQztJQTBMaEQsQ0FBQztJQWxORyxJQUFXLFNBQVM7UUFDaEIsT0FBTyxJQUFJLENBQUMsVUFBVSxDQUFDO0lBQzNCLENBQUM7SUFDRCxJQUFXLFNBQVMsQ0FBQyxLQUFhO1FBQzlCLElBQUksQ0FBQyxJQUFJLENBQUMsWUFBWSxJQUFJLElBQUksQ0FBQyxZQUFZLENBQUMsTUFBTSxHQUFHLEVBQUUsSUFBSSxLQUFLLEdBQUcsQ0FBQyxJQUFJLEtBQUssR0FBRyxJQUFJLENBQUMsWUFBWSxDQUFDLE1BQU0sRUFBRTtZQUMxRyxPQUFPLENBQUMsS0FBSyxDQUFDLGFBQWEsQ0FBQyxDQUFDO1NBQzVCO2FBQU07WUFDUCxJQUFJLENBQUMsVUFBVSxHQUFHLEtBQUssQ0FBQztZQUN4QixPQUFPLENBQUMsR0FBRyxDQUFDLG1CQUFtQixJQUFJLENBQUMsVUFBVSxFQUFFLENBQUMsQ0FBQztTQUNqRDtJQUNMLENBQUM7SUFPRCxJQUFXLEtBQUssS0FBYSxPQUFPLElBQUksQ0FBQyxNQUFNLENBQUMsQ0FBQyxDQUFDO0lBQ2xELElBQVksS0FBSyxDQUFDLEtBQWEsSUFBSSxJQUFJLENBQUMsTUFBTSxHQUFHLEtBQUssQ0FBQyxDQUFDLENBQUM7SUFHekQsSUFBVyxNQUFNLEtBQWEsT0FBTyxJQUFJLENBQUMsT0FBTyxDQUFDLENBQUMsQ0FBQztJQUNwRCxJQUFZLE1BQU0sQ0FBQyxLQUFhLElBQUksSUFBSSxDQUFDLE9BQU8sR0FBRyxLQUFLLENBQUMsQ0FBQyxDQUFDO0lBSTNELGlDQUFpQztJQUNqQyxtRUFBbUU7SUFDbkUsMEVBQTBFO0lBRTFFLGlCQUFpQjtJQUNWLFdBQVc7UUFDZCxhQUFhO1FBQ2IsTUFBTSxLQUFLLEdBQUcsSUFBSSxJQUFJLEVBQUUsQ0FBQztRQUN6Qix5RkFBeUY7UUFFekYsSUFBSSxDQUFDLEtBQUssR0FBRyxHQUFHLEtBQUssQ0FBQyxRQUFRLEVBQUUsR0FBRSxDQUFDLEVBQUUsQ0FBQztRQUV0QyxJQUFJLENBQUMsTUFBTSxHQUFHLElBQUksQ0FBQyxVQUFVLENBQUMsS0FBSyxDQUFDLENBQUM7UUFDckMsa0RBQWtEO1FBRWxELGNBQWM7UUFDZCxJQUFJLENBQUMsV0FBVyxFQUFFLENBQUM7SUFDdkIsQ0FBQztJQUVPLFlBQVk7UUFDaEIsSUFBSSxJQUFJLENBQUMsT0FBTyxFQUFFO1lBQ2QsSUFBSSxDQUFDLE9BQU8sR0FBRyxLQUFLLENBQUM7WUFDckIsK0RBQStEO1lBQy9ELG1CQUFTLENBQUMsUUFBUSxDQUFDLGFBQWEsQ0FBQyxJQUFJLEVBQUUsQ0FBQyxFQUFFLENBQUMsRUFBRSxDQUFDLENBQUMsQ0FBQztTQUNuRDtJQUNMLENBQUM7SUFFTyxXQUFXO1FBQ2YsRUFBRTtRQUNGLE1BQU0sV0FBVyxHQUFHLElBQUksQ0FBQyxRQUFRLENBQUMsUUFBUSxDQUFDLENBQUMsQ0FBQyxDQUFDLFlBQVksU0FBQyx1QkFBTSxFQUFHLENBQUM7UUFDckUsTUFBTSxXQUFXLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDOUMsTUFBTSxNQUFNLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFFekMsU0FBUztRQUNULFdBQVcsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUNqQyw0Q0FBNEM7WUFDNUMsOEJBQThCO1lBRTlCLElBQUksQ0FBQyxZQUFZLEVBQUUsQ0FBQztZQUNwQixJQUFJLENBQUMsUUFBUSxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7UUFDOUMsQ0FBQyxDQUFDLENBQUM7UUFFSCxLQUFLLElBQUksQ0FBQyxHQUFHLENBQUMsRUFBRSxDQUFDLEdBQUcsV0FBVyxDQUFDLFVBQVUsRUFBRSxDQUFDLEVBQUUsRUFBRTtZQUM3QyxNQUFNLFdBQVcsR0FBRyxXQUFXLENBQUMsUUFBUSxDQUFDLENBQUMsQ0FBQyxDQUFDO1lBQzVDLE1BQU0sU0FBUyxHQUFHLFdBQVcsQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLENBQUM7WUFDMUMsTUFBTSxJQUFJLEdBQUcsV0FBVyxDQUFDLFFBQVEsQ0FBQyxDQUFDLENBQUMsQ0FBQztZQUVyQyxXQUFXLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztZQUV4QyxNQUFNLElBQUksR0FBZ0I7Z0JBQ3RCLFVBQVUsRUFBRSxXQUFXLENBQUMsVUFBVTtnQkFDbEMsU0FBUyxFQUFFLFdBQVc7Z0JBQ3RCLFNBQVMsRUFBRSxTQUFTLENBQUMsVUFBVTtnQkFDL0IsSUFBSSxFQUFFLElBQUksQ0FBQyxVQUFVO2dCQUNyQixLQUFLLEVBQUUsQ0FBQzthQUNYLENBQUM7WUFDRixJQUFJLENBQUMsWUFBWSxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsQ0FBQztTQUNoQztRQUVELE9BQU87UUFDUCxNQUFNLFlBQVksR0FBRyxNQUFNLENBQUMsUUFBUSxDQUFDLENBQUMsQ0FBQyxDQUFDLFlBQVksU0FBQyx1QkFBTSxFQUFHLENBQUM7UUFDL0QsTUFBTSxZQUFZLEdBQUcsTUFBTSxDQUFDLFFBQVEsQ0FBQyxDQUFDLENBQUMsQ0FBQyxZQUFZLFNBQUMsdUJBQU0sRUFBRyxDQUFDO1FBRS9ELFlBQVksQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUNsQyxNQUFNLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztZQUNuQyx3REFBd0Q7UUFDNUQsQ0FBQyxDQUFDLENBQUM7UUFFSCxZQUFZLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDbEMsTUFBTSxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7WUFDbkMsd0RBQXdEO1FBQzVELENBQUMsQ0FBQyxDQUFDO1FBQ0gsSUFBSSxDQUFDLFFBQVEsR0FBRyxNQUFNLENBQUMsUUFBUSxDQUFDLENBQUMsQ0FBQyxDQUFDLFlBQVksU0FBQyx1QkFBZSxFQUFHLENBQUM7UUFDbkUsTUFBTSxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7SUFDdkMsQ0FBQztJQUVNLGdCQUFnQixDQUFDLFVBQWtCO1FBQ3RDLGlCQUFpQjtRQUNqQixNQUFNLE9BQU8sR0FBRyxVQUFVLENBQUMsUUFBUSxJQUFJLElBQUksSUFBSSxVQUFVLENBQUMsUUFBUSxJQUFJLEVBQUUsSUFBSSxVQUFVLENBQUMsUUFBUSxDQUFDLE1BQU0sR0FBRyxDQUFDLENBQUM7UUFDM0csSUFBRyxPQUFPLEVBQUU7WUFDUixVQUFVLENBQUMsUUFBUSxHQUFHLE9BQU8sQ0FBQztZQUM5QixVQUFVLENBQUMsS0FBSyxHQUFHLENBQUMsQ0FBQztTQUN4QjtRQUVELDBCQUEwQjtRQUMxQixNQUFNLElBQUksR0FBRyxVQUFVLENBQUMsUUFBUSxDQUFDLEtBQUssQ0FBQyxHQUFHLENBQUMsQ0FBQztRQUM1QyxJQUFHLElBQUksQ0FBQyxLQUFLLElBQUksSUFBSSxDQUFDLENBQUMsQ0FBQyxFQUFFO1lBQ3RCLFVBQVUsQ0FBQyxLQUFLLEdBQUcsQ0FBQyxDQUFDO1NBQ3hCO1FBRUQsT0FBTztRQUNQLEtBQUksSUFBSSxDQUFDLEdBQUMsQ0FBQyxFQUFFLENBQUMsR0FBQyxVQUFVLENBQUMsS0FBSyxFQUFFLENBQUMsRUFBRTtZQUFFLElBQUksQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDdkQsSUFBSSxDQUFDLFNBQVMsR0FBRyxVQUFVLENBQUMsS0FBSyxDQUFDO1FBRWxDLHNCQUFzQjtRQUN0QixNQUFNLFFBQVEsR0FBRyxVQUFVLENBQUMsS0FBSyxJQUFJLEVBQUUsQ0FBQztRQUN4QyxJQUFHLFFBQVEsRUFBRTtZQUNULE1BQU0sTUFBTSxHQUFHLHFCQUFXLENBQUMsUUFBUSxDQUFDLFFBQVEsQ0FBQyxNQUFNLENBQUM7WUFDcEQsSUFBSSxNQUFNLENBQUMsUUFBUSxJQUFJLElBQUksQ0FBQyxNQUFNO2dCQUFFLE1BQU0sQ0FBQyxRQUFRLEdBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQztZQUNsRSxJQUFJLENBQUMsWUFBWSxFQUFFLENBQUM7WUFDcEIsT0FBTztTQUNWO1FBQ0QsdUJBQXVCO1FBQ3ZCLElBQUcsSUFBSSxDQUFDLE1BQU0sSUFBSSxVQUFVLENBQUMsUUFBUSxFQUFFO1lBQ25DLElBQUksQ0FBQyxZQUFZLEVBQUUsQ0FBQztZQUNwQixPQUFPO1NBQ1Y7UUFDRCxXQUFXO1FBQ1gsTUFBTSxLQUFLLEdBQUcsSUFBSSxDQUFDLFlBQVksQ0FBQyxVQUFVLENBQUMsS0FBSyxDQUFDLENBQUM7UUFDbEQsS0FBSyxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLENBQUM7UUFDakMsS0FBSyxDQUFDLFNBQVMsQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLENBQUM7UUFDaEMsS0FBSyxDQUFDLElBQUksQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7UUFDNUIsSUFBSSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsU0FBUyxDQUFDLENBQUM7UUFDL0IsTUFBTSxJQUFJLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLFVBQVUsQ0FBQyxLQUFLLENBQUMsQ0FBQyxDQUFDO1FBQzlELElBQUksQ0FBQyxRQUFRLENBQUMsSUFBSSxHQUFHLElBQUksQ0FBQyxVQUFVLENBQUMsSUFBSSxDQUFDLENBQUM7UUFDM0MsSUFBSSxDQUFDLGNBQWMsQ0FBQyxJQUFJLENBQUMsYUFBYSxDQUFDLFVBQVUsQ0FBQyxDQUFDLENBQUM7SUFDeEQsQ0FBQztJQUVELGVBQWU7SUFDUCxDQUFDLGFBQWEsQ0FBQyxVQUFrQjtRQUNyQyxNQUFNLElBQUksR0FBRyxJQUFJLDRCQUFjLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDbkMsSUFBSSxDQUFDLFNBQVMsR0FBRyxJQUFJLENBQUM7UUFFdEIsSUFBRyxJQUFJLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQyxxQkFBVyxDQUFDLFFBQVEsQ0FBQyxRQUFRLENBQUM7WUFBRSxPQUFPO1FBRWxFLG1CQUFTLENBQUMsUUFBUSxDQUFDLDBCQUEwQixDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQ3JELE1BQU0sSUFBSSxDQUFDO1FBRVgsSUFBSSxDQUFDLFFBQVEsQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO1FBQ3pDLE1BQU0sSUFBSSxDQUFDO1FBRVgsTUFBTSxNQUFNLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDekMsTUFBTSxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLENBQUM7UUFDbEMsTUFBTSxJQUFJLEdBQUcsTUFBTSxDQUFDLFlBQVksU0FBQyxzQkFBUSxFQUFHLENBQUM7UUFDN0MsSUFBSSxDQUFDLFVBQVUsQ0FBQyxRQUFRLENBQUMsQ0FBQztJQUM5QixDQUFDO0lBRU8sUUFBUSxDQUFDLEtBQWE7UUFDMUIsSUFBSSxLQUFLLEdBQUcsQ0FBQztZQUFFLE9BQU87UUFFdEIsTUFBTSxJQUFJLEdBQUcsSUFBSSxDQUFDLFlBQVksQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUN0QyxJQUFJLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsQ0FBQztRQUNoQyxJQUFJLENBQUMsU0FBUyxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUNoQyxJQUFJLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsQ0FBQztJQUM5QixDQUFDO0lBRU8sU0FBUyxDQUFDLEtBQWE7UUFDM0IsSUFBSSxLQUFLLEdBQUcsQ0FBQztZQUFFLE9BQU87UUFFdEIsT0FBTztRQUNQLElBQUksQ0FBQyxRQUFRLENBQUMsS0FBSyxDQUFDLENBQUM7UUFFckIscUJBQXFCO1FBQ3JCLE1BQU0sTUFBTSxHQUFHLHFCQUFXLENBQUMsUUFBUSxDQUFDLFFBQVEsQ0FBQyxNQUFNLENBQUM7UUFDcEQsTUFBTSxDQUFDLEtBQUssR0FBRyxJQUFJLENBQUMsUUFBUSxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQ3BDLE1BQU0sQ0FBQyxRQUFRLEdBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQztRQUM5QixPQUFPLENBQUMsR0FBRyxDQUFDLHNCQUFzQixNQUFNLENBQUMsUUFBUSxFQUFFLENBQUMsQ0FBQztRQUNyRCxtQkFBbUI7UUFDbkIsTUFBTSxJQUFJLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLEtBQUssQ0FBQyxDQUFDLENBQUM7UUFDbkQscUJBQVcsQ0FBQyxRQUFRLENBQUMsUUFBUSxDQUFDLFVBQVUsR0FBRyxtQkFBSyxDQUFDLEtBQUssQ0FBQyxxQkFBVyxDQUFDLFFBQVEsQ0FBQyxRQUFRLENBQUMsVUFBVSxHQUFFLElBQUksRUFBRSxDQUFDLEVBQUUsbUNBQXlCLENBQUMsU0FBUyxDQUFDLENBQUM7UUFFL0ksU0FBUztRQUNULG1CQUFTLENBQUMsUUFBUSxDQUFDLDBCQUEwQixDQUFDLElBQUksQ0FBQyxDQUFDO1FBQ3BELG1CQUFTLENBQUMsUUFBUSxDQUFDLFlBQVksRUFBRSxDQUFBO1FBQ2pDLElBQUksQ0FBQyxTQUFTLEdBQUcsS0FBSyxDQUFDO0lBQzNCLENBQUM7SUFFRCxlQUFlO0lBQ1AsVUFBVSxDQUFDLEtBQWE7UUFDNUIsSUFBSSxDQUFDLEtBQUssR0FBRyxDQUFDLENBQUMsR0FBRyxDQUFDLElBQUksQ0FBQztZQUFFLE9BQU8sbUJBQUssQ0FBQyxLQUFLLENBQUMsQ0FBQyxLQUFLLEdBQUcsQ0FBQyxDQUFDLEdBQUcsQ0FBQyxDQUFDLENBQUM7UUFDOUQsT0FBTyxDQUFDLENBQUM7SUFDYixDQUFDO0lBRU8sVUFBVSxDQUFDLElBQVk7UUFDM0IsT0FBTyxRQUFRLElBQUksRUFBRSxDQUFDO0lBQzFCLENBQUM7SUFFTyxRQUFRLENBQUMsS0FBYTtRQUMxQixPQUFPLEtBQUssR0FBRyxDQUFDLEdBQUcsRUFBRSxDQUFDLENBQUMsQ0FBQyxLQUFLLEdBQUcsQ0FBQyxDQUFDLENBQUMsQ0FBQyxDQUFDLENBQUM7SUFDMUMsQ0FBQztJQUVPLFVBQVUsQ0FBQyxJQUFVO1FBQ3pCLE9BQU8sR0FBRyxJQUFJLENBQUMsT0FBTyxFQUFFLElBQUksSUFBSSxDQUFDLFFBQVEsRUFBRSxHQUFHLENBQUMsSUFBSSxJQUFJLENBQUMsV0FBVyxFQUFFLEVBQUUsQ0FBQztJQUM1RSxDQUFDO0NBQ0o7QUF4TkQsbUNBd05DIn0=","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/AttendController.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"attendUI","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"exceptIds","type":"System.String[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"AttendController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 4f084655bdb3c4382920e9d86c0fd13b
+  onlyWriteTrigger: 0

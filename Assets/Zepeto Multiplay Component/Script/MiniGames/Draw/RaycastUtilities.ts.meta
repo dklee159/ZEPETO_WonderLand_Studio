@@ -1,0 +1,61 @@
+fileFormatVersion: 2
+guid: 35de916554b4a424bb54726874318cde
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst __UnityEngine__ = require(\"UnityEngine\");\r\nconst
+    System_Collections_Generic_1 = require(\"System.Collections.Generic\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst UnityEngine_EventSystems_1
+    = require(\"UnityEngine.EventSystems\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
+    RaycastUtilities extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    static
+    PointerIsOverUI(screenPos, obj) {\r\n        const hitObject = this.UIRaycast(this.ScreenPosToPointerData(screenPos));\r\n       
+    return __UnityEngine__.Object.op_Inequality(hitObject, null) && hitObject.layer
+    == UnityEngine_1.LayerMask.NameToLayer(\"UI\") && __UnityEngine__.Object.op_Equality(hitObject.gameObject,
+    obj.gameObject);\r\n    }\r\n    static GetPointConverToLocal(screenPos, obj,
+    isSetOffset = false) {\r\n        const hitObject = this.UIRaycast(this.ScreenPosToPointerData(screenPos));\r\n       
+    if (__UnityEngine__.Object.op_Equality(hitObject, obj) && hitObject.layer ==
+    UnityEngine_1.LayerMask.NameToLayer(\"UI\")) {\r\n            const mousePos
+    = new UnityEngine_1.Vector3(screenPos.x, screenPos.y, 0);\r\n            const
+    local = hitObject.transform.InverseTransformPoint(mousePos);\r\n            if
+    (isSetOffset) {\r\n                local.x += hitObject.GetComponent($typeof(UnityEngine_1.RectTransform)).sizeDelta.x
+    * 0.5 + 28;\r\n                local.y += hitObject.GetComponent($typeof(UnityEngine_1.RectTransform)).sizeDelta.y
+    * 0.5 + 28;\r\n            }\r\n            return local;\r\n        }\r\n       
+    return null;\r\n    }\r\n    static PointerIsInVertex(screenPos, obj) {\r\n       
+    const hitObject = this.UIRaycast(this.ScreenPosToPointerData(screenPos));\r\n       
+    if (__UnityEngine__.Object.op_Inequality(hitObject, null) && __UnityEngine__.Object.op_Equality(hitObject,
+    obj)) {\r\n            const coll = hitObject.GetComponent($typeof(UnityEngine_1.PolygonCollider2D));\r\n           
+    if (coll == null)\r\n                return false;\r\n            const worldPoint
+    = UnityEngine_1.Camera.main.ScreenToWorldPoint(new UnityEngine_1.Vector3(screenPos.x,
+    screenPos.y, 1));\r\n            const vec2 = new UnityEngine_1.Vector2(worldPoint.x,
+    worldPoint.y);\r\n            const isHit = coll.OverlapPoint(vec2);\r\n           
+    return hitObject.layer == UnityEngine_1.LayerMask.NameToLayer(\"UI\") && isHit;\r\n       
+    }\r\n        else {\r\n            return false;\r\n        }\r\n    }\r\n   
+    static UIRaycast(pointerData) {\r\n        let results = new ($generic(System_Collections_Generic_1.List$1,
+    UnityEngine_EventSystems_1.RaycastResult))();\r\n        UnityEngine_EventSystems_1.EventSystem.current.RaycastAll(pointerData,
+    results);\r\n        return results.Count < 1 ? null : results.get_Item(0).gameObject;\r\n   
+    }\r\n    static ScreenPosToPointerData(screenPos) {\r\n        const event =
+    new UnityEngine_EventSystems_1.PointerEventData(UnityEngine_EventSystems_1.EventSystem.current);\r\n       
+    event.position = screenPos;\r\n        return event;\r\n    }\r\n    static GraphicRay(gr,
+    pointerData) {\r\n        let results = new ($generic(System_Collections_Generic_1.List$1,
+    UnityEngine_EventSystems_1.RaycastResult))();\r\n        gr.Raycast(pointerData,
+    results);\r\n        return results.Count < 1 ? null : results.get_Item(0).gameObject;\r\n   
+    }\r\n}\r\nexports.default = RaycastUtilities;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiUmF5Y2FzdFV0aWxpdGllcy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlJheWNhc3RVdGlsaXRpZXMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUEsMkVBQW9EO0FBQ3BELDZDQUFxSTtBQUVySSx1RUFBd0Y7QUFDeEYsaURBQXFEO0FBRXJELE1BQXFCLGdCQUFpQixTQUFRLHFDQUFxQjtJQUV4RCxNQUFNLENBQUMsZUFBZSxDQUFDLFNBQW1CLEVBQUUsR0FBZ0I7UUFDL0QsTUFBTSxTQUFTLEdBQWdCLElBQUksQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLHNCQUFzQixDQUFDLFNBQVMsQ0FBQyxDQUFDLENBQUM7UUFDdEYsT0FBTyx1QkFxRDByUSxhQUFjLENBckR4c1EsU0FBUyxFQUFJLElBQUksS0FBSSxTQUFTLENBQUMsS0FBSyxJQUFJLHVCQUFTLENBQUMsV0FBVyxDQUFDLElBQUksQ0FBQywyQkFxRDJpUSxXQUFZLENBckRualEsU0FBUyxDQUFDLFVBQVUsRUFBSSxHQUFHLENBQUMsVUFBVSxDQUFBLENBQUM7SUFDekgsQ0FBQztJQUVNLE1BQU0sQ0FBQyxxQkFBcUIsQ0FBQyxTQUFtQixFQUFFLEdBQWdCLEVBQUUsY0FBd0IsS0FBSztRQUNwRyxNQUFNLFNBQVMsR0FBZ0IsSUFBSSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsc0JBQXNCLENBQUMsU0FBUyxDQUFDLENBQUMsQ0FBQztRQUV0RixJQUFJLHVCQStDaW5RLFdBQVksQ0EvQzduUSxTQUFTLEVBQUksR0FBRyxLQUFJLFNBQVMsQ0FBQyxLQUFLLElBQUksdUJBQVMsQ0FBQyxXQUFXLENBQUMsSUFBSSxDQUFDLEVBQUU7WUFDcEUsTUFBTSxRQUFRLEdBQUcsSUFBSSxxQkFBTyxDQUFDLFNBQVMsQ0FBQyxDQUFDLEVBQUUsU0FBUyxDQUFDLENBQUMsRUFBRSxDQUFDLENBQUMsQ0FBQztZQUMxRCxNQUFNLEtBQUssR0FBRyxTQUFTLENBQUMsU0FBUyxDQUFDLHFCQUFx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","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/MiniGames/Draw/RaycastUtilities.ts","manifest":{"properties":[],"name":"RaycastUtilities","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 1a127a874a8d5987d6ec53f880497f6b
+  onlyWriteTrigger: 0

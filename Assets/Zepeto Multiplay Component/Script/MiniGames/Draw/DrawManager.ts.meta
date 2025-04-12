@@ -1,0 +1,162 @@
+fileFormatVersion: 2
+guid: a2602424ad471bc428956319248baa43
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst __UnityEngine__ = require(\"UnityEngine\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst ImageTargeter_1 = require(\"./ImageTargeter\");\r\nconst
+    RaycastUtilities_1 = require(\"./RaycastUtilities\");\r\nconst GuideLineHandler_1
+    = require(\"./GuideLineHandler\");\r\nconst InteractionBtn_1 = require(\"../../Interaction/InteractionBtn\");\r\nconst
+    UIManager_1 = require(\"../../Manager/UIManager\");\r\nclass DrawManager extends
+    ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n        super(...arguments);\r\n       
+    this.isDrawStart = false;\r\n        this.isDrawing = false;\r\n        this.minDistance
+    = 0.01;\r\n        this.drawNum = 0;\r\n        this.previousPosition = UnityEngine_1.Vector3.zero;\r\n       
+    this.drawPoints = new Map();\r\n        this.consPresets = [];\r\n        this.vowelPresets
+    = [];\r\n        this.drawIndex = null;\r\n        this.drawIndexMax = 0;\r\n   
+    }\r\n    get DrawIndex() { return this.drawIndex; }\r\n    set DrawIndex(value)
+    {\r\n        if (value <= 0) {\r\n            value = 0;\r\n            this.prevBtn.gameObject.SetActive(false);\r\n           
+    if (!this.nextBtn.gameObject.activeSelf)\r\n                this.nextBtn.gameObject.SetActive(true);\r\n       
+    }\r\n        else if (value >= this.drawIndexMax) {\r\n            value = this.drawIndexMax;\r\n           
+    this.nextBtn.gameObject.SetActive(false);\r\n            if (!this.prevBtn.gameObject.activeSelf)\r\n               
+    this.prevBtn.gameObject.SetActive(true);\r\n        }\r\n        else {\r\n           
+    if (!this.prevBtn.gameObject.activeSelf)\r\n                this.prevBtn.gameObject.SetActive(true);\r\n           
+    if (!this.nextBtn.gameObject.activeSelf)\r\n                this.nextBtn.gameObject.SetActive(true);\r\n       
+    }\r\n        this.drawIndex = value;\r\n        if (this.drawMode == DrawMode.Consonant)
+    {\r\n            this.SwitchDrawImage(this.consPresets[value]);\r\n        }\r\n       
+    else if (this.drawMode == DrawMode.Vowel) {\r\n            this.SwitchDrawImage(this.vowelPresets[value]);\r\n       
+    }\r\n    }\r\n    Start() {\r\n        this.imageTargeter = this.transform.GetComponent($typeof(ImageTargeter_1.default));\r\n       
+    this.drawCanvas.worldCamera = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.ZepetoCamera.camera;\r\n       
+    this.drawCanvas.planeDistance = 1;\r\n        this.closeBtn.onClick.AddListener(()
+    => {\r\n            this.DrawFinish();\r\n        });\r\n        this.nextBtn.onClick.AddListener(()
+    => {\r\n            this.DrawPanelInit();\r\n            this.DrawIndex++;\r\n       
+    });\r\n        this.prevBtn.onClick.AddListener(() => {\r\n            this.DrawPanelInit();\r\n           
+    this.DrawIndex--;\r\n        });\r\n        this.consBtn.onClick.AddListener(()
+    => {\r\n            this.DrawPanelInit();\r\n            this.SetDrawingMode(DrawMode.Consonant);\r\n       
+    });\r\n        this.vowelBtn.onClick.AddListener(() => {\r\n            this.DrawPanelInit();\r\n           
+    this.SetDrawingMode(DrawMode.Vowel);\r\n        });\r\n        const consChildCnt
+    = this.consonantsParent.transform.childCount;\r\n        const vowelChildCnt
+    = this.vowelsParent.transform.childCount;\r\n        for (let i = 0; i < consChildCnt
+    / 3; i++) {\r\n            const num = i * 3;\r\n            let preset = {\r\n               
+    firstImage: null,\r\n                secondImage: null,\r\n                thirdImage:
+    null\r\n            };\r\n            for (let j = 0; j < 3; j++) {\r\n               
+    if (num + j >= consChildCnt)\r\n                    break;\r\n               
+    const obj = this.consonantsParent.transform.GetChild(num + j);\r\n               
+    const image = obj.GetComponent($typeof(UnityEngine_UI_1.Image));\r\n               
+    if (j == 0)\r\n                    preset.firstImage = image;\r\n               
+    else if (j == 1)\r\n                    preset.secondImage = image;\r\n               
+    else if (j == 2)\r\n                    preset.thirdImage = image;\r\n               
+    this.imageTargeter.AddTargetImage(image);\r\n            }\r\n            this.consPresets[i]
+    = preset;\r\n        }\r\n        for (let i = 0; i < vowelChildCnt / 3; i++)
+    {\r\n            const num = i * 3;\r\n            let preset = {\r\n               
+    firstImage: null,\r\n                secondImage: null,\r\n                thirdImage:
+    null\r\n            };\r\n            for (let j = 0; j < 3; j++) {\r\n               
+    if (num + j >= vowelChildCnt)\r\n                    break;\r\n               
+    const obj = this.vowelsParent.transform.GetChild(num + j);\r\n               
+    const image = obj.GetComponent($typeof(UnityEngine_UI_1.Image));\r\n               
+    if (j == 0)\r\n                    preset.firstImage = image;\r\n               
+    else if (j == 1)\r\n                    preset.secondImage = image;\r\n               
+    else if (j == 2)\r\n                    preset.thirdImage = image;\r\n               
+    this.imageTargeter.AddTargetImage(image);\r\n            }\r\n            this.vowelPresets[i]
+    = preset;\r\n        }\r\n    }\r\n    DrawStart() {\r\n        if (!this.isDrawStart)
+    {\r\n            this.isDrawStart = true;\r\n            this.drawCanvas.gameObject.SetActive(true);\r\n           
+    // UIManager.Ins.SetDefaultPlayerController(false);\r\n            UIManager_1.default.instance.SetDefaultPlayerController(false);\r\n           
+    this.DrawPanelInit();\r\n            this.SetDrawingMode(DrawMode.Consonant);\r\n           
+    this.StartCoroutine(this.OnDrawStart());\r\n        }\r\n        else {\r\n           
+    UnityEngine_1.Debug.LogWarning(\"Drawing is already Start\");\r\n        }\r\n   
+    }\r\n    SetDrawingMode(mode) {\r\n        if (this.drawMode == mode)\r\n           
+    return;\r\n        this.drawMode = mode;\r\n        if (this.drawMode == DrawMode.Consonant)
+    {\r\n            this.consBtn.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite
+    = this.selectedImage;\r\n            this.consBtn.GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).color
+    = UnityEngine_1.Color.white;\r\n            this.vowelBtn.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite
+    = this.unselectedImage;\r\n            this.vowelBtn.GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).color
+    = UnityEngine_1.Color.black;\r\n            this.drawIndexMax = this.consPresets.length
+    - 1;\r\n            this.consonantsParent.SetActive(true);\r\n            this.vowelsParent.SetActive(false);\r\n           
+    // this.SwitchDrawImage(this.consPresets[0]);\r\n        }\r\n        else if
+    (this.drawMode == DrawMode.Vowel) {\r\n            this.consBtn.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite
+    = this.unselectedImage;\r\n            this.consBtn.GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).color
+    = UnityEngine_1.Color.black;\r\n            this.vowelBtn.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite
+    = this.selectedImage;\r\n            this.vowelBtn.GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).color
+    = UnityEngine_1.Color.white;\r\n            this.drawIndexMax = this.vowelPresets.length
+    - 1;\r\n            this.consonantsParent.SetActive(false);\r\n            this.vowelsParent.SetActive(true);\r\n           
+    // this.SwitchDrawImage(this.vowelPresets[0]);\r\n        }\r\n        this.DrawIndex
+    = 0;\r\n    }\r\n    *OnDrawStart() {\r\n        while (this.isDrawStart) {\r\n           
+    const mousePos = UnityEngine_1.Input.mousePosition;\r\n            if (UnityEngine_1.Input.GetMouseButtonDown(0))
+    {\r\n                this.DrawInputBegin(mousePos);\r\n            }\r\n           
+    if (UnityEngine_1.Input.GetMouseButton(0)) {\r\n                this.OnDrawing(mousePos);\r\n           
+    }\r\n            if (UnityEngine_1.Input.GetMouseButtonUp(0)) {\r\n               
+    this.DrawInputEnd();\r\n            }\r\n            yield null;\r\n        }\r\n   
+    }\r\n    DrawPanelInit() {\r\n        this.drawPoints.forEach((value, key) =>
+    {\r\n            if (!value.IsDestroyed)\r\n                UnityEngine_1.GameObject.Destroy(value);\r\n       
+    });\r\n        this.drawPoints.clear();\r\n        this.drawNum = 0;\r\n    }\r\n   
+    CanDraw() {\r\n        return this.imageTargeter.IsTargetHit();\r\n    }\r\n   
+    DrawInputBegin(pos) {\r\n        if (this.CanDraw()) {\r\n            const vector2Pos
+    = new UnityEngine_1.Vector2(pos.x, pos.y);\r\n            const worldPoint =
+    this.GetScreenToWorldPoint(pos);\r\n            const mouseVec2 = new UnityEngine_1.Vector2(worldPoint.x,
+    worldPoint.y);\r\n            const imageObj = this.imageTargeter.GetImageAsPos(vector2Pos);\r\n           
+    if (__UnityEngine__.Object.op_Equality(imageObj, null))\r\n                return;\r\n           
+    this.guideLineHandler = imageObj.GetComponent($typeof(GuideLineHandler_1.default));\r\n           
+    if (this.guideLineHandler.CanDrawLineStart(worldPoint)) {\r\n               
+    if (this.isDrawing)\r\n                    return;\r\n                this.isDrawing
+    = true;\r\n                this.drawNum++;\r\n                const drawLine
+    = UnityEngine_1.GameObject.Instantiate(this.linePrefab, worldPoint, UnityEngine_1.Camera.main.transform.rotation,
+    this.drawPanel.transform);\r\n                this.drawPoints.set(this.drawNum,
+    drawLine);\r\n            }\r\n        }\r\n    }\r\n    OnDrawing(pos) {\r\n       
+    if (this.CanDraw() && this.isDrawing) {\r\n            const worldPoint = this.GetScreenToWorldPoint(pos);\r\n           
+    const obj = this.drawPoints.get(this.drawNum);\r\n            if (__UnityEngine__.Object.op_Equality(obj,
+    null))\r\n                return;\r\n            const line = obj.GetComponent($typeof(UnityEngine_1.LineRenderer));\r\n           
+    const isDrawn = this.guideLineHandler.DrawingLine(worldPoint);\r\n           
+    if (isDrawn) {\r\n                const hasNextLine = this.guideLineHandler.SetNextGuideLine(this.drawNum);\r\n               
+    if (hasNextLine)\r\n                    this.DrawInputEnd(true);\r\n               
+    else {\r\n                    this.DrawInputEnd();\r\n                    const
+    getNums = this.guideLineHandler.GetSuccessDrawNums();\r\n                   
+    getNums.forEach((value, index) => {\r\n                        this.RemoveLine(value);\r\n                   
+    });\r\n                }\r\n                return;\r\n            }\r\n           
+    const currentPosition = obj.transform.InverseTransformPoint(worldPoint);\r\n           
+    if (UnityEngine_1.Vector3.Distance(currentPosition, this.previousPosition) >
+    this.minDistance) {\r\n                line.positionCount++;\r\n               
+    line.SetPosition(line.positionCount - 1, currentPosition);\r\n               
+    this.previousPosition = currentPosition;\r\n            }\r\n        }\r\n       
+    else {\r\n            this.DrawInputEnd();\r\n        }\r\n    }\r\n    DrawInputEnd(isSuccess
+    = false) {\r\n        if (!this.isDrawing)\r\n            return;\r\n       
+    if (!isSuccess) {\r\n            this.RemoveLine(this.drawNum);\r\n        }\r\n       
+    this.isDrawing = false;\r\n        this.drawNum++;\r\n    }\r\n    RemoveLine(index)
+    {\r\n        UnityEngine_1.GameObject.Destroy(this.drawPoints.get(index));\r\n       
+    this.drawPoints.delete(index);\r\n    }\r\n    GetScreenToWorldPoint(mousePos)
+    {\r\n        mousePos.z = 1;\r\n        return UnityEngine_1.Camera.main.ScreenToWorldPoint(mousePos);\r\n   
+    }\r\n    SwitchDrawImage(preset) {\r\n        if (this.currentDrawImages != null)
+    {\r\n            if (this.currentDrawImages.firstImage != null)\r\n               
+    this.currentDrawImages.firstImage.gameObject.SetActive(false);\r\n           
+    if (this.currentDrawImages.secondImage != null)\r\n                this.currentDrawImages.secondImage.gameObject.SetActive(false);\r\n           
+    if (this.currentDrawImages.thirdImage != null)\r\n                this.currentDrawImages.thirdImage.gameObject.SetActive(false);\r\n       
+    }\r\n        if (preset.firstImage != null)\r\n            preset.firstImage.gameObject.SetActive(true);\r\n       
+    if (preset.secondImage != null)\r\n            preset.secondImage.gameObject.SetActive(true);\r\n       
+    if (preset.thirdImage != null)\r\n            preset.thirdImage.gameObject.SetActive(true);\r\n       
+    this.currentDrawImages = preset;\r\n    }\r\n    DrawFinish() {\r\n        this.DrawPanelInit();\r\n       
+    this.StopCoroutine(this.OnDrawStart());\r\n        this.drawCanvas.gameObject.SetActive(false);\r\n       
+    this.drawMode = null;\r\n        this.DrawIndex = 0;\r\n        this.isDrawStart
+    = false;\r\n        // this.SetDefaultPlayerController(true);\r\n        UIManager_1.default.instance.SetDefaultPlayerController(true);\r\n       
+    this._interactionBtn.GetComponent($typeof(InteractionBtn_1.default)).ShowIcon();\r\n   
+    }\r\n}\r\nexports.default = DrawManager;\r\nvar DrawMode;\r\n(function (DrawMode)
+    {\r\n    DrawMode[\"Vowel\"] = \"Drawing Vowel\";\r\n    DrawMode[\"Consonant\"]
+    = \"Drawing Consonant\";\r\n})(DrawMode || (DrawMode = {}));\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRHJhd01hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJEcmF3TWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQSw2Q0FBcUg7QUFDckgsNkVBQW1GO0FBQ25GLG1EQUFxRDtBQUNyRCxpREFBcUQ7QUFDckQsbURBQTRDO0FBQzVDLHlEQUFrRDtBQUNsRCx5REFBa0Q7QUFDbEQscUVBQThEO0FBQzlELHVEQUFnRDtBQUVoRCxNQUFxQixXQUFZLFNBQVEscUNBQXFCO0lBQTlEOztRQXNCWSxnQkFBVyxHQUFhLEtBQUssQ0FBQztRQUM5QixjQUFTLEdBQWEsS0FBSyxDQUFBO1FBQzNCLGdCQUFXLEdBQVksSUFBSSxDQUFDO1FBQzVCLFlBQU8sR0FBWSxDQUFDLENBQUM7UUFDckIscUJBQWdCLEdBQWEscUJBQU8sQ0FBQyxJQUFJLENBQUM7UUFDMUMsZUFBVSxHQUE2QixJQUFJLEdBQUcsRUFBc0IsQ0FBQztRQUVyRSxnQkFBVyxHQUFrQixFQUFFLENBQUM7UUFDaEMsaUJBQVksR0FBa0IsRUFBRSxDQUFDO1FBRWpDLGNBQVMsR0FBWSxJQUFJLENBQUM7UUFDMUIsaUJBQVksR0FBWSxDQUFDLENBQUM7SUFzUnRDLENBQUM7SUFwUkcsSUFBVyxTQUFTLEtBQUssT0FBTyxJQUFJLENBQUMsU0FBUyxDQUFDLENBQUMsQ0FBQztJQUNqRCxJQUFXLFNBQVMsQ0FBQyxLQUFjO1FBQy9CLElBQUksS0FBSyxJQUFJLENBQUMsRUFBRTtZQUNaLEtBQUssR0FBRyxDQUFDLENBQUM7WUFDVixJQUFJLENBQUMsT0FBTyxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7WUFDekMsSUFBSSxDQUFDLElBQUksQ0FBQyxPQUFPLENBQUMsVUFBVSxDQUFDLFVBQVU7Z0JBQUUsSUFBSSxDQUFDLE9BQU8sQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO1NBQ3BGO2FBQ0ksSUFBSSxLQUFLLElBQUks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","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/MiniGames/Draw/DrawManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.UIModule","name":"drawCanvas","type":"UnityEngine.Canvas","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"drawPanel","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"linePrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"consonantsParent","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"vowelsParent","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"_interactionBtn","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"closeBtn","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Buttons\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"nextBtn","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"prevBtn","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"consBtn","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"vowelBtn","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"selectedImage","type":"UnityEngine.Sprite","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Sprites\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"unselectedImage","type":"UnityEngine.Sprite","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"DrawManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 30311db912b972161d3eab4b37163d4c
+  onlyWriteTrigger: 0

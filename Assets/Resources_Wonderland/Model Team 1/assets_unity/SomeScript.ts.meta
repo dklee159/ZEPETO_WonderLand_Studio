@@ -1,0 +1,35 @@
+fileFormatVersion: 2
+guid: 31ce226753f140e4eaf4f9c4d9bf8f87
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass SomeScript extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    constructor() {\r\n        super(...arguments);\r\n        /* Properties
+    */\r\n        this.speedX = 0.1;\r\n        this.speedY = 0.1;\r\n        this.curX
+    = 0.1;\r\n        this.curY = 0.1;\r\n    }\r\n    Start() {\r\n        this.curX
+    = this.GetComponent($typeof(UnityEngine_1.Renderer)).material.mainTextureOffset.x;\r\n       
+    this.curY = this.GetComponent($typeof(UnityEngine_1.Renderer)).material.mainTextureOffset.y;\r\n       
+    this.mat = this.GetComponent($typeof(UnityEngine_1.Renderer)).material;\r\n   
+    }\r\n    FixedUpdate() {\r\n        this.curX += UnityEngine_1.Time.deltaTime
+    * this.speedX;\r\n        this.curY += UnityEngine_1.Time.deltaTime * this.speedY;\r\n       
+    this.mat.SetTextureOffset(\"_MainTex\", new UnityEngine_1.Vector2(this.curX,
+    this.curX));\r\n    }\r\n}\r\nexports.default = SomeScript;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU29tZVNjcmlwdC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlNvbWVTY3JpcHQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBZ0U7QUFDaEUsaURBQXFEO0FBRXJELE1BQXFCLFVBQVcsU0FBUSxxQ0FBcUI7SUFBN0Q7O1FBRUksZ0JBQWdCO1FBQ1QsV0FBTSxHQUFVLEdBQUcsQ0FBQztRQUNwQixXQUFNLEdBQVUsR0FBRyxDQUFDO1FBQ3BCLFNBQUksR0FBVSxHQUFHLENBQUM7UUFDbEIsU0FBSSxHQUFVLEdBQUcsQ0FBQztJQWlCN0IsQ0FBQztJQWJHLEtBQUs7UUFDRCxJQUFJLENBQUMsSUFBSSxHQUFHLElBQUksQ0FBQyxZQUFZLFNBQUMsc0JBQVEsR0FBSSxRQUFRLENBQUMsaUJBQWlCLENBQUMsQ0FBQyxDQUFDO1FBQ3ZFLElBQUksQ0FBQyxJQUFJLEdBQUcsSUFBSSxDQUFDLFlBQVksU0FBQyxzQkFBUSxHQUFJLFFBQVEsQ0FBQyxpQkFBaUIsQ0FBQyxDQUFDLENBQUM7UUFFdkUsSUFBSSxDQUFDLEdBQUcsR0FBRyxJQUFJLENBQUMsWUFBWSxTQUFDLHNCQUFRLEdBQUksUUFBUSxDQUFDO0lBQ3RELENBQUM7SUFFRCxXQUFXO1FBQ1AsSUFBSSxDQUFDLElBQUksSUFBSSxrQkFBSSxDQUFDLFNBQVMsR0FBRyxJQUFJLENBQUMsTUFBTSxDQUFDO1FBQzFDLElBQUksQ0FBQyxJQUFJLElBQUksa0JBQUksQ0FBQyxTQUFTLEdBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQztRQUMxQyxJQUFJLENBQUMsR0FBRyxDQUFDLGdCQUFnQixDQUFDLFVBQVUsRUFBRSxJQUFJLHFCQUFPLENBQUMsSUFBSSxDQUFDLElBQUksRUFBRSxJQUFJLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQztJQUM3RSxDQUFDO0NBRUo7QUF2QkQsNkJBdUJDIn0=","assetPath":"Assets/assets_unity/animation_fbx/SomeScript.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"speedX","type":"System.Single","isArray":false,"initValue":["0.1"],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"speedY","type":"System.Single","isArray":false,"initValue":["0.1"],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"curX","type":"System.Single","isArray":false,"initValue":["0.1"],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"curY","type":"System.Single","isArray":false,"initValue":["0.1"],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"SomeScript","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 27b3a6177f39986920f01ee55ed77782
+  onlyWriteTrigger: 0

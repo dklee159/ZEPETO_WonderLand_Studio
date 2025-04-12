@@ -1,0 +1,98 @@
+fileFormatVersion: 2
+guid: 181c1309bacf14b4394bc100b97c4e02
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst ZEPETO_Multiplay_1 =
+    require(\"ZEPETO.Multiplay\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    GameInteraction_1 = require(\"../MiniGames/GameInteraction\");\r\nconst MultiplayManager_1
+    = require(\"../../ZepetoScript/Common/MultiplayManager\");\r\nconst TypeManager_1
+    = require(\"../TypeManager\");\r\nconst AnimationManager_1 = require(\"./AnimationManager\");\r\nconst
+    GameManager_1 = require(\"../GameManager\");\r\nconst LocalizeExternText_1 =
+    require(\"../Lang/LocalizeExternText\");\r\nconst UIManager_1 = require(\"./UIManager\");\r\nclass
+    FoodManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
+    {\r\n        super(...arguments);\r\n        this.foodDatas = new Map();\r\n       
+    this.equippDatas = new Map();\r\n        this.price = 10;\r\n    }\r\n    get
+    PurchaseStr() { return `${this.foodName} ${this.purchaseAttachedStr}`; }\r\n   
+    Start() {\r\n        this.foodDatas.set(this.tteokbokkiPrefab.name, this.tteokbokkiPrefab);\r\n       
+    this.foodDatas.set(this.rawMeatPrefab.name, this.rawMeatPrefab);\r\n        this.foodDatas.set(this.jeonPrefab.name,
+    this.jeonPrefab);\r\n        this.foodDatas.set(this.bibimPrefab.name, this.bibimPrefab);\r\n       
+    this.foodDatas.set(this.chickenPrefab.name, this.chickenPrefab);\r\n        this.foodDatas.set(this.twistedBreadPrefab.name,
+    this.twistedBreadPrefab);\r\n        this.buyBtn.onClick.AddListener(() => {\r\n           
+    this.BuyFood();\r\n        });\r\n        this.cancelBtn.onClick.AddListener(()
+    => {\r\n            this.foodPopup.gameObject.SetActive(false);\r\n        });\r\n       
+    this.foodRemoveBtn.onClick.AddListener(() => {\r\n            this.RemoveFood();\r\n       
+    });\r\n    }\r\n    OpenPurchaseUI(foodType) {\r\n        this.foodPopup.gameObject.SetActive(true);\r\n       
+    const localText = this.purchaseText.GetComponent($typeof(LocalizeExternText_1.default));\r\n       
+    switch (foodType) {\r\n            case GameInteraction_1.InteractionType.Ttekbokki:\r\n               
+    this.selectedFood = this.tteokbokkiPrefab;\r\n                this.selectedSprite
+    = this.tteokbokkiSprite;\r\n                this.foodName = `\"${localText.GetTextInArray(3)}\"`;\r\n               
+    break;\r\n            case GameInteraction_1.InteractionType.RawMeat:\r\n               
+    this.selectedFood = this.rawMeatPrefab;\r\n                this.selectedSprite
+    = this.rawMeatSprite;\r\n                this.foodName = `\"${localText.GetArrayText(2)}\"`;\r\n               
+    break;\r\n            case GameInteraction_1.InteractionType.Jeon:\r\n               
+    this.selectedFood = this.jeonPrefab;\r\n                this.selectedSprite =
+    this.jeonSprite;\r\n                this.foodName = `\"${localText.GetArrayText(4)}\"`;\r\n               
+    break;\r\n            case GameInteraction_1.InteractionType.Bibim:\r\n               
+    this.selectedFood = this.bibimPrefab;\r\n                this.selectedSprite
+    = this.bibimSprite;\r\n                this.foodName = `\"${localText.GetArrayText(6)}\"`;\r\n               
+    break;\r\n            case GameInteraction_1.InteractionType.Chicken:\r\n               
+    this.selectedFood = this.chickenPrefab;\r\n                this.selectedSprite
+    = this.chickenSprite;\r\n                this.foodName = `\"${localText.GetArrayText(5)}\"`;\r\n               
+    break;\r\n            case GameInteraction_1.InteractionType.TwistedBread:\r\n               
+    this.selectedFood = this.twistedBreadPrefab;\r\n                this.selectedSprite
+    = this.twistedBreadSprite;\r\n                this.foodName = `\"${localText.GetArrayText(1)}\"`;\r\n               
+    break;\r\n            default:\r\n                break;\r\n        }\r\n       
+    this.purchaseText.text = this.StringFormat();\r\n        this.foodImage.sprite
+    = this.selectedSprite;\r\n    }\r\n    StringFormat() {\r\n        const localText
+    = this.purchaseText.GetComponent($typeof(LocalizeExternText_1.default));\r\n       
+    let defaultText = localText.GetTextInArray(0);\r\n        const name = this.foodName;\r\n       
+    defaultText = defaultText.replace(\"InputFood\", name);\r\n        console.log(defaultText);\r\n       
+    return defaultText;\r\n    }\r\n    // client method\r\n    CheckEquipped() {\r\n       
+    const sessionId = MultiplayManager_1.default.instance.Room.SessionId;\r\n       
+    return this.equippDatas.has(sessionId);\r\n    }\r\n    BuyFood() {\r\n       
+    this.foodPopup.gameObject.SetActive(false);\r\n        this.foodRemoveBtn.gameObject.SetActive(true);\r\n       
+    if (!GameManager_1.default.instance.UseCoin(this.price))\r\n            return;\r\n       
+    UIManager_1.default.instance.GetGiftController().MikeOff();\r\n        const
+    data = new ZEPETO_Multiplay_1.RoomData();\r\n        data.Add(TypeManager_1.SendName.FoodType,
+    this.selectedFood.name);\r\n        MultiplayManager_1.default.instance.Room.Send(TypeManager_1.MESSAGE.FoodEquipp,
+    data.GetObject());\r\n    }\r\n    RemoveFood() {\r\n        this.foodRemoveBtn.gameObject.SetActive(false);\r\n       
+    const data = new ZEPETO_Multiplay_1.RoomData();\r\n        data.Add(TypeManager_1.SendName.SessionId,
+    MultiplayManager_1.default.instance.Room.SessionId);\r\n        MultiplayManager_1.default.instance.Room.Send(TypeManager_1.MESSAGE.FoodUnequipp,
+    data.GetObject());\r\n    }\r\n    // server receive method    \r\n    OnBuyFood(sessionId,
+    foodName) {\r\n        UnityEngine_1.Debug.Log(\"equipped \" + foodName);\r\n       
+    const boneTransform = AnimationManager_1.default.GetBone(sessionId, this.bodyBone);\r\n       
+    const food = this.foodDatas.get(foodName);\r\n        const equippedFood = UnityEngine_1.GameObject.Instantiate(food,
+    boneTransform);\r\n        equippedFood.transform.localPosition = new UnityEngine_1.Vector3(0.075,
+    0.05, -0.022);\r\n        // equippedFood.transform.localRotation = Quaternion.Euler(180,
+    0, 180);\r\n        AnimationManager_1.default.SetCharacterAnimation(sessionId,
+    AnimationManager_1.AnimParamType.Bool, AnimationManager_1.AnimParamName.FoodHold,
+    true);\r\n        this.equippDatas.set(sessionId, equippedFood);\r\n    }\r\n   
+    OnRemoveFood(sessionId) {\r\n        const food = this.equippDatas.get(sessionId);\r\n       
+    if (food) {\r\n            UnityEngine_1.Debug.Log(\"Unequipped\" + food.name);\r\n           
+    UnityEngine_1.GameObject.Destroy(food);\r\n            AnimationManager_1.default.SetCharacterAnimation(sessionId,
+    AnimationManager_1.AnimParamType.Bool, AnimationManager_1.AnimParamName.FoodHold,
+    false);\r\n            this.equippDatas.delete(sessionId);\r\n        }\r\n   
+    }\r\n}\r\nexports.default = FoodManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRm9vZE1hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJGb29kTWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUE2RjtBQUM3RixtREFBcUQ7QUFDckQsdURBQTRDO0FBQzVDLGlEQUFxRDtBQUNyRCxrRUFBK0Q7QUFDL0QsaUZBQTBFO0FBQzFFLGdEQUFtRDtBQUNuRCx5REFBb0Y7QUFDcEYsZ0RBQXlDO0FBQ3pDLG1FQUE0RDtBQUM1RCwyQ0FBb0M7QUFFcEMsTUFBcUIsV0FBWSxTQUFRLHFDQUFxQjtJQUE5RDs7UUFtQ1ksY0FBUyxHQUE2QixJQUFJLEdBQUcsRUFBc0IsQ0FBQztRQUNwRSxnQkFBVyxHQUE2QixJQUFJLEdBQUcsRUFBc0IsQ0FBQztRQUN0RSxVQUFLLEdBQVksRUFBRSxDQUFDO0lBMEhoQyxDQUFDO0lBeEhHLElBQVksV0FBVyxLQUFjLE9BQU8sR0FBRyxJQUFJLENBQUMsUUFBUSxJQUFJLElBQUksQ0FBQyxtQkFBbUIsRUFBRSxDQUFDLENBQUMsQ0FBQztJQUU3RixLQUFLO1FBQ0QsSUFBSSxDQUFDLFNBQVMsQ0FBQyxHQUFHLENBQUMsSUFBSSxDQUFDLGdCQUFnQixDQUFDLElBQUksRUFBRSxJQUFJLENBQUMsZ0JBQWdCLENBQUMsQ0FBQztRQUN0RSxJQUFJLENBQUMsU0FBUyxDQUFDLEdBQUcsQ0FBQyxJQUFJLENBQUMsYUFBYSxDQUFDLElBQUksRUFBRSxJQUFJLENBQUMsYUFBYSxDQUFDLENBQUM7UUFDaEUsSUFBSSxDQUFDLFNBQVMsQ0FBQyxHQUFHLENBQUMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxJQUFJLEVBQUUsSUFBSSxDQUFDLFVBQVUsQ0FBQyxDQUFDO1FBQzFELElBQUksQ0FBQyxTQUFTLENBQUMsR0FBRyxDQUFDLElBQUksQ0FBQyxXQUFXLENBQUMsSUFBSSxFQUFFLElBQUksQ0FBQyxXQUFXLENBQUMsQ0FBQztRQUM1RCxJQUFJLENBQUMsU0FBUyxDQUFDLEdBQUcsQ0FBQyxJQUFJLENBQUMsYUFBYSxDQUFDLElBQUksRUFBRSxJQUFJLENBQUMsYUFBYSxDQUFDLENBQUM7UUFDaEUsSUFBSSxDQUFDLFNBQVMsQ0FBQyxHQUFHLENBQUMsSUFBSSxDQUFDLGtCQUFrQixDQUFDLElBQUksRUFBRSxJQUFJLENBQUMsa0JBQWtCLENBQUMsQ0FBQztRQUUxRSxJQUFJLENBQUMsTUFBTSxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ2pDLElBQUksQ0FBQyxPQUFPLEVBQUUsQ0FBQztRQUNuQixDQUFDLENBQUMsQ0FBQztRQUVILElBQUksQ0FBQyxTQUFTLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDcEMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQy9DLENBQUMsQ0FBQyxDQUFDO1FBRUgsSUFBSSxDQUFDLGFBQWEsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUN4QyxJQUFJLENBQUMsVUFBVSxFQUFFLENBQUM7UUFDdEIsQ0FBQyxDQUFDLENBQUE7SUFDTixDQUFDO0lBRU0sY0FBYyxDQUFDLFFBQTBCO1FBQzVDLElBQUksQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsQ0FBQztRQUMxQyxNQUFNLFNBQVMsR0FBRyxJQUFJLENBQUMsWUFBWSxDQUFDLFlBQVksU0FBQyw0QkFBa0IsRUFBRyxDQUFDO1FBQ3ZFLFFBQVEsUUFBUSxFQUFFO1lBQ2QsS0FBSyxpQ0FBZSxDQUFDLFNBQVM7Z0JBQzFCLElBQUksQ0FBQyxZQUFZLEdBQUcsSUFBSSxDQUFDLGdCQUFnQixDQUFDO2dCQUMxQyxJQUFJLENBQUMsY0FBYyxHQUFHLElBQUksQ0FBQyxnQkFBZ0IsQ0FBQztnQkFDNUMsSUFBSSxDQUFDLFFBQVEsR0FBRyxJQUFJLFNBQVMsQ0FBQyxjQUFjLENBQUMsQ0FBQyxDQUFDLEdBQUcsQ0FBQztnQkFDbkQsTUFBTTtZQUNWLEtBQUssaUNBQWUsQ0FBQyxPQUFPO2dCQUN4QixJQUFJLENBQUMsWUFBWSxHQUFHLElBQUksQ0FBQyxhQUFhLENBQUM7Z0JBQ3ZDLElBQUksQ0FBQyxjQUFjLEdBQUcsSUFBSSxDQUFDLGFBQWEsQ0FBQztnQkFDekMsSUFBSSxDQUFDLFFBQVEsR0FBRyxJQUFJLFNBQVMsQ0FBQyxZQUFZLENBQUMsQ0FBQyxDQUFDLEdBQUcsQ0FBQztnQkFDakQsTUFBTTtZQUNWLEtBQUssaUNBQWUsQ0FBQyxJQUFJO2dCQUNyQixJQUFJLENBQUMsWUFBWSxHQUFHLElBQUksQ0FBQyxVQUFVLENBQUM7Z0JBQ3BDLElBQUksQ0FBQyxjQUFjLEdBQUcsSUFBSSxDQUFDLFVBQVUsQ0FBQztnQkFDdEMsSUFBSSxDQUFDLFFBQVEsR0FBRyxJQUFJLFNBQVMsQ0FBQyxZQUFZLENBQUMsQ0FBQyxDQUFDLEdBQUcsQ0FBQztnQkFDakQsTUFBTTtZQUNWLEtBQUssaUNBQWUsQ0FBQyxLQUFLO2dCQUN0QixJQUFJLENBQUMsWUFBWSxHQUFHLElBQUksQ0FBQyxXQUFXLENBQUM7Z0JBQ3JDLElBQUksQ0FBQyxjQUFjLEdBQUcsSUFBSSxDQUFDLFdBQVcsQ0FBQztnQkFDdkMsSUFBSSxDQUFDLFFBQVEsR0FBRyxJQUFJLFNBQVMsQ0FBQyxZQUFZLENBQUMsQ0FBQyxDQUFDLEdBQUcsQ0FBQztnQkFDakQsTUFBTTtZQUNWLEtBQUssaUNBQWUsQ0FBQyxPQUFPO2dCQUN4QixJQUFJLENBQUMsWUFBWSxHQUFHLElBQUksQ0FBQyxhQUFhLENBQUM7Z0JBQ3ZDLElBQUksQ0FBQyxjQUFjLEdBQUcsSUFBSSxDQUFDLGFBQWEsQ0FBQztnQkFDekMsSUFBSSxDQUFDLFFBQVEsR0FBRyxJQUFJLFNBQVMsQ0FBQyxZQUFZLENBQUMsQ0FBQyxDQUFDLEdBQUcsQ0FBQztnQkFDakQsTUFBTTtZQUNWLEtBQUssaUNBQWUsQ0FBQyxZQUFZO2dCQUM3QixJQUFJLENBQUMsWUFBWSxHQUFHLElBQUksQ0FBQyxrQkFBa0IsQ0FBQztnQkFDNUMsSUFBSSxDQUFDLGNBQWMsR0FBRyxJQUFJLENBQUMsa0JBQWtCLENBQUM7Z0JBQzlDLElBQUksQ0FBQyxRQUFRLEdBQUcsSUFBSSxTQUFTLENBQUMsWUFBWSxDQUFDLENBQUMsQ0FBQyxHQUFHLENBQUM7Z0JBQ2pELE1BQU07WUFDVjtnQkFDSSxNQUFNO1NBQ2I7UUFDRCxJQUFJLENBQUMsWUFBWSxDQUFDLElBQUksR0FBRyxJQUFJLENBQUMsWUFBWSxFQUFFLENBQUM7UUFDN0MsSUFBSSxDQUFDLFNBQVMsQ0FBQyxNQUFNLEdBQUcsSUFBSSxDQUFDLGNBQWMsQ0FBQztJQUNoRCxDQUFDO0lBRU8sWUFBWTtRQUNoQixNQUFNLFNBQVMsR0FBRyxJQUFJLENBQUMsWUFBWSxDQUFDLFlBQVksU0FBQyw0QkFBa0IsRUFBRyxDQUFDO1FBQ3ZFLElBQUksV0FBVyxHQUFHLFNBQVMsQ0FBQyxjQUFjLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDOUMsTUFBTSxJQUFJLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQztRQUMzQixXQUFXLEdBQUcsV0FBVyxDQUFDLE9BQU8sQ0FBQyxXQUFXLEVBQUUsSUFBSSxDQUFDLENBQUM7UUFDckQsT0FBTyxDQUFDLEdBQUcsQ0FBQyxXQUFXLENBQUMsQ0FBQztRQUN6QixPQUFPLFdBQVcsQ0FBQztJQUN2QixDQUFDO0lBRUQsZ0JBQWdCO0lBQ1QsYUFBYTtRQUNoQixNQUFNLFNBQVMsR0FBRywwQkFBZ0IsQ0FBQyxRQUFRLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQztRQUMzRCxPQUFPLElBQUksQ0FBQyxXQUFXLENBQUMsR0FBRyxDQUFDLFNBQVMsQ0FBQyxDQUFDO0lBQzNDLENBQUM7SUFFTyxPQUFPO1FBQ1gsSUFBSSxDQUFDLFNBQVMsQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQzNDLElBQUksQ0FBQyxhQUFhLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsQ0FBQztRQUU5QyxJQUFJLENBQUMscUJBQVcsQ0FBQyxRQUFRLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyxLQUFLLENBQUM7WUFBRSxPQUFPO1FBQ3RELG1CQUFTLENBQUMsUUFBUSxDQUFDLGlCQUFpQixFQUFFLENBQUMsT0FBTyxFQUFFLENBQUM7UUFDakQsTUFBTSxJQUFJLEdBQUcsSUFBSSwyQkFBUSxFQUFFLENBQUM7UUFDNUIsSUFBSSxDQUFDLEdBQUcsQ0FBQyxzQkFBUSxDQUFDLFFBQVEsRUFBRSxJQUFJLENBQUMsWUFBWSxDQUFDLElBQUksQ0FBQyxDQUFDO1FBQ3BELDBCQUFnQixDQUFDLFFBQVEsQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLHFCQUFPLENBQUMsVUFBVSxFQUFFLElBQUksQ0FBQyxTQUFTLEVBQUUsQ0FBQyxDQUFDO0lBRTlFLENBQUM7SUFFTSxVQUFVO1FBQ2IsSUFBSSxDQUFDLGFBQWEsQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQy9DLE1BQU0sSUFBSSxHQUFHLElBQUksMkJBQVEsRUFBRSxDQUFDO1FBQzVCLElBQUksQ0FBQyxHQUFHLENBQUMsc0JBQVEsQ0FBQyxTQUFTLEVBQUUsMEJBQWdCLENBQUMsUUFBUSxDQUFDLElBQUksQ0FBQyxTQUFTLENBQUMsQ0FBQztRQUN2RSwwQkFBZ0IsQ0FBQyxRQUFRLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxxQkFBTyxDQUFDLFlBQVksRUFBRSxJQUFJLENBQUMsU0FBUyxFQUFFLENBQUMsQ0FBQztJQUNoRixDQUFDO0lBRUQsNEJBQTRCO0lBQ3JCLFNBQVMsQ0FBQyxTQUFrQixFQUFFLFFBQWlCO1FBQ2xELG1CQUFLLENBQUMsR0FBRyxDQUFDLFdBQVcsR0FBRyxRQUFRLENBQUMsQ0FBQztRQUNsQyxNQUFNLGFBQWEsR0FBRywwQkFBZ0IsQ0FBQyxPQUFPLENBQUMsU0FBUyxFQUFFLElBQUksQ0FBQyxRQUFRLENBQUMsQ0FBQztRQUN6RSxNQUFNLElBQUksR0FBRyxJQUFJLENBQUMsU0FBUyxDQUFDLEdBQUcsQ0FBQyxRQUFRLENBQUMsQ0FBQztRQUMxQyxNQUFNLFlBQVksR0FBZ0Isd0JBQVUsQ0FBQyxXQUFXLENBQWEsSUFBSSxFQUFFLGFBQWEsQ0FBQyxDQUFDO1FBQzFGLFlBQVksQ0FBQyxTQUFTLENBQUMsYUFBYSxHQUFHLElBQUkscUJBQU8sQ0FBQyxLQUFLLEVBQUUsSUFBSSxFQUFFLENBQUMsS0FBSyxDQUFDLENBQUM7UUFDeEUsd0VBQXdFO1FBQ3hFLDBCQUFnQixDQUFDLHFCQUFxQixDQUFDLFNBQVMsRUFBRSxnQ0FBYSxDQUFDLElBQUksRUFBQyxnQ0FBYSxDQUFDLFFBQVEsRUFBRSxJQUFJLENBQUMsQ0FBQztRQUVuRyxJQUFJLENBQUMsV0FBVyxDQUFDLEdBQUcsQ0FBQyxTQUFTLEVBQUUsWUFBWSxDQUFDLENBQUM7SUFDbEQsQ0FBQztJQUVNLFlBQVksQ0FBQyxTQUFrQjtRQUNsQyxNQUFNLElBQUksR0FBRyxJQUFJLENBQUMsV0FBVyxDQUFDLEdBQUcsQ0FBQyxTQUFTLENBQUMsQ0FBQztRQUM3QyxJQUFHLElBQUksRUFBRTtZQUNMLG1CQUFLLENBQUMsR0FBRyxDQUFDLFlBQVksR0FBRyxJQUFJLENBQUMsSUFBSSxDQUFDLENBQUM7WUFDcEMsd0JBQVUsQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLENBQUM7WUFDekIsMEJBQWdCLENBQUMscUJBQXFCLENBQUMsU0FBUyxFQUFFLGdDQUFhLENBQUMsSUFBSSxFQUFFLGdDQUFhLENBQUMsUUFBUSxFQUFFLEtBQUssQ0FBQyxDQUFDO1lBQ3JHLElBQUksQ0FBQyxXQUFXLENBQUMsTUFBTSxDQUFDLFNBQVMsQ0FBQyxDQUFDO1NBQ3RDO0lBQ0wsQ0FBQztDQUNKO0FBL0pELDhCQStKQyJ9","assetPath":"Assets/Zepeto
+    Multiplay Component/Script/Manager/FoodManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"foodPopup","type":"UnityEngine.UI.Image","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"UIs\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"foodImage","type":"UnityEngine.UI.Image","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"buyBtn","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"cancelBtn","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"foodRemoveBtn","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"purchaseText","type":"UnityEngine.UI.Text","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"tteokbokkiSprite","type":"UnityEngine.Sprite","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Food
+    Sprites\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"rawMeatSprite","type":"UnityEngine.Sprite","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"jeonSprite","type":"UnityEngine.Sprite","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"bibimSprite","type":"UnityEngine.Sprite","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"chickenSprite","type":"UnityEngine.Sprite","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"twistedBreadSprite","type":"UnityEngine.Sprite","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"tteokbokkiPrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"GameObjects\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"rawMeatPrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"jeonPrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"bibimPrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"chickenPrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"twistedBreadPrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.AnimationModule","name":"bodyBone","type":"UnityEngine.HumanBodyBones","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Attached
+    Body Bone\""]},{"name":"SerializeField","args":[]}]}],"name":"FoodManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: f8b9112b3ec86889c5c42dfbac4c606e
+  onlyWriteTrigger: 0
